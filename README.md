@@ -1,1 +1,1 @@
-# Dashboard-Hotel
+# Admin dashboard - Hotel Esmeralda Resort & Spa
