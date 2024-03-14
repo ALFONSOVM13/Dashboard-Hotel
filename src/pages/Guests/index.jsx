@@ -2,14 +2,14 @@ import { useState } from "react";
 
 function Guests() {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 5; // Asumiendo que tienes 5 páginas
+  const totalPages = 5;
 
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event) => {
     const value = event.target.value;
-    console.log(value); // Consologuea lo que se está escribiendo
-    setInputValue(value); // Actualiza el estado con el nuevo valor
+    console.log(value);
+    setInputValue(value);
   };
 
   const handleNewClick = () => {
