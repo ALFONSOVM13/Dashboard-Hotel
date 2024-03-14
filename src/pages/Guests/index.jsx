@@ -153,6 +153,35 @@ function Guests() {
           </div>
         </div>
       </div>
+      <div>
+        <div className="flex justify-around items-center py-6 my-6 text-base tracking-normal bg-white text-slate-400">
+          <div>Nombre y Apellido</div>
+          <div>Email</div>
+          <div>Status</div>
+          <div>Edit</div>
+        </div>
+
+        <div>
+          <div className="flex justify-around items-center py-6 text-base tracking-normal bg-white text-slate-400">
+            <div>Ileana</div>
+            <div>ile²mail.com</div>
+            <div>active</div>
+            <div>icono</div>
+          </div>
+          <div className="flex justify-around items-center py-6 text-base tracking-normal bg-white text-slate-400">
+            <div>Ileana</div>
+            <div>ile²mail.com</div>
+            <div>active</div>
+            <div>icono</div>
+          </div>
+          <div className="flex justify-around items-center py-6 text-base tracking-normal bg-white text-slate-400">
+            <div>Ileana</div>
+            <div>ile²mail.com</div>
+            <div>active</div>
+            <div>icono</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
