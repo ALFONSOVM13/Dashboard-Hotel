@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 function ListOption({ text, link, active }) {
