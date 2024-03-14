@@ -7,6 +7,8 @@ import Offers from "./pages/Offers";
 import Sidebar from "./components/layouts/sidebar";
 import Employees from "./pages/Employees";
 import RoomsCustomization from "./pages/RoomsCustomization";
+import OfferNotifications from "./pages/OfferNotifications";
+import Notifications from "./pages/Notifications";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="offers" element={<Offers />} />
           <Route path="employees" element={<Employees />} />
           <Route path="roomsCustomization" element={<RoomsCustomization />} />
+          <Route path="offerNotifications" element={<OfferNotifications />} />
+          <Route path="notifications" element={<Notifications />} />
         </Route>
       </Routes>
     </div>
