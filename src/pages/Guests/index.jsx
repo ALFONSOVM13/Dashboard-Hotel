@@ -1,4 +1,6 @@
 import { useState } from "react";
+import users from "../../data";
+import Users from "../../components/Users/Users";
 
 function Guests() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -180,6 +182,7 @@ function Guests() {
             <div>active</div>
             <div>icono</div>
           </div>
+          <Users users={users} />
         </div>
       </div>
     </div>
