@@ -1,6 +1,7 @@
 import { useState } from "react";
 import users from "../../data";
 import Users from "../../components/Users/Users";
+import TabTitle from "../../components/TabTitle";
 
 function Guests() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,9 +40,9 @@ function Guests() {
   };
 
   return (
-    <div className="flex flex-col px-5 w-full">
-      <div className="self-start ml-6 text-4xl font-semibold tracking-wide whitespace-nowrap text-neutral-500 max-md:ml-2.5">
-        Guest Management
+    <div className="flex flex-col w-full pl-[330px]">
+      <div className="flex flex-col px-5 w-full max-md:max-w-full">
+        <TabTitle title="Guest Management" />
       </div>
       <div className="flex gap-3 px-9 py-6 mt-11 text-base tracking-normal bg-white text-slate-400 max-md:flex-wrap max-md:px-5 max-md:mt-10">
         <img
