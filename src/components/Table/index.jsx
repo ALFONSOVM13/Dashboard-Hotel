@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /*Este componente sirve para renderizar una tabla, enviando los props headers que deben definirse como  un array de strings y data que debe ser un arreglo de objetos del tipo 
 [
   {propiedad1:"celda1Fila1",propiedad2:"celda2Fila1",propiedad3:"celda3Fila1"},
