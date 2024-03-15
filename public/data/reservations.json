@@ -1,0 +1,702 @@
+[
+  {
+    "roomNumber": 401,
+    "roomName": "Standar King",
+    "guestUsername": "Rafael Martínez",
+    "checkIn": "2023-09-12T10:00:00Z",
+    "checkOut": "2023-09-15T12:00:00Z"
+  },
+  {
+    "roomNumber": 402,
+    "roomName": "Superior King",
+    "guestUsername": "María González",
+    "checkIn": "2023-09-14T11:00:00Z",
+    "checkOut": "2023-09-16T10:00:00Z"
+  },
+  {
+    "roomNumber": 403,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Alejandro Silva",
+    "checkIn": "2023-09-15T12:00:00Z",
+    "checkOut": "2023-09-19T09:00:00Z"
+  },
+  {
+    "roomNumber": 404,
+    "roomName": "Junior Suite",
+    "guestUsername": "Lucía Rodríguez",
+    "checkIn": "2023-09-16T09:00:00Z",
+    "checkOut": "2023-09-19T08:00:00Z"
+  },
+  {
+    "roomNumber": 405,
+    "roomName": "Standar King",
+    "guestUsername": "Carlos Pérez",
+    "checkIn": "2023-09-18T10:00:00Z",
+    "checkOut": "2023-09-21T09:00:00Z"
+  },
+  {
+    "roomNumber": 406,
+    "roomName": "Superior King",
+    "guestUsername": "Ana López",
+    "checkIn": "2023-09-20T11:00:00Z",
+    "checkOut": "2023-09-23T10:00:00Z"
+  },
+  {
+    "roomNumber": 407,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Diego Sánchez",
+    "checkIn": "2023-09-22T12:00:00Z",
+    "checkOut": "2023-09-25T11:00:00Z"
+  },
+  {
+    "roomNumber": 408,
+    "roomName": "Junior Suite",
+    "guestUsername": "Laura Ramírez",
+    "checkIn": "2023-09-24T09:00:00Z",
+    "checkOut": "2023-09-27T08:00:00Z"
+  },
+  {
+    "roomNumber": 409,
+    "roomName": "Superior King",
+    "guestUsername": "Javier Herrera",
+    "checkIn": "2023-09-26T10:00:00Z",
+    "checkOut": "2023-09-28T12:00:00Z"
+  },
+  {
+    "roomNumber": 410,
+    "roomName": "Junior Suite",
+    "guestUsername": "Camila Flores",
+    "checkIn": "2023-09-27T08:30:00Z",
+    "checkOut": "2023-09-30T07:30:00Z"
+  },
+  {
+    "roomNumber": 411,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Sofía Martínez",
+    "checkIn": "2023-09-28T09:30:00Z",
+    "checkOut": "2023-10-01T10:30:00Z"
+  },
+  {
+    "roomNumber": 412,
+    "roomName": "Superior King",
+    "guestUsername": "Alejandro Guzmán",
+    "checkIn": "2023-09-29T07:30:00Z",
+    "checkOut": "2023-10-02T06:30:00Z"
+  },
+  {
+    "roomNumber": 413,
+    "roomName": "Standar King",
+    "guestUsername": "Isabel Vargas",
+    "checkIn": "2023-09-30T10:30:00Z",
+    "checkOut": "2023-10-03T09:30:00Z"
+  },
+  {
+    "roomNumber": 414,
+    "roomName": "Standar King",
+    "guestUsername": "Martín Rojas",
+    "checkIn": "2023-10-01T08:30:00Z",
+    "checkOut": "2023-10-04T11:30:00Z"
+  },
+  {
+    "roomNumber": 415,
+    "roomName": "Junior Suite",
+    "guestUsername": "Gabriela Herrera",
+    "checkIn": "2023-10-02T08:00:00Z",
+    "checkOut": "2023-10-05T09:00:00Z"
+  },
+  {
+    "roomNumber": 416,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Javier López",
+    "checkIn": "2023-10-03T09:30:00Z",
+    "checkOut": "2023-10-06T10:30:00Z"
+  },
+  {
+    "roomNumber": 417,
+    "roomName": "Superior King",
+    "guestUsername": "Mariana Silva",
+    "checkIn": "2023-10-04T07:00:00Z",
+    "checkOut": "2023-10-07T08:00:00Z"
+  },
+  {
+    "roomNumber": 418,
+    "roomName": "Standar King",
+    "guestUsername": "Luis Rodríguez",
+    "checkIn": "2023-10-05T10:00:00Z",
+    "checkOut": "2023-10-08T11:00:00Z"
+  },
+  {
+    "roomNumber": 419,
+    "roomName": "Standar King",
+    "guestUsername": "Adriana Pérez",
+    "checkIn": "2023-10-06T08:30:00Z",
+    "checkOut": "2023-10-09T09:30:00Z"
+  },
+  {
+    "roomNumber": 420,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Diego Ramírez",
+    "checkIn": "2023-10-07T08:45:00Z",
+    "checkOut": "2023-10-10T09:45:00Z"
+  },
+  {
+    "roomNumber": 421,
+    "roomName": "Superior King",
+    "guestUsername": "Laura Martínez",
+    "checkIn": "2023-10-08T10:15:00Z",
+    "checkOut": "2023-10-11T11:15:00Z"
+  },
+  {
+    "roomNumber": 422,
+    "roomName": "Standar King",
+    "guestUsername": "Roberto Rojas",
+    "checkIn": "2023-10-09T09:00:00Z",
+    "checkOut": "2023-10-12T10:00:00Z"
+  },
+  {
+    "roomNumber": 423,
+    "roomName": "Junior Suite",
+    "guestUsername": "Patricia Castillo",
+    "checkIn": "2023-10-10T08:30:00Z",
+    "checkOut": "2023-10-13T09:30:00Z"
+  },
+  {
+    "roomNumber": 424,
+    "roomName": "Standar King",
+    "guestUsername": "Alejandro Gómez",
+    "checkIn": "2023-10-11T07:45:00Z",
+    "checkOut": "2023-10-14T08:45:00Z"
+  },
+  {
+    "roomNumber": 425,
+    "roomName": "Superior King",
+    "guestUsername": "María Hernández",
+    "checkIn": "2023-10-12T10:30:00Z",
+    "checkOut": "2023-10-15T11:30:00Z"
+  },
+  {
+    "roomNumber": 426,
+    "roomName": "Junior Suite",
+    "guestUsername": "Juan López",
+    "checkIn": "2023-10-13T09:15:00Z",
+    "checkOut": "2023-10-16T10:15:00Z"
+  },
+  {
+    "roomNumber": 427,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Carolina Pérez",
+    "checkIn": "2023-10-14T08:45:00Z",
+    "checkOut": "2023-10-17T09:45:00Z"
+  },
+  {
+    "roomNumber": 428,
+    "roomName": "Standar King",
+    "guestUsername": "Ricardo Sánchez",
+    "checkIn": "2023-10-15T07:30:00Z",
+    "checkOut": "2023-10-18T08:30:00Z"
+  },
+  {
+    "roomNumber": 429,
+    "roomName": "Superior King",
+    "guestUsername": "Isabel Torres",
+    "checkIn": "2023-10-16T10:00:00Z",
+    "checkOut": "2023-10-19T11:00:00Z"
+  },
+  {
+    "roomNumber": 430,
+    "roomName": "Superior King",
+    "guestUsername": "Luisa García",
+    "checkIn": "2023-10-17T09:45:00Z",
+    "checkOut": "2023-10-20T10:45:00Z"
+  },
+  {
+    "roomNumber": 431,
+    "roomName": "Standar King",
+    "guestUsername": "Alejandro Rodríguez",
+    "checkIn": "2023-10-18T07:15:00Z",
+    "checkOut": "2023-10-21T08:15:00Z"
+  },
+  {
+    "roomNumber": 432,
+    "roomName": "Junior Suite",
+    "guestUsername": "Laura Martínez",
+    "checkIn": "2023-10-19T11:00:00Z",
+    "checkOut": "2023-10-22T12:00:00Z"
+  },
+  {
+    "roomNumber": 433,
+    "roomName": "Superior King",
+    "guestUsername": "Eduardo Ramírez",
+    "checkIn": "2023-10-20T10:30:00Z",
+    "checkOut": "2023-10-23T11:30:00Z"
+  },
+  {
+    "roomNumber": 434,
+    "roomName": "Standar King",
+    "guestUsername": "Carmen Ortiz",
+    "checkIn": "2023-10-21T08:00:00Z",
+    "checkOut": "2023-10-24T09:00:00Z"
+  },
+  {
+    "roomNumber": 435,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Juan Pérez",
+    "checkIn": "2023-10-22T12:20:00Z",
+    "checkOut": "2023-10-25T13:20:00Z"
+  },
+  {
+    "roomNumber": 436,
+    "roomName": "Superior King",
+    "guestUsername": "Gabriela Sánchez",
+    "checkIn": "2023-10-23T13:00:00Z",
+    "checkOut": "2023-10-26T14:00:00Z"
+  },
+  {
+    "roomNumber": 437,
+    "roomName": "Junior Suite",
+    "guestUsername": "Carlos López",
+    "checkIn": "2023-10-24T14:45:00Z",
+    "checkOut": "2023-10-27T15:45:00Z"
+  },
+  {
+    "roomNumber": 438,
+    "roomName": "Standar King",
+    "guestUsername": "María Fernández",
+    "checkIn": "2023-10-25T11:30:00Z",
+    "checkOut": "2023-10-28T12:30:00Z"
+  },
+  {
+    "roomNumber": 439,
+    "roomName": "Junior Suite",
+    "guestUsername": "Pedro Gómez",
+    "checkIn": "2023-10-26T09:00:00Z",
+    "checkOut": "2023-10-29T10:00:00Z"
+  },
+  {
+    "roomNumber": 440,
+    "roomName": "Junior Suite",
+    "guestUsername": "Pedro Gómez",
+    "checkIn": "2023-10-26T09:00:00Z",
+    "checkOut": "2023-10-29T10:00:00Z"
+  },
+  {
+    "roomNumber": 441,
+    "roomName": "Standar King",
+    "guestUsername": "Rafael Martínez",
+    "checkIn": "2023-09-12T10:00:00Z",
+    "checkOut": "2023-09-15T12:00:00Z"
+  },
+  {
+    "roomNumber": 442,
+    "roomName": "Superior King",
+    "guestUsername": "María González",
+    "checkIn": "2023-09-14T11:00:00Z",
+    "checkOut": "2023-09-16T10:00:00Z"
+  },
+  {
+    "roomNumber": 443,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Alejandro Silva",
+    "checkIn": "2023-09-15T12:00:00Z",
+    "checkOut": "2023-09-19T09:00:00Z"
+  },
+  {
+    "roomNumber": 444,
+    "roomName": "Junior Suite",
+    "guestUsername": "Lucía Rodríguez",
+    "checkIn": "2023-09-16T09:00:00Z",
+    "checkOut": "2023-09-19T08:00:00Z"
+  },
+  {
+    "roomNumber": 445,
+    "roomName": "Standar King",
+    "guestUsername": "Carlos Pérez",
+    "checkIn": "2023-09-18T10:00:00Z",
+    "checkOut": "2023-09-21T09:00:00Z"
+  },
+  {
+    "roomNumber": 446,
+    "roomName": "Superior King",
+    "guestUsername": "Ana López",
+    "checkIn": "2023-09-20T11:00:00Z",
+    "checkOut": "2023-09-23T10:00:00Z"
+  },
+  {
+    "roomNumber": 447,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Diego Sánchez",
+    "checkIn": "2023-09-22T12:00:00Z",
+    "checkOut": "2023-09-25T11:00:00Z"
+  },
+  {
+    "roomNumber": 448,
+    "roomName": "Junior Suite",
+    "guestUsername": "Laura Ramírez",
+    "checkIn": "2023-09-24T09:00:00Z",
+    "checkOut": "2023-09-27T08:00:00Z"
+  },
+  {
+    "roomNumber": 449,
+    "roomName": "Superior King",
+    "guestUsername": "Javier Herrera",
+    "checkIn": "2023-09-26T10:00:00Z",
+    "checkOut": "2023-09-28T12:00:00Z"
+  },
+  {
+    "roomNumber": 450,
+    "roomName": "Junior Suite",
+    "guestUsername": "Camila Flores",
+    "checkIn": "2023-09-27T08:30:00Z",
+    "checkOut": "2023-09-30T07:30:00Z"
+  },
+  {
+    "roomNumber": 451,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Sofía Martínez",
+    "checkIn": "2023-09-28T09:30:00Z",
+    "checkOut": "2023-10-01T10:30:00Z"
+  },
+  {
+    "roomNumber": 452,
+    "roomName": "Superior King",
+    "guestUsername": "Alejandro Guzmán",
+    "checkIn": "2023-09-29T07:30:00Z",
+    "checkOut": "2023-10-02T06:30:00Z"
+  },
+  {
+    "roomNumber": 453,
+    "roomName": "Standar King",
+    "guestUsername": "Isabel Vargas",
+    "checkIn": "2023-09-30T10:30:00Z",
+    "checkOut": "2023-10-03T09:30:00Z"
+  },
+  {
+    "roomNumber": 454,
+    "roomName": "Standar King",
+    "guestUsername": "Martín Rojas",
+    "checkIn": "2023-10-01T08:30:00Z",
+    "checkOut": "2023-10-04T11:30:00Z"
+  },
+  {
+    "roomNumber": 455,
+    "roomName": "Junior Suite",
+    "guestUsername": "Gabriela Herrera",
+    "checkIn": "2023-10-02T08:00:00Z",
+    "checkOut": "2023-10-05T09:00:00Z"
+  },
+  {
+    "roomNumber": 456,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Javier López",
+    "checkIn": "2023-10-03T09:30:00Z",
+    "checkOut": "2023-10-06T10:30:00Z"
+  },
+  {
+    "roomNumber": 457,
+    "roomName": "Superior King",
+    "guestUsername": "Mariana Silva",
+    "checkIn": "2023-10-04T07:00:00Z",
+    "checkOut": "2023-10-07T08:00:00Z"
+  },
+  {
+    "roomNumber": 458,
+    "roomName": "Standar King",
+    "guestUsername": "Luis Rodríguez",
+    "checkIn": "2023-10-05T10:00:00Z",
+    "checkOut": "2023-10-08T11:00:00Z"
+  },
+  {
+    "roomNumber": 459,
+    "roomName": "Standar King",
+    "guestUsername": "Adriana Pérez",
+    "checkIn": "2023-10-06T08:30:00Z",
+    "checkOut": "2023-10-09T09:30:00Z"
+  },
+  {
+    "roomNumber": 460,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Diego Ramírez",
+    "checkIn": "2023-10-07T08:45:00Z",
+    "checkOut": "2023-10-10T09:45:00Z"
+  },
+  {
+    "roomNumber": 461,
+    "roomName": "Superior King",
+    "guestUsername": "Laura Martínez",
+    "checkIn": "2023-10-08T10:15:00Z",
+    "checkOut": "2023-10-11T11:15:00Z"
+  },
+  {
+    "roomNumber": 462,
+    "roomName": "Standar King",
+    "guestUsername": "Roberto Rojas",
+    "checkIn": "2023-10-09T09:00:00Z",
+    "checkOut": "2023-10-12T10:00:00Z"
+  },
+  {
+    "roomNumber": 463,
+    "roomName": "Junior Suite",
+    "guestUsername": "Patricia Castillo",
+    "checkIn": "2023-10-10T08:30:00Z",
+    "checkOut": "2023-10-13T09:30:00Z"
+  },
+  {
+    "roomNumber": 464,
+    "roomName": "Standar King",
+    "guestUsername": "Alejandro Gómez",
+    "checkIn": "2023-10-11T07:45:00Z",
+    "checkOut": "2023-10-14T08:45:00Z"
+  },
+  {
+    "roomNumber": 465,
+    "roomName": "Superior King",
+    "guestUsername": "María Hernández",
+    "checkIn": "2023-10-12T10:30:00Z",
+    "checkOut": "2023-10-15T11:30:00Z"
+  },
+  {
+    "roomNumber": 466,
+    "roomName": "Junior Suite",
+    "guestUsername": "Juan López",
+    "checkIn": "2023-10-13T09:15:00Z",
+    "checkOut": "2023-10-16T10:15:00Z"
+  },
+  {
+    "roomNumber": 467,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Carolina Pérez",
+    "checkIn": "2023-10-14T08:45:00Z",
+    "checkOut": "2023-10-17T09:45:00Z"
+  },
+  {
+    "roomNumber": 468,
+    "roomName": "Standar King",
+    "guestUsername": "Ricardo Sánchez",
+    "checkIn": "2023-10-15T07:30:00Z",
+    "checkOut": "2023-10-18T08:30:00Z"
+  },
+  {
+    "roomNumber": 469,
+    "roomName": "Superior King",
+    "guestUsername": "Isabel Torres",
+    "checkIn": "2023-10-16T10:00:00Z",
+    "checkOut": "2023-10-19T11:00:00Z"
+  },
+  {
+    "roomNumber": 470,
+    "roomName": "Superior King",
+    "guestUsername": "Luisa García",
+    "checkIn": "2023-10-17T09:45:00Z",
+    "checkOut": "2023-10-20T10:45:00Z"
+  },
+  {
+    "roomNumber": 471,
+    "roomName": "Standar King",
+    "guestUsername": "Alejandro Rodríguez",
+    "checkIn": "2023-10-18T07:15:00Z",
+    "checkOut": "2023-10-21T08:15:00Z"
+  },
+  {
+    "roomNumber": 472,
+    "roomName": "Junior Suite",
+    "guestUsername": "Laura Martínez",
+    "checkIn": "2023-10-19T11:00:00Z",
+    "checkOut": "2023-10-22T12:00:00Z"
+  },
+  {
+    "roomNumber": 473,
+    "roomName": "Superior King",
+    "guestUsername": "Eduardo Ramírez",
+    "checkIn": "2023-10-20T10:30:00Z",
+    "checkOut": "2023-10-23T11:30:00Z"
+  },
+  {
+    "roomNumber": 474,
+    "roomName": "Standar King",
+    "guestUsername": "Carmen Ortiz",
+    "checkIn": "2023-10-21T08:00:00Z",
+    "checkOut": "2023-10-24T09:00:00Z"
+  },
+  {
+    "roomNumber": 475,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Juan Pérez",
+    "checkIn": "2023-10-22T12:20:00Z",
+    "checkOut": "2023-10-25T13:20:00Z"
+  },
+  {
+    "roomNumber": 476,
+    "roomName": "Superior King",
+    "guestUsername": "Gabriela Sánchez",
+    "checkIn": "2023-10-23T13:00:00Z",
+    "checkOut": "2023-10-26T14:00:00Z"
+  },
+  {
+    "roomNumber": 477,
+    "roomName": "Junior Suite",
+    "guestUsername": "Carlos López",
+    "checkIn": "2023-10-24T14:45:00Z",
+    "checkOut": "2023-10-27T15:45:00Z"
+  },
+  {
+    "roomNumber": 478,
+    "roomName": "Standar King",
+    "guestUsername": "María Fernández",
+    "checkIn": "2023-10-25T11:30:00Z",
+    "checkOut": "2023-10-28T12:30:00Z"
+  },
+  {
+    "roomNumber": 479,
+    "roomName": "Junior Suite",
+    "guestUsername": "Pedro Gómez",
+    "checkIn": "2023-10-26T09:00:00Z",
+    "checkOut": "2023-10-29T10:00:00Z"
+  },
+  {
+    "roomNumber": 480,
+    "roomName": "Superior King",
+    "guestUsername": "Luisa García",
+    "checkIn": "2023-10-17T09:45:00Z",
+    "checkOut": "2023-10-20T10:45:00Z"
+  },
+  {
+    "roomNumber": 481,
+    "roomName": "Standar King",
+    "guestUsername": "Alejandro Rodríguez",
+    "checkIn": "2023-10-18T07:15:00Z",
+    "checkOut": "2023-10-21T08:15:00Z"
+  },
+  {
+    "roomNumber": 482,
+    "roomName": "Junior Suite",
+    "guestUsername": "Laura Martínez",
+    "checkIn": "2023-10-19T11:00:00Z",
+    "checkOut": "2023-10-22T12:00:00Z"
+  },
+  {
+    "roomNumber": 483,
+    "roomName": "Superior King",
+    "guestUsername": "Eduardo Ramírez",
+    "checkIn": "2023-10-20T10:30:00Z",
+    "checkOut": "2023-10-23T11:30:00Z"
+  },
+  {
+    "roomNumber": 484,
+    "roomName": "Standar King",
+    "guestUsername": "Carmen Ortiz",
+    "checkIn": "2023-10-21T08:00:00Z",
+    "checkOut": "2023-10-24T09:00:00Z"
+  },
+  {
+    "roomNumber": 485,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Juan Pérez",
+    "checkIn": "2023-10-22T12:20:00Z",
+    "checkOut": "2023-10-25T13:20:00Z"
+  },
+  {
+    "roomNumber": 486,
+    "roomName": "Superior King",
+    "guestUsername": "Gabriela Sánchez",
+    "checkIn": "2023-10-23T13:00:00Z",
+    "checkOut": "2023-10-26T14:00:00Z"
+  },
+  {
+    "roomNumber": 487,
+    "roomName": "Junior Suite",
+    "guestUsername": "Carlos López",
+    "checkIn": "2023-10-24T14:45:00Z",
+    "checkOut": "2023-10-27T15:45:00Z"
+  },
+  {
+    "roomNumber": 488,
+    "roomName": "Standar King",
+    "guestUsername": "María Fernández",
+    "checkIn": "2023-10-25T11:30:00Z",
+    "checkOut": "2023-10-28T12:30:00Z"
+  },
+  {
+    "roomNumber": 489,
+    "roomName": "Junior Suite",
+    "guestUsername": "Pedro Gómez",
+    "checkIn": "2023-10-26T09:00:00Z",
+    "checkOut": "2023-10-29T10:00:00Z"
+  },
+  {
+    "roomNumber": 490,
+    "roomName": "Superior King",
+    "guestUsername": "Luisa García",
+    "checkIn": "2023-10-17T09:45:00Z",
+    "checkOut": "2023-10-20T10:45:00Z"
+  },
+  {
+    "roomNumber": 491,
+    "roomName": "Standar King",
+    "guestUsername": "Alejandro Rodríguez",
+    "checkIn": "2023-10-18T07:15:00Z",
+    "checkOut": "2023-10-21T08:15:00Z"
+  },
+  {
+    "roomNumber": 492,
+    "roomName": "Junior Suite",
+    "guestUsername": "Laura Martínez",
+    "checkIn": "2023-10-19T11:00:00Z",
+    "checkOut": "2023-10-22T12:00:00Z"
+  },
+  {
+    "roomNumber": 493,
+    "roomName": "Superior King",
+    "guestUsername": "Eduardo Ramírez",
+    "checkIn": "2023-10-20T10:30:00Z",
+    "checkOut": "2023-10-23T11:30:00Z"
+  },
+  {
+    "roomNumber": 494,
+    "roomName": "Standar King",
+    "guestUsername": "Carmen Ortiz",
+    "checkIn": "2023-10-21T08:00:00Z",
+    "checkOut": "2023-10-24T09:00:00Z"
+  },
+  {
+    "roomNumber": 495,
+    "roomName": "Presidential Suite",
+    "guestUsername": "Juan Pérez",
+    "checkIn": "2023-10-22T12:20:00Z",
+    "checkOut": "2023-10-25T13:20:00Z"
+  },
+  {
+    "roomNumber": 496,
+    "roomName": "Superior King",
+    "guestUsername": "Gabriela Sánchez",
+    "checkIn": "2023-10-23T13:00:00Z",
+    "checkOut": "2023-10-26T14:00:00Z"
+  },
+  {
+    "roomNumber": 497,
+    "roomName": "Junior Suite",
+    "guestUsername": "Carlos López",
+    "checkIn": "2023-10-24T14:45:00Z",
+    "checkOut": "2023-10-27T15:45:00Z"
+  },
+  {
+    "roomNumber": 498,
+    "roomName": "Standar King",
+    "guestUsername": "María Fernández",
+    "checkIn": "2023-10-25T11:30:00Z",
+    "checkOut": "2023-10-28T12:30:00Z"
+  },
+  {
+    "roomNumber": 499,
+    "roomName": "Junior Suite",
+    "guestUsername": "Pedro Gómez",
+    "checkIn": "2023-10-26T09:00:00Z",
+    "checkOut": "2023-10-29T10:00:00Z"
+  },
+  {
+    "roomNumber": 500,
+    "roomName": "Junior Suite",
+    "guestUsername": "Pedro Gómez",
+    "checkIn": "2023-10-26T09:00:00Z",
+    "checkOut": "2023-10-29T10:00:00Z"
+  }
+]
