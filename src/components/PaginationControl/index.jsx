@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable react/prop-types */
 
 function PaginationControl({ pagination, control }) {
   const goStart = () => {
@@ -8,7 +9,6 @@ function PaginationControl({ pagination, control }) {
   };
 
   const previous = () => {
-    const lastPage = Math.ceil(pagination.items / pagination.size);
     if (pagination.page > 1) {
       control({
         ...pagination,
