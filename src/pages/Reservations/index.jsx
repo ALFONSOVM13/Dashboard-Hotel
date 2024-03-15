@@ -1,9 +1,27 @@
-import Button from "../../components/Button";
+import { useState } from "react";
+import Button from "../../components/NewButton/index.jsx";
 import PaginationControl from "../../components/PaginationControl";
 import TabTitle from "../../components/TabTitle";
 import Table from "../../components/Table";
+import functions from "../../utils/index.js";
+import ReservedButtons from "../../components/ReservedButtons/index.jsx";
 
 function Reservations() {
+  const [data, setData] = useState([]);
+  fetch("http://localhost:5173/data/reservations.json")
+    .then((response) => response.json())
+    .then((data) => {
+      setData([
+        ...data.map((reservation) => {
+          return {
+            ...reservation,
+            checkIn: functions.convertirFechaAAmPm(reservation.checkIn),
+            checkOut: functions.convertirFechaAAmPm(reservation.checkOut),
+          };
+        }),
+      ]);
+    })
+    .catch((error) => console.log(error));
   return (
     <div className="flex flex-col w-full pl-[330px]">
       <div className="flex flex-col px-5 w-full max-md:max-w-full">
@@ -22,7 +40,7 @@ function Reservations() {
       <div className="self-start pt-5 pl-5">
         <Button text="New Reservation" />
       </div>
-      <div className="flex flex-col px-20 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
+      <div className="flex flex-col px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
         <PaginationControl />
         <Table
           headers={[
@@ -33,238 +51,10 @@ function Reservations() {
             "Check-Out",
             "Actions",
           ]}
-          data={[
-            [
-              1,
-              "Presidential Room",
-              "Hugo",
-              "2024-02-23",
-              "2024-02-28",
-              "Edit",
-            ],
-          ]}
+          data={data}
+          Components={ReservedButtons}
+          idName="roomNumber"
         />
-
-        <div className="flex flex-col self-center mt-6 w-full text-base tracking-normal text-center capitalize max-w-[1044px] max-md:max-w-full">
-          <div className="flex flex-col pr-px pl-10 mt-6 max-md:pl-5 max-md:max-w-full">
-            <div className="flex gap-5 justify-between max-md:flex-wrap">
-              <div className="flex flex-auto gap-5 justify-between items-center font-light text-black max-md:flex-wrap max-md:max-w-full">
-                <div className="self-stretch my-auto">412</div>
-                <div className="self-stretch my-auto">Hector Hugo</div>
-                <div className="flex-auto self-stretch my-auto">
-                  Presidential Room
-                </div>
-                <div className="self-stretch">
-                  03/03/2024
-                  <br />
-                  14:00:00
-                </div>
-                <div className="self-stretch">
-                  04/03/2024
-                  <br />
-                  18:00:00
-                </div>
-              </div>
-              <div className="flex gap-3 self-start mt-1.5 font-semibold text-white">
-                <div className="grow justify-center px-4 py-2.5 bg-green-600 rounded-md shadow-sm">
-                  Edit{" "}
-                </div>
-                <div className="grow justify-center px-3 py-2.5 whitespace-nowrap bg-fuchsia-700 rounded-md shadow-sm">
-                  Release
-                </div>
-              </div>
-            </div>
-            <div className="flex gap-5 justify-between mt-6 max-md:flex-wrap">
-              <div className="flex flex-auto gap-5 justify-between items-center font-light text-black max-md:flex-wrap max-md:max-w-full">
-                <div className="self-stretch my-auto">413</div>
-                <div className="self-stretch my-auto">Hector Hugo</div>
-                <div className="flex-auto self-stretch my-auto">
-                  Matrimonial Room
-                </div>
-                <div className="self-stretch">
-                  02/03/2024
-                  <br />
-                  14:00:00
-                </div>
-                <div className="self-stretch">
-                  05/03/2024
-                  <br />
-                  14:00:00
-                </div>
-              </div>
-              <div className="flex gap-3 self-start mt-1.5 font-semibold text-white">
-                <div className="grow justify-center px-4 py-2.5 bg-green-600 rounded-md shadow-sm">
-                  Edit{" "}
-                </div>
-                <div className="grow justify-center px-3 py-2.5 whitespace-nowrap bg-fuchsia-700 rounded-md shadow-sm">
-                  Release
-                </div>
-              </div>
-            </div>
-            <div className="flex gap-5 justify-between mt-6 max-md:flex-wrap">
-              <div className="flex flex-auto gap-5 justify-between items-center font-light text-black max-md:flex-wrap max-md:max-w-full">
-                <div className="self-stretch my-auto">414</div>
-                <div className="self-stretch my-auto">Hector Hugo</div>
-                <div className="flex-auto self-stretch my-auto">
-                  Presidential Room
-                </div>
-                <div className="self-stretch">
-                  03/03/2024
-                  <br />
-                  14:00:00
-                </div>
-                <div className="self-stretch">
-                  04/03/2024
-                  <br />
-                  18:00:00
-                </div>
-              </div>
-              <div className="flex gap-3 self-start mt-1.5 font-semibold text-white">
-                <div className="grow justify-center px-4 py-2.5 bg-green-600 rounded-md shadow-sm">
-                  Edit{" "}
-                </div>
-                <div className="grow justify-center px-3 py-2.5 whitespace-nowrap bg-fuchsia-700 rounded-md shadow-sm">
-                  Release
-                </div>
-              </div>
-            </div>
-            <div className="flex gap-5 justify-between mt-6 max-md:flex-wrap">
-              <div className="flex flex-auto gap-5 justify-between items-center font-light text-black max-md:flex-wrap max-md:max-w-full">
-                <div className="self-stretch my-auto">415</div>
-                <div className="self-stretch my-auto">Hector Hugo</div>
-                <div className="flex-auto self-stretch my-auto">
-                  Presidential Room
-                </div>
-                <div className="self-stretch">
-                  03/03/2024
-                  <br />
-                  14:00:00
-                </div>
-                <div className="self-stretch">
-                  04/03/2024
-                  <br />
-                  18:00:00
-                </div>
-              </div>
-              <div className="flex gap-3 self-start mt-1.5 font-semibold text-white">
-                <div className="grow justify-center px-4 py-2.5 bg-green-600 rounded-md shadow-sm">
-                  Edit{" "}
-                </div>
-                <div className="grow justify-center px-3 py-2.5 whitespace-nowrap bg-fuchsia-700 rounded-md shadow-sm">
-                  Release
-                </div>
-              </div>
-            </div>
-            <div className="flex gap-5 justify-between mt-6 max-md:flex-wrap">
-              <div className="flex flex-auto gap-5 justify-between items-center font-light text-black max-md:flex-wrap max-md:max-w-full">
-                <div className="self-stretch my-auto">501</div>
-                <div className="self-stretch my-auto">Hector Hugo</div>
-                <div className="flex-auto self-stretch my-auto">
-                  Presidential Room
-                </div>
-                <div className="self-stretch">
-                  03/03/2024
-                  <br />
-                  14:00:00
-                </div>
-                <div className="self-stretch">
-                  04/03/2024
-                  <br />
-                  18:00:00
-                </div>
-              </div>
-              <div className="flex gap-3 self-start mt-1.5 font-semibold text-white">
-                <div className="grow justify-center px-4 py-2.5 bg-green-600 rounded-md shadow-sm">
-                  Edit{" "}
-                </div>
-                <div className="grow justify-center px-3 py-2.5 whitespace-nowrap bg-fuchsia-700 rounded-md shadow-sm">
-                  Release
-                </div>
-              </div>
-            </div>
-            <div className="flex gap-5 justify-between mt-6 max-md:flex-wrap">
-              <div className="flex flex-auto gap-5 justify-between items-center font-light text-black max-md:flex-wrap max-md:max-w-full">
-                <div className="self-stretch my-auto">502</div>
-                <div className="self-stretch my-auto">Hector Hugo</div>
-                <div className="flex-auto self-stretch my-auto">
-                  Presidential Room
-                </div>
-                <div className="self-stretch">
-                  03/03/2024
-                  <br />
-                  14:00:00
-                </div>
-                <div className="self-stretch">
-                  04/03/2024
-                  <br />
-                  18:00:00
-                </div>
-              </div>
-              <div className="flex gap-3 self-start mt-1.5 font-semibold text-white">
-                <div className="grow justify-center px-4 py-2.5 bg-green-600 rounded-md shadow-sm">
-                  Edit{" "}
-                </div>
-                <div className="grow justify-center px-3 py-2.5 whitespace-nowrap bg-fuchsia-700 rounded-md shadow-sm">
-                  Release
-                </div>
-              </div>
-            </div>
-            <div className="flex gap-5 justify-between mt-6 max-md:flex-wrap">
-              <div className="flex flex-auto gap-5 justify-between items-center font-light text-black max-md:flex-wrap max-md:max-w-full">
-                <div className="self-stretch my-auto">503</div>
-                <div className="self-stretch my-auto">Hector Hugo</div>
-                <div className="flex-auto self-stretch my-auto">
-                  Presidential Room
-                </div>
-                <div className="self-stretch">
-                  03/03/2024
-                  <br />
-                  14:00:00
-                </div>
-                <div className="self-stretch">
-                  04/03/2024
-                  <br />
-                  18:00:00
-                </div>
-              </div>
-              <div className="flex gap-3 self-start mt-1.5 font-semibold text-white">
-                <div className="grow justify-center px-4 py-2.5 bg-green-600 rounded-md shadow-sm">
-                  Edit{" "}
-                </div>
-                <div className="grow justify-center px-3 py-2.5 whitespace-nowrap bg-fuchsia-700 rounded-md shadow-sm">
-                  Release
-                </div>
-              </div>
-            </div>
-            <div className="flex gap-5 justify-between mt-6 max-md:flex-wrap">
-              <div className="flex flex-auto gap-5 justify-between items-center font-light text-black max-md:flex-wrap max-md:max-w-full">
-                <div className="self-stretch my-auto">601</div>
-                <div className="self-stretch my-auto">Hector Hugo</div>
-                <div className="flex-auto self-stretch my-auto">
-                  Presidential Room
-                </div>
-                <div className="self-stretch">
-                  03/03/2024
-                  <br />
-                  14:00:00
-                </div>
-                <div className="self-stretch">
-                  04/03/2024
-                  <br />
-                  18:00:00
-                </div>
-              </div>
-              <div className="flex gap-3 self-start mt-1.5 font-semibold text-white">
-                <div className="grow justify-center px-4 py-2.5 bg-green-600 rounded-md shadow-sm">
-                  Edit{" "}
-                </div>
-                <div className="grow justify-center px-3 py-2.5 whitespace-nowrap bg-fuchsia-700 rounded-md shadow-sm">
-                  Release
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
