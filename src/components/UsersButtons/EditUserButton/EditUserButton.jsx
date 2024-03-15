@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 
-function EditButton({ id }) {
+function EditUserButton({ id }) {
   return (
     <button
       onClick={() => alert("Edit" + id)}
@@ -12,4 +12,4 @@ function EditButton({ id }) {
   );
 }
 
-export default EditButton;
+export default EditUserButton;
