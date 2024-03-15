@@ -5,8 +5,17 @@
   {propiedad1:"celda1Fila3",propiedad2:"celda1Fila3",propiedad3:"celda1Fila3"}
 ]
 */
+import { useState } from "react";
 
-function Table({ headers, data = [], Components, idName = "" }) {
+function Table({
+  headers,
+  data = [],
+  Components,
+  idName = "",
+  size = 10,
+  page = 0,
+}) {
+  const [pointer, setPointer] = useState(0);
   return (
     <table>
       <thead>
@@ -23,7 +32,7 @@ function Table({ headers, data = [], Components, idName = "" }) {
       </thead>
       <tbody>
         {data.length > 0 &&
-          data.map((row, i) => (
+          data.slice(size * (page - 1), size * page).map((row, i) => (
             <tr
               key={Object.values(row).values[0] + i.toString()}
               className="border-b-2 border-slate-300 h-[4rem]"

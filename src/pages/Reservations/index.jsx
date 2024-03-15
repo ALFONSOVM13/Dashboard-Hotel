@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../../components/NewButton/index.jsx";
 import PaginationControl from "../../components/PaginationControl";
 import TabTitle from "../../components/TabTitle";
@@ -8,20 +8,27 @@ import ReservedButtons from "../../components/ReservedButtons/index.jsx";
 
 function Reservations() {
   const [data, setData] = useState([]);
-  fetch("http://localhost:5173/data/reservations.json")
-    .then((response) => response.json())
-    .then((data) => {
-      setData([
-        ...data.map((reservation) => {
-          return {
-            ...reservation,
-            checkIn: functions.convertirFechaAAmPm(reservation.checkIn),
-            checkOut: functions.convertirFechaAAmPm(reservation.checkOut),
-          };
-        }),
-      ]);
-    })
-    .catch((error) => console.log(error));
+  const [pagination, setPagination] = useState({ page: 1, size: 10, items: 0 });
+  useEffect(() => {
+    (async () => {
+      fetch("http://localhost:5173/data/reservations.json")
+        .then((response) => response.json())
+        .then((data) => {
+          setData([
+            ...data.map((reservation) => {
+              return {
+                ...reservation,
+                checkIn: functions.convertirFechaAAmPm(reservation.checkIn),
+                checkOut: functions.convertirFechaAAmPm(reservation.checkOut),
+              };
+            }),
+          ]);
+          setPagination({ ...pagination, items: data.length });
+        })
+        .catch((error) => console.log(error));
+    })();
+  }, []);
+
   return (
     <div className="flex flex-col w-full pl-[330px]">
       <div className="flex flex-col px-5 w-full max-md:max-w-full">
@@ -41,7 +48,7 @@ function Reservations() {
         <Button text="New Reservation" />
       </div>
       <div className="flex flex-col px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
-        <PaginationControl />
+        <PaginationControl pagination={pagination} control={setPagination} />
         <Table
           headers={[
             "Room #",
@@ -54,6 +61,8 @@ function Reservations() {
           data={data}
           Components={ReservedButtons}
           idName="roomNumber"
+          size={pagination.size}
+          page={pagination.page}
         />
       </div>
     </div>
