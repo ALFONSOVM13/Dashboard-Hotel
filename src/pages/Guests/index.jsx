@@ -47,6 +47,10 @@ function Guests() {
           };
         }),
       ]);
+      setPagination({
+        ...pagination,
+        items: users.length,
+      });
     } else {
       var boolValue = filterValue === "true";
       const filtered = users.filter((user) => user.is_Active === boolValue);
@@ -59,6 +63,10 @@ function Guests() {
           };
         }),
       ]);
+      setPagination({
+        ...pagination,
+        items: filtered.length,
+      });
     }
   };
 
@@ -74,8 +82,8 @@ function Guests() {
           />
           <input
             type="text"
-            placeholder="Name, Status, E-mail"
-            className="flex-grow my-auto max-md:max-w-full bg-white"
+            placeholder="Name, E-mail"
+            className="flex-grow my-auto max-md:max-w-full bg-white text-base"
             value={inputValue}
             onChange={handleInputChange}
           />
@@ -95,11 +103,12 @@ function Guests() {
 
               <select
                 name="filter"
+                defaultValue={"DEFAULT"}
                 className=" bg-white text-sky-500 text-lg w-full h-8"
                 onChange={handleFilterChange}
               >
-                <option value="" disabled>
-                  Select
+                <option value="DEFAULT" disabled hidden>
+                  --
                 </option>
                 <option value="true">Activ</option>
                 <option value="false">Inactive</option>
