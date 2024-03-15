@@ -40,7 +40,7 @@ function Guests() {
   };
 
   return (
-    <div className="flex flex-col w-full pl-[330px]">
+    <>
       <div className="flex flex-col px-5 w-full max-md:max-w-full">
         <TabTitle title="Guest Management" />
       </div>
@@ -186,7 +186,7 @@ function Guests() {
           <Users users={users} />
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

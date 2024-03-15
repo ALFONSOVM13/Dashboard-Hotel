@@ -30,9 +30,12 @@ function Reservations() {
   }, []);
 
   return (
-    <div className="flex flex-col w-full pl-[330px]">
-      <div className="flex flex-col px-5 w-full max-md:max-w-full">
-        <TabTitle title="Reserved Rooms" />
+    <>
+      <div className="flex flex-col px-5 pr-10 pt-10 w-full max-md:max-w-full">
+        <div className="flex justify-between items-center">
+          <TabTitle title="Reserved Rooms" />
+          <Button text="New Reservation" />
+        </div>
         <div className="flex gap-3 px-9 py-5 mt-14 text-xs tracking-normal bg-white text-slate-400 max-md:flex-wrap max-md:px-5 max-md:mt-10">
           <img
             loading="lazy"
@@ -44,9 +47,7 @@ function Reservations() {
           </div>
         </div>
       </div>
-      <div className="self-start pt-5 pl-5">
-        <Button text="New Reservation" />
-      </div>
+      <div className="self-start pt-5 pl-5"></div>
       <div className="flex flex-col px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
         <PaginationControl pagination={pagination} control={setPagination} />
         <Table
@@ -54,7 +55,7 @@ function Reservations() {
             "Room #",
             "Room Name",
             "Guest Username",
-            "Check-in",
+            "Check-In",
             "Check-Out",
             "Actions",
           ]}
@@ -65,7 +66,7 @@ function Reservations() {
           page={pagination.page}
         />
       </div>
-    </div>
+    </>
   );
 }
 
