@@ -22,7 +22,7 @@ function UserForm() {
           .max(8, "El Dni no puede tener mas de 8 caracteres"),
         phoneNumber: Yup.string()
           .required("El PHONE NUMBER es requerido")
-          .max(15, "El Phone number no puede tener mas de 15 caracteres"),
+          .max(15, "El PHONE NUMBER no puede tener mas de 15 caracteres"),
         status: Yup.string().required("El STATUS es requerido"),
         gender: Yup.string().required("El GENDER es requerido"),
       })}
