@@ -11,7 +11,7 @@ function ListCategory({ icon, text }) {
     else if (icon === "mail") return mail;
   };
   return (
-    <div className="flex gap-2.5 self-stretch mt-4 text-sm font-medium tracking-normal text-sky-500 whitespace-nowrap">
+    <div className="flex gap-2.5 self-stretch mt-4 text-sm xl:text-xl font-medium tracking-normal text-sky-500 whitespace-nowrap">
       <img
         loading="lazy"
         src={imagetoshow(icon)}
