@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/prop-types */
-
 function PaginationControl({ pagination, control }) {
   const goStart = () => {
     if (pagination.page > 1) {
