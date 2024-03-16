@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import TextInput from "../../TextInput";
+import FormButtons from "../../FormButtons";
+import FormTitle from "../../FormTittle";
 
 function FoodForm({ setShowForm }) {
   const [open, setOpen] = useState(true);
@@ -53,18 +55,7 @@ function FoodForm({ setShowForm }) {
                 <CloseIcon className="m-4 text-white bg-red-500 rounded-full" />
               </IconButton>
             </div>
-            <Typography
-              id="modal-modal-title"
-              variant="h3"
-              component="h2"
-              color="primary"
-              fontWeight="bold"
-              sx={{
-                pb: 4,
-              }}
-            >
-              ADD FOOD
-            </Typography>
+            <FormTitle title="ADD A FOOD" />
             <Formik
               initialValues={{
                 name: "",
@@ -105,88 +96,15 @@ function FoodForm({ setShowForm }) {
             >
               {({ isSubmitting, handleReset }) => (
                 <Form className="w-full">
-                  <div className="flex flex-col w-full">
-                    <label>NAME</label>
-                    <Field
-                      type="text"
-                      name="name"
-                      className="border mt-4 mr-4 ml-4 py-2 px-3 text-gray-700 bg-white rounded-md"
-                    />
-                    <ErrorMessage
-                      name="name"
-                      component="div"
-                      className="text-red-500 mb-2 text-sm"
-                    />
-                  </div>
-                  <div className="flex flex-col w-full">
-                    <label>DESCRIPTION</label>
-                    <Field
-                      as="textarea"
-                      rows="3"
-                      name="description"
-                      className="border mt-4 mr-4 ml-4 py-2 px-3 text-gray-700 bg-white rounded-md"
-                    />
-                    <ErrorMessage
-                      name="description"
-                      component="div"
-                      className="text-red-500 mb-2 text-sm"
-                    />
-                  </div>
-                  <div className="flex flex-col w-full">
-                    <label>IMAGE</label>
-                    <Field
-                      type="text"
-                      name="image"
-                      className="border mt-4 mr-4 ml-4 py-2 px-3 text-gray-700 bg-white rounded-md"
-                    />
-                    <ErrorMessage
-                      name="image"
-                      component="div"
-                      className="text-red-500 mb-2 text-sm"
-                    />
-                  </div>
-                  <div className="flex flex-col w-full">
-                    <label>CATEGORY</label>
-                    <Field
-                      type="text"
-                      name="category"
-                      className="border mt-4 mr-4 ml-4 py-2 px-3 text-gray-700 bg-white rounded-md"
-                    />
-                    <ErrorMessage
-                      name="category"
-                      component="div"
-                      className="text-red-500 mb-2 text-sm"
-                    />
-                  </div>
-                  <div className="flex flex-col w-full">
-                    <label>PRICE</label>
-                    <Field
-                      type="text"
-                      name="price"
-                      className="border mt-4 mr-4 ml-4 py-2 px-3 text-gray-700 bg-white rounded-md"
-                    />
-                    <ErrorMessage
-                      name="price"
-                      component="div"
-                      className="text-red-500 mb-2 text-sm"
-                    />
-                  </div>
-                  <div className="flex justify-center items-center">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                    >
-                      CREAR
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleReset}
-                      className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                    >
-                      LIMPIAR CAMPOS
-                    </button>
-                  </div>
+                  <TextInput label="NAME" name="name" />
+                  <TextInput label="DESCRIPTION" name="description" rows="3" />
+                  <TextInput label="IMAGE" name="image" />
+                  <TextInput label="CATEGORY" name="category" />
+                  <TextInput label="PRICE" name="price" />
+                  <FormButtons
+                    isSubmitting={isSubmitting}
+                    handleReset={handleReset}
+                  />
                 </Form>
               )}
             </Formik>
