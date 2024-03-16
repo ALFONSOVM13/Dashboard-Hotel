@@ -51,7 +51,11 @@ function Table({
                 className="flex gap-5 h-full h-[4rem] items-center font-light text-black "
               >
                 {Components !== undefined && (
-                  <Components className="flex" id={`${row[idName]}`} />
+                  <Components
+                    className="flex"
+                    id={`${row[idName]}`}
+                    data={row}
+                  />
                 )}
               </td>
             </tr>
