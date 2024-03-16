@@ -5,10 +5,13 @@ import TabTitle from "../../components/TabTitle";
 import Table from "../../components/Table";
 import functions from "../../utils/index.js";
 import ReservedButtons from "../../components/ReservedButtons/index.jsx";
+import SearchBar from "../../components/SearchBar/index.jsx";
 
 function Reservations() {
+  const [inputValue, setInputValue] = useState("");
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState({ page: 1, size: 10, items: 0 });
+  const [searchResults, setSearchResults] = useState([]);
   useEffect(() => {
     (async () => {
       fetch("http://localhost:5173/data/reservations.json")
@@ -29,6 +32,29 @@ function Reservations() {
     })();
   }, []);
 
+  useEffect(() => {
+    if (!inputValue) {
+      setSearchResults([]);
+      setPagination({ ...pagination, items: data.length });
+      return;
+    }
+    const filteredData = data.filter((item) => {
+      return (
+        item.roomNumber.toString().includes(inputValue) ||
+        item.guestUsername.toLowerCase().includes(inputValue.toLowerCase()) ||
+        item.checkIn.toLowerCase().includes(inputValue.toLowerCase()) ||
+        item.checkOut.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    });
+    setSearchResults(filteredData);
+    setPagination({ ...pagination, items: filteredData.length });
+  }, [inputValue]);
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setInputValue(value);
+  };
+
   return (
     <>
       <div className="flex flex-col px-5 pr-10 pt-10 w-full max-md:max-w-full">
@@ -36,35 +62,34 @@ function Reservations() {
           <TabTitle title="Reserved Rooms" />
           <Button text="New Reservation" />
         </div>
-        <div className="flex gap-3 px-9 py-5 mt-14 text-xs tracking-normal bg-white text-slate-400 max-md:flex-wrap max-md:px-5 max-md:mt-10">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/6d2a6dbba5d860a59939c495c0fc43844a78a9d4388e98de3cfa2e35be663b20?"
-            className="shrink-0 w-5 aspect-square"
-          />
-          <div className="flex-auto my-auto max-md:max-w-full text-left pl-5">
-            Room #, Room Name, Date
-          </div>
-        </div>
+        <SearchBar
+          text="Room #, Room Name, Date"
+          value={inputValue}
+          action={handleInputChange}
+        />
       </div>
       <div className="self-start pt-5 pl-5"></div>
       <div className="flex flex-col px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
         <PaginationControl pagination={pagination} control={setPagination} />
-        <Table
-          headers={[
-            "Room #",
-            "Room Name",
-            "Guest Username",
-            "Check-In",
-            "Check-Out",
-            "Actions",
-          ]}
-          data={data}
-          Components={ReservedButtons}
-          idName="roomNumber"
-          size={pagination.size}
-          page={pagination.page}
-        />
+        {inputValue !== "" && searchResults.length === 0 ? (
+          <h1>{`No results for "${inputValue}" search...`}</h1>
+        ) : (
+          <Table
+            headers={[
+              "Room #",
+              "Room Name",
+              "Guest Username",
+              "Check-In",
+              "Check-Out",
+              "Actions",
+            ]}
+            data={searchResults.length > 0 ? searchResults : data}
+            Components={ReservedButtons}
+            idName="roomNumber"
+            size={pagination.size}
+            page={pagination.page}
+          />
+        )}
       </div>
     </>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import EditButton from "../EditButton";
 import ReleaseButton from "../ReleaseButton";
 

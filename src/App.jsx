@@ -9,6 +9,7 @@ import Employees from "./pages/Employees";
 import RoomsCustomization from "./pages/RoomsCustomization";
 import OfferNotifications from "./pages/OfferNotifications";
 import Notifications from "./pages/Notifications";
+import RestaurantMenu from "./pages/RestaurantMenu";
 import { useRef } from "react";
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
             <Route path="roomsCustomization" element={<RoomsCustomization />} />
             <Route path="offerNotifications" element={<OfferNotifications />} />
             <Route path="notifications" element={<Notifications />} />
+            <Route path="restaurantMenu" element={<RestaurantMenu />} />
           </Route>
         </Routes>
       </div>
