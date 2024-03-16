@@ -30,6 +30,11 @@ function Sidebar() {
           link={"/dashboard/roomsCustomization"}
           active={false}
         />
+        <ListOption
+          text={"Restaurant"}
+          link={"/dashboard/restaurantMenu"}
+          active={false}
+        />
 
         <ListCategory text="Messaging" icon="mail" />
         <ListOption
