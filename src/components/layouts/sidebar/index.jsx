@@ -1,10 +1,14 @@
 import ListCategory from "../../ListCategory";
 import ListOption from "../../ListOption";
 import ProfileDock from "../../ProfileDock";
+import { useRef } from "react";
 
-function Sidebar() {
+function Sidebar({ controlador }) {
   return (
-    <div className="fixed flex flex-col py-6 bg-white shadow-sm w-[20%] min-w-[320px] self-start top-0 bottom-0 h-full z-100">
+    <div
+      className="fixed transition-all duration-500 flex flex-col py-6 bg-white shadow-sm w-[30%] lg:w-[20%] self-start top-0 bottom-0 h-full z-100 md:text-2xl"
+      ref={controlador}
+    >
       <div className="flex flex-col items-left px-6 w-full">
         <div className="self-stretch text-lg font-semibold text-sky-500 text-left pl-4">
           Hotel Esmeralda Resort & Spa
@@ -28,6 +32,11 @@ function Sidebar() {
         <ListOption
           text={"Rooms Customization"}
           link={"/dashboard/roomsCustomization"}
+          active={false}
+        />
+        <ListOption
+          text={"Restaurant"}
+          link={"/dashboard/restaurantMenu"}
           active={false}
         />
 

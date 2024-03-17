@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/prop-types */
-
 function PaginationControl({ pagination, control }) {
   const goStart = () => {
     if (pagination.page > 1) {
@@ -44,7 +43,7 @@ function PaginationControl({ pagination, control }) {
   };
   return (
     <>
-      <div className="flex w-full justify-between">
+      <div className="flex w-full justify-between mb-5">
         <div className="flex z-10 gap-3.5 items-center self-end mt-0 mr-16 text-xs tracking-normal text-gray-500 whitespace-nowrap max-md:mr-2.5">
           <div className="self-stretch my-auto">Showing</div>
           <div className="self-stretch my-auto font-bold">
@@ -64,16 +63,13 @@ function PaginationControl({ pagination, control }) {
               width="28"
               height="28"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
               stroke="#ff2825"
               fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <path
                 d="M19 2a3 3 0 0 1 3 3v14a3 3 0 0 1 -3 3h-14a3 3 0 0 1 -3 -3v-14a3 3 0 0 1 3 -3zm-2.293 6.293a1 1 0 0 0 -1.414 0l-3 3l-.083 .094a1 1 0 0 0 .083 1.32l3 3l.094 .083a1 1 0 0 0 1.32 -.083l.083 -.094a1 1 0 0 0 -.083 -1.32l-2.292 -2.293l2.292 -2.293l.083 -.094a1 1 0 0 0 -.083 -1.32zm-5 0a1 1 0 0 0 -1.414 0l-3 3l-.083 .094a1 1 0 0 0 .083 1.32l3 3l.094 .083a1 1 0 0 0 1.32 -.083l.083 -.094a1 1 0 0 0 -.083 -1.32l-2.292 -2.293l2.292 -2.293l.083 -.094a1 1 0 0 0 -.083 -1.32z"
-                stroke-width="0"
+                strokeWidth="0"
                 fill="currentColor"
               />
             </svg>
@@ -84,19 +80,17 @@ function PaginationControl({ pagination, control }) {
               width="28"
               height="28"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
               stroke="#ff2825"
               fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <path
                 d="M19 2a3 3 0 0 1 3 3v14a3 3 0 0 1 -3 3h-14a3 3 0 0 1 -3 -3v-14a3 3 0 0 1 3 -3zm-5.293 6.293a1 1 0 0 0 -1.414 0l-3 3l-.083 .094a1 1 0 0 0 .083 1.32l3 3l.094 .083a1 1 0 0 0 1.32 -.083l.083 -.094a1 1 0 0 0 -.083 -1.32l-2.292 -2.293l2.292 -2.293l.083 -.094a1 1 0 0 0 -.083 -1.32z"
-                stroke-width="0"
+                strokeWidth="0"
                 fill="currentColor"
               />
             </svg>
+            <span className="w-5 h-5 m-auto font-bold">{pagination.page}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="icon icon-tabler cursor-pointer icon-tabler-square-chevron-right-filled"
@@ -104,16 +98,13 @@ function PaginationControl({ pagination, control }) {
               width="28"
               height="28"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
               stroke="#ff2825"
               fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <path
                 d="M19 2a3 3 0 0 1 3 3v14a3 3 0 0 1 -3 3h-14a3 3 0 0 1 -3 -3v-14a3 3 0 0 1 3 -3zm-7.387 6.21a1 1 0 0 0 -1.32 .083l-.083 .094a1 1 0 0 0 .083 1.32l2.292 2.293l-2.292 2.293l-.083 .094a1 1 0 0 0 1.497 1.32l3 -3l.083 -.094a1 1 0 0 0 -.083 -1.32l-3 -3z"
-                stroke-width="0"
+                strokeWidth="0"
                 fill="currentColor"
               />
             </svg>
@@ -124,16 +115,13 @@ function PaginationControl({ pagination, control }) {
               width="28"
               height="28"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
               stroke="#ff2825"
               fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <path
                 d="M19 2a3 3 0 0 1 3 3v14a3 3 0 0 1 -3 3h-14a3 3 0 0 1 -3 -3v-14a3 3 0 0 1 3 -3zm-10.387 6.21a1 1 0 0 0 -1.32 .083l-.083 .094a1 1 0 0 0 .083 1.32l2.292 2.293l-2.292 2.293l-.083 .094a1 1 0 0 0 1.497 1.32l3 -3l.083 -.094a1 1 0 0 0 -.083 -1.32l-3 -3zm5 0a1 1 0 0 0 -1.32 .083l-.083 .094a1 1 0 0 0 .083 1.32l2.292 2.293l-2.292 2.293l-.083 .094a1 1 0 0 0 1.497 1.32l3 -3l.083 -.094a1 1 0 0 0 -.083 -1.32l-3 -3z"
-                stroke-width="0"
+                strokeWidth="0"
                 fill="currentColor"
               />
             </svg>
