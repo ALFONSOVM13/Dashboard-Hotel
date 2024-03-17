@@ -110,7 +110,7 @@ function Guests() {
           </div>
         </div>
         <Table
-          headers={["Name", "Email", "Status", "Actions"]}
+          headers={["Full Name", "Email", "Status", "Actions"]}
           data={data}
           Components={ActionsUsersButtons}
           idName="usersTable"
