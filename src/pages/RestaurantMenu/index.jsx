@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  deleteFood,
-  getAllFoods,
-} from "../../redux/FoodsReducer/Actions/actions";
+import { deleteFood, getAllFoods } from "../../redux/Foods/Actions/actions";
 
 import TabTitle from "../../components/TabTitle";
 import Button from "../../components/NewButton";
@@ -24,36 +21,38 @@ function RestaurantMenu() {
   const [foodToEdit, setFoodToEdit] = useState(null);
   const [dataLoaded, setDataLoaded] = useState(false);
 
-  useEffect(() => {
-    dispatch(getAllFoods()).then(() => {
-      setDataLoaded(true);
-    });
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getAllFoods())
+  //     .then(() => {
+  //       setDataLoaded(true);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, [dispatch]);
 
-  useEffect(() => {
-    if (dataLoaded) {
-      setPagination({
-        ...pagination,
-        items: allFoods.length,
-      });
-    }
-  }, [allFoods, dataLoaded]);
+  // useEffect(() => {
+  //   if (dataLoaded) {
+  //     setPagination({
+  //       ...pagination,
+  //       items: allFoods.length,
+  //     });
+  //   }
+  // }, [allFoods, dataLoaded]);
 
-  useEffect(() => {
-    if (!inputValue) {
-      setSearchResults([]);
-      setPagination({ ...pagination, items: allFoods.length });
-      return;
-    }
-    const filteredData = allFoods.filter((item) => {
-      return (
-        item.name.toLowerCase().includes(inputValue.toLowerCase()) ||
-        item.category.toLowerCase().includes(inputValue.toLowerCase())
-      );
-    });
-    setSearchResults(filteredData);
-    setPagination({ ...pagination, page: 1, items: filteredData.length });
-  }, [inputValue]);
+  // useEffect(() => {
+  //   if (!inputValue) {
+  //     setSearchResults([]);
+  //     setPagination({ ...pagination, items: allFoods.length });
+  //     return;
+  //   }
+  //   const filteredData = allFoods.filter((item) => {
+  //     return (
+  //       item.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+  //       item.category.toLowerCase().includes(inputValue.toLowerCase())
+  //     );
+  //   });
+  //   setSearchResults(filteredData);
+  //   setPagination({ ...pagination, page: 1, items: filteredData.length });
+  // }, [inputValue]);
 
   const handleInputChange = (event) => {
     const value = event.target.value;

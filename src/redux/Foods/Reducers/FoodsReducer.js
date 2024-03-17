@@ -9,7 +9,7 @@ const initialState = {
   allFoods: [],
 };
 
-const rootReducer = (state = initialState, { type, payload }) => {
+const foodsReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_ALL_FOODS:
       return {
@@ -42,4 +42,4 @@ const rootReducer = (state = initialState, { type, payload }) => {
   }
 };
 
-export default rootReducer;
+export default foodsReducer;

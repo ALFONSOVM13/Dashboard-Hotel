@@ -10,7 +10,7 @@ import * as Yup from "yup";
 import TextInput from "../../TextInput";
 import FormButtons from "../../FormButtons";
 import FormTitle from "../../FormTittle";
-import { postFood } from "../../../redux/FoodsReducer/Actions/actions";
+import { postFood } from "../../../redux/Foods/Actions/actions";
 
 function FoodForm({ setShowForm, foodToEdit, setFoodToEdit }) {
   const dispatch = useDispatch();
