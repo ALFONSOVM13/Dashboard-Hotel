@@ -1,0 +1,45 @@
+import {
+  GET_ALL_FOODS,
+  DELETE_FOOD,
+  PUT_FOOD,
+  POST_FOOD,
+} from "../Actions/actionsTypes";
+
+const initialState = {
+  allFoods: [],
+};
+
+const rootReducer = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case GET_ALL_FOODS:
+      return {
+        ...state,
+        allFoods: payload,
+      };
+
+    case DELETE_FOOD:
+      return {
+        ...state,
+        allFoods: payload,
+      };
+
+    case PUT_FOOD:
+      return {
+        ...state,
+        allFoods: payload,
+      };
+
+    case POST_FOOD:
+      return {
+        ...state,
+        allFoods: payload,
+      };
+
+    default:
+      return {
+        ...state,
+      };
+  }
+};
+
+export default rootReducer;
