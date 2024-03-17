@@ -10,10 +10,10 @@ function ProfileDock({ name, email, image = "/img/noImage.png" }) {
         className="shrink-0 h-[46px] w-[46px] m-auto"
       />
       <div className="flex flex-col flex-1 my-auto">
-        <div className="text-sm xl:text-lg text-slate-800 text-left">
+        <div className="text-sm xl:text-md 2xl:text-lg text-slate-800 text-left">
           {name}
         </div>
-        <div className="mt-2 text-xs xl:text-lg tracking-normal text-slate-400 text-left">
+        <div className="mt-2 text-sm xl:text-md 2xl:text-lg tracking-normal text-slate-400 text-left">
           {email}
         </div>
       </div>

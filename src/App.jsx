@@ -25,14 +25,14 @@ function App() {
     if (screenWidth < 700) {
       sidebar.classList.remove("left-0");
       sidebar.classList.add("left-[-300px]");
-      tabContent.classList.remove("pl-[30%]");
+      tabContent.classList.remove("pl-[300px]");
       tabContent.classList.add("pl-0");
     } else {
-      sidebar.classList.remove("left-[20%]");
+      sidebar.classList.remove("left-[-300px]");
       sidebar.classList.add("left-0");
 
       tabContent.classList.remove("pl-0");
-      tabContent.classList.add("pl-[30%]");
+      tabContent.classList.add("pl-[300px]");
     }
   };
 
@@ -43,7 +43,7 @@ function App() {
       <Sidebar controlador={sideBar} />
       <div
         ref={tabcontent}
-        className="flex justify-start min-h-screen flex-col w-full pl-[30%] lg:pl-[20%] transition-all duration-500 ease-in-out"
+        className="flex justify-start min-h-screen flex-col w-full pl-[300px] transition-all duration-500 ease-in-out"
       >
         <Routes>
           <Route path="/" element={<LoginPage />} />

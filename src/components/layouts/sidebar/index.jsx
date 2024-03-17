@@ -6,7 +6,7 @@ import { useRef } from "react";
 function Sidebar({ controlador }) {
   return (
     <div
-      className="fixed transition-all duration-500 flex flex-col py-6 bg-white shadow-sm w-[30%] lg:w-[20%] self-start top-0 bottom-0 h-full z-100 md:text-2xl"
+      className="fixed transition-all duration-500 flex flex-col py-6 bg-white shadow-sm w-[300px]  self-start top-0 bottom-0 h-full z-100 md:text-2xl"
       ref={controlador}
     >
       <div className="flex flex-col items-left px-6 w-full">

@@ -49,7 +49,9 @@ function PaginationControl({ pagination, control }) {
           <div className="self-stretch my-auto font-bold">
             {pagination.size * (pagination.page - 1) +
               "-" +
-              pagination.size * pagination.page}
+              (pagination.size * pagination.page < pagination.items
+                ? pagination.size * pagination.page
+                : pagination.items)}
           </div>
           <div className="self-stretch my-auto">of</div>
           <div className="self-stretch my-auto font-bold">

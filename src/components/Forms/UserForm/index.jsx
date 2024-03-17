@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import TextInput from "../../InputsForm";
+import TextInput from "../../TextInput";
 import FormButtons from "../../FormButtons";
 import FormTitle from "../../FormTittle";
 

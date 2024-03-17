@@ -35,7 +35,7 @@ function Reservations() {
   useEffect(() => {
     if (!inputValue) {
       setSearchResults([]);
-      setPagination({ ...pagination, items: data.length });
+      setPagination({ ...pagination, items: data.length, page: 1 });
       return;
     }
     const filteredData = data.filter((item) => {
@@ -47,7 +47,7 @@ function Reservations() {
       );
     });
     setSearchResults(filteredData);
-    setPagination({ ...pagination, items: filteredData.length });
+    setPagination({ ...pagination, items: filteredData.length, page: 1 });
   }, [inputValue]);
 
   const handleInputChange = (event) => {
