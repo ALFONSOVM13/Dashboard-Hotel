@@ -1,7 +1,11 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 
-const FormButtons = ({ isSubmitting, handleReset }) => {
+const FormButtons = ({ isSubmitting, resetForm, foodToEdit }) => {
+  const handleClearFields = () => {
+    resetForm();
+  };
+
   return (
     <div className="flex justify-center items-center">
       <button
@@ -9,14 +13,14 @@ const FormButtons = ({ isSubmitting, handleReset }) => {
         disabled={isSubmitting}
         className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
       >
-        CREAR
+        {foodToEdit ? "EDIT FOOD" : "CREATE FOOD"}
       </button>
       <button
         type="button"
-        onClick={handleReset}
+        onClick={handleClearFields}
         className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
       >
-        LIMPIAR CAMPOS
+        CLEAR FIELDS
       </button>
     </div>
   );

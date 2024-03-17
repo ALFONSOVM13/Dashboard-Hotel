@@ -4,7 +4,7 @@ import TabTitle from "../../components/TabTitle";
 import Button from "../../components/NewButton";
 import PaginationControl from "../../components/PaginationControl";
 import Table from "../../components/Table";
-import ActionsUsersButtons from "../../components/UsersButtons/ActionsUsersButtons/ActionsUsersButtons";
+import EditDeletButtons from "../../components/EditDeleteButtons/ActionsButtons/index";
 import SearchBar from "../../components/SearchBar";
 
 function Guests() {
@@ -110,9 +110,9 @@ function Guests() {
           </div>
         </div>
         <Table
-          headers={["Name", "Email", "Status", "Actions"]}
+          headers={["Full Name", "Email", "Status", "Actions"]}
           data={data}
-          Components={ActionsUsersButtons}
+          Components={EditDeletButtons}
           idName="usersTable"
           size={pagination.size}
           page={pagination.page}

@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
@@ -9,13 +10,16 @@ import * as Yup from "yup";
 import TextInput from "../../TextInput";
 import FormButtons from "../../FormButtons";
 import FormTitle from "../../FormTittle";
+import { postFood } from "../../../redux/FoodsReducer/Actions/actions";
 
-function FoodForm({ setShowForm }) {
+function FoodForm({ setShowForm, foodToEdit, setFoodToEdit }) {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
 
   const handleClose = () => {
     setOpen(false);
     setShowForm(false);
+    setFoodToEdit(null);
   };
 
   return (
@@ -55,14 +59,14 @@ function FoodForm({ setShowForm }) {
                 <CloseIcon className="m-4 text-white bg-red-500 rounded-full" />
               </IconButton>
             </div>
-            <FormTitle title="ADD A FOOD" />
+            <FormTitle title={foodToEdit ? "EDIT FOOD" : "ADD A FOOD"} />
             <Formik
               initialValues={{
-                name: "",
-                description: "",
-                image: "",
-                category: "",
-                price: "",
+                name: foodToEdit ? foodToEdit.name : "",
+                description: foodToEdit ? foodToEdit.description : "",
+                image: foodToEdit ? foodToEdit.image : "",
+                category: foodToEdit ? foodToEdit.category : "",
+                price: foodToEdit ? foodToEdit.price : "",
               }}
               validationSchema={Yup.object().shape({
                 name: Yup.string()
@@ -86,15 +90,15 @@ function FoodForm({ setShowForm }) {
                   .required("El precio es requerido"),
               })}
               onSubmit={(values, { setSubmitting }) => {
-                console.log(values);
+                dispatch(postFood(values));
                 setSubmitting(false);
+                setFoodToEdit(null);
                 handleClose();
               }}
-              initialTouched={{ price: true }}
               validateOnChange={true}
               validateOnBlur={true}
             >
-              {({ isSubmitting, handleReset }) => (
+              {({ isSubmitting, resetForm }) => (
                 <Form className="w-full">
                   <TextInput label="NAME" name="name" />
                   <TextInput label="DESCRIPTION" name="description" rows="3" />
@@ -102,8 +106,9 @@ function FoodForm({ setShowForm }) {
                   <TextInput label="CATEGORY" name="category" />
                   <TextInput label="PRICE" name="price" />
                   <FormButtons
+                    foodToEdit={foodToEdit}
                     isSubmitting={isSubmitting}
-                    handleReset={handleReset}
+                    resetForm={resetForm}
                   />
                 </Form>
               )}
