@@ -92,6 +92,9 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit }) {
               onSubmit={(values, { setSubmitting }) => {
                 dispatch(postFood(values));
                 setSubmitting(false);
+                foodToEdit
+                  ? window.alert("The food was edited successfully")
+                  : window.alert("The food was created successfully");
                 setFoodToEdit(null);
                 handleClose();
               }}

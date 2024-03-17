@@ -13,6 +13,8 @@ import Table from "../../components/Table";
 import EditDeleteButtons from "../../components/EditDeleteButtons/ActionsButtons";
 import FoodForm from "../../components/Forms/FoodForm";
 import SearchBar from "../../components/SearchBar";
+import Swal from "sweetalert2";
+import alertFunctions from "../../utils/alerts";
 
 function RestaurantMenu() {
   const dispatch = useDispatch();
@@ -65,8 +67,13 @@ function RestaurantMenu() {
   };
 
   const handleDelete = (id) => {
-    dispatch(deleteFood(id));
-    window.alert(`se borro correctamente la comida con en id ${id}`);
+    alertFunctions.seeAlert(
+      dispatch,
+      id,
+      deleteFood,
+      "¿Estas seguro que quieres borrarlo?",
+      ["Borrado correctamente", "", "success"]
+    );
     setInputValue("");
   };
 
@@ -98,28 +105,32 @@ function RestaurantMenu() {
       </div>
       <div className="flex flex-col px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
         <PaginationControl pagination={pagination} control={setPagination} />
-        <Table
-          headers={[
-            "ID",
-            "Nombre",
-            "Precio",
-            "Descripcion",
-            "Categoria",
-            "Image",
-            "Actions",
-          ]}
-          data={searchResults.length > 0 ? searchResults : allFoods}
-          Components={(props) => (
-            <EditDeleteButtons
-              {...props}
-              handleDelete={handleDelete}
-              handleEdit={handleEdit}
-            />
-          )}
-          idName="id"
-          size={pagination.size}
-          page={pagination.page}
-        />
+        {inputValue !== "" && searchResults.length === 0 ? (
+          <h3>{`No results for "${inputValue}" search...`}</h3>
+        ) : (
+          <Table
+            headers={[
+              "ID",
+              "Nombre",
+              "Precio",
+              "Descripcion",
+              "Categoria",
+              "Image",
+              "Actions",
+            ]}
+            data={searchResults.length > 0 ? searchResults : allFoods}
+            Components={(props) => (
+              <EditDeleteButtons
+                {...props}
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+              />
+            )}
+            idName="id"
+            size={pagination.size}
+            page={pagination.page}
+          />
+        )}
       </div>
     </>
   );
