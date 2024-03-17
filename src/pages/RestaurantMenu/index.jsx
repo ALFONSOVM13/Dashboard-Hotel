@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAllFoods } from "../../redux/FoodsReducer/Actions/actions";
+import {
+  deleteFood,
+  getAllFoods,
+} from "../../redux/FoodsReducer/Actions/actions";
 
 import TabTitle from "../../components/TabTitle";
 import Button from "../../components/NewButton";
 import PaginationControl from "../../components/PaginationControl";
 import Table from "../../components/Table";
-import ActionsUsersButtons from "../../components/UsersButtons/ActionsUsersButtons/ActionsUsersButtons";
-
+import EditDeleteButtons from "../../components/EditDeleteButtons/ActionsButtons";
 import FoodForm from "../../components/Forms/FoodForm";
 import SearchBar from "../../components/SearchBar";
 
@@ -19,18 +21,23 @@ function RestaurantMenu() {
   const [pagination, setPagination] = useState({ page: 1, size: 10, items: 0 });
   const [showForm, setShowForm] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-
-  const handleClick = () => {
-    setShowForm(true);
-  };
+  const [foodToEdit, setFoodToEdit] = useState(null);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    dispatch(getAllFoods());
-    setPagination({
-      ...pagination,
-      items: allFoods.length,
+    dispatch(getAllFoods()).then(() => {
+      setDataLoaded(true);
     });
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (dataLoaded) {
+      setPagination({
+        ...pagination,
+        items: allFoods.length,
+      });
+    }
+  }, [allFoods, dataLoaded]);
 
   useEffect(() => {
     if (!inputValue) {
@@ -45,12 +52,28 @@ function RestaurantMenu() {
       );
     });
     setSearchResults(filteredData);
-    setPagination({ ...pagination, items: filteredData.length });
+    setPagination({ ...pagination, page: 1, items: filteredData.length });
   }, [inputValue]);
 
   const handleInputChange = (event) => {
     const value = event.target.value;
     setInputValue(value);
+  };
+
+  const handleClick = () => {
+    setShowForm(true);
+  };
+
+  const handleDelete = (id) => {
+    dispatch(deleteFood(id));
+    window.alert(`se borro correctamente la comida con en id ${id}`);
+    setInputValue("");
+  };
+
+  const handleEdit = (id) => {
+    const foodToEdit = allFoods.find((item) => item.id.toString() === id);
+    setFoodToEdit(foodToEdit);
+    setShowForm(true);
   };
 
   return (
@@ -65,7 +88,13 @@ function RestaurantMenu() {
       </div>
       <div className="self-start pt-5 pl-5">
         {!showForm && <Button text="NEW PLATE" onClick={handleClick} />}
-        {showForm && <FoodForm setShowForm={setShowForm} />}
+        {showForm && (
+          <FoodForm
+            setShowForm={setShowForm}
+            foodToEdit={foodToEdit}
+            setFoodToEdit={setFoodToEdit}
+          />
+        )}
       </div>
       <div className="flex flex-col px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
         <PaginationControl pagination={pagination} control={setPagination} />
@@ -80,8 +109,14 @@ function RestaurantMenu() {
             "Actions",
           ]}
           data={searchResults.length > 0 ? searchResults : allFoods}
-          Components={ActionsUsersButtons}
-          idName="platesTable"
+          Components={(props) => (
+            <EditDeleteButtons
+              {...props}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
+            />
+          )}
+          idName="id"
           size={pagination.size}
           page={pagination.page}
         />
