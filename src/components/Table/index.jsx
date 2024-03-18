@@ -36,26 +36,19 @@ function Table({
           data.slice(size * (page - 1), size * page).map((row, i) => (
             <tr
               key={Object.values(row).values[0] + i.toString()}
-              className="border-b-2 border-slate-300 h-[4rem]"
+              className="h-[5rem]"
             >
               {Object.values(row).map((cell, j) => (
                 <td
                   key={"Cell" + i.toString() + j.toString()}
-                  className="justify-between items-center font-light text-black max-md:flex-wrap max-md:max-w-full"
+                  className="justify-between items-center font-light text-black max-md:flex-wrap max-md:max-w-full px-1"
                 >
                   {cell}
                 </td>
               ))}
-              <td
-                key={"Cell" + i.toString() + "components"}
-                className="flex gap-5 h-full h-[4rem] items-center font-light text-black "
-              >
+              <td key={"Cell" + i.toString() + "components"}>
                 {Components !== undefined && (
-                  <Components
-                    className="flex"
-                    id={`${row[idName]}`}
-                    data={row}
-                  />
+                  <Components id={`${row[idName]}`} data={row} />
                 )}
               </td>
             </tr>

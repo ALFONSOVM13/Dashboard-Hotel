@@ -106,6 +106,7 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit }) {
                   <TextInput label="CATEGORY" name="category" />
                   <TextInput label="PRICE" name="price" />
                   <FormButtons
+                    clearText={"CLEAR FIELDS"}
                     foodToEdit={foodToEdit}
                     isSubmitting={isSubmitting}
                     resetForm={resetForm}
