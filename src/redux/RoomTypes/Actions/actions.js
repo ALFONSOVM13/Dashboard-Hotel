@@ -1,18 +1,18 @@
 import {
-  GET_ALL_RESERVATIONS,
-  DELETE_RESERVATION,
-  PUT_RESERVATION,
-  CREATE_RESERVATION,
+  GET_ALL_ROOMTYPES,
+  DELETE_ROOMTYPE,
+  PUT_ROOMTYPE,
+  CREATE_ROOMTYPE,
 } from "./actionsTypes";
 
 import axios from "axios";
 
-export const getAllReservations = () => {
+export const getAllRoomTypes = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get("http://localhost:3001/api/rooms");
+      const response = await axios.get("http://localhost:3001/api/roomTypes");
       dispatch({
-        type: GET_ALL_RESERVATIONS,
+        type: GET_ALL_ROOMTYPES,
         payload: response.data,
       });
     } catch (error) {
@@ -21,14 +21,14 @@ export const getAllReservations = () => {
   };
 };
 
-export const deleteReservation = (id) => {
+export const deleteRoomType = (id) => {
   return async (dispatch) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3001/api/rooms/${id}`
+        `http://localhost:3001/api/roomTypes/${id}`
       );
       return dispatch({
-        type: DELETE_RESERVATION,
+        type: DELETE_ROOMTYPE,
         payload: response.data,
       });
     } catch (error) {
@@ -37,15 +37,15 @@ export const deleteReservation = (id) => {
   };
 };
 
-export const putReservation = (id, product) => {
+export const putRoomType = (id, product) => {
   return async (dispatch) => {
     try {
       const response = await axios.put(
-        `http://localhost:3001/api/rooms/${id}`,
+        `http://localhost:3001/api/roomTypes/${id}`,
         product
       );
       return dispatch({
-        type: PUT_RESERVATION,
+        type: PUT_ROOMTYPE,
         payload: response.data,
       });
     } catch (error) {
@@ -54,15 +54,15 @@ export const putReservation = (id, product) => {
   };
 };
 
-export const createReservation = (product) => {
+export const createRoomType = (product) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/rooms",
+        "http://localhost:3001/api/roomTypes",
         product
       );
       return dispatch({
-        type: CREATE_RESERVATION,
+        type: CREATE_ROOMTYPE,
         payload: response.data,
       });
     } catch (error) {
