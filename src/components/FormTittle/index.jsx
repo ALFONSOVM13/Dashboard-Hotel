@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 const FormTitle = ({ title }) => {
   return (
     <Typography
-      variant="h3"
+      variant="h4"
       component="h2"
       color="primary"
       fontWeight="bold"
