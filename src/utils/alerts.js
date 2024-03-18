@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 
 export default {
-  seeAlert(dispatch, id, action, text, confirm) {
+  seeAlert(dispatch, id, values, action, text, confirm) {
     Swal.fire({
       title: "Advertencia",
       text: text,
@@ -12,7 +12,13 @@ export default {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(action(id));
+        if (action.toString() === "deleteFood") {
+          dispatch(action(id));
+        } else if (action.toString() === "putFood") {
+          dispatch(action(id, values));
+        } else {
+          dispatch(action(values));
+        }
         Swal.fire({
           title: confirm[0],
           text: confirm[1],

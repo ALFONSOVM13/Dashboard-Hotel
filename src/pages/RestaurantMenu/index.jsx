@@ -13,7 +13,6 @@ import Table from "../../components/Table";
 import EditDeleteButtons from "../../components/EditDeleteButtons/ActionsButtons";
 import FoodForm from "../../components/Forms/FoodForm";
 import SearchBar from "../../components/SearchBar";
-import Swal from "sweetalert2";
 import alertFunctions from "../../utils/alerts";
 
 function RestaurantMenu() {
@@ -70,6 +69,7 @@ function RestaurantMenu() {
     alertFunctions.seeAlert(
       dispatch,
       id,
+      null,
       deleteFood,
       "¿Estas seguro que quieres borrarlo?",
       ["Borrado correctamente", "", "success"]
