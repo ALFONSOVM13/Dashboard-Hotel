@@ -38,7 +38,30 @@ function RestaurantMenu() {
       });
     }
   }, [allFoods, dataLoaded]);
+  useEffect(() => {
+    if (dataLoaded) {
+      setPagination({
+        ...pagination,
+        items: allFoods.length,
+      });
+    }
+  }, [allFoods, dataLoaded]);
 
+  useEffect(() => {
+    if (!inputValue) {
+      setSearchResults([]);
+      setPagination({ ...pagination, items: allFoods.length });
+      return;
+    }
+    const filteredData = allFoods.filter((item) => {
+      return (
+        item.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+        item.category.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    });
+    setSearchResults(filteredData);
+    setPagination({ ...pagination, page: 1, items: filteredData.length });
+  }, [inputValue]);
   useEffect(() => {
     if (!inputValue) {
       setSearchResults([]);
@@ -99,6 +122,7 @@ function RestaurantMenu() {
             setShowForm={setShowForm}
             foodToEdit={foodToEdit}
             setFoodToEdit={setFoodToEdit}
+            setInputValue={setInputValue}
           />
         )}
       </div>
@@ -109,12 +133,12 @@ function RestaurantMenu() {
         ) : (
           <Table
             headers={[
+              "Image",
               "ID",
               "Nombre",
+              "Categoria",
               "Precio",
               "Descripcion",
-              "Categoria",
-              "Image",
               "Actions",
             ]}
             data={searchResults.length > 0 ? searchResults : allFoods}

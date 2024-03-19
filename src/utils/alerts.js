@@ -12,9 +12,9 @@ export default {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        if (action.toString() === "deleteFood") {
+        if (action.name.toString() === "deleteFood") {
           dispatch(action(id));
-        } else if (action.toString() === "putFood") {
+        } else if (action.name.toString() === "putFood") {
           dispatch(action(id, values));
         } else {
           dispatch(action(values));

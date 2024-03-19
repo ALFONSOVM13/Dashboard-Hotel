@@ -13,7 +13,7 @@ import FormTitle from "../../FormTittle";
 import { postFood, putFood } from "../../../redux/Foods/Actions/actions";
 import alertFunctions from "../../../utils/alerts";
 
-function FoodForm({ setShowForm, foodToEdit, setFoodToEdit }) {
+function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
 
@@ -63,15 +63,13 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit }) {
             <FormTitle title={foodToEdit ? "EDIT A FOOD" : "CREATE A FOOD"} />
             <Formik
               initialValues={{
-                id: foodToEdit ? foodToEdit.id : "",
                 name: foodToEdit ? foodToEdit.name : "",
-                description: foodToEdit ? foodToEdit.description : "",
-                image: foodToEdit ? foodToEdit.image : "",
-                category: foodToEdit ? foodToEdit.category : "",
                 price: foodToEdit ? foodToEdit.price : "",
+                category: foodToEdit ? foodToEdit.category : "",
+                description: foodToEdit ? foodToEdit.description : "",
+                imageUrl: foodToEdit ? foodToEdit.imageUrl : "",
               }}
               validationSchema={Yup.object().shape({
-                id: Yup.string().required("El ID es requerido"),
                 name: Yup.string()
                   .required("El nombre es requerido")
                   .matches(/^[A-Z]/, "La primera letra debe ser mayúscula")
@@ -82,15 +80,15 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit }) {
                 description: Yup.string()
                   .required("La descripción es requerida")
                   .matches(
-                    /^[A-Z][a-z0-9\s]*$/,
-                    "La primera letra debe ser mayúscula y solo se permiten números, letras y espacios"
+                    /^[A-Z][a-zA-Z0-9\s,.-]*$/,
+                    "La primera letra debe ser mayúscula y solo se permiten letras, espacios, números, comas y puntos"
                   )
                   .min(10, "La descripción debe tener al menos 10 caracteres")
                   .max(
                     400,
                     "La descripción no puede tener más de 100 caracteres"
                   ),
-                image: Yup.string().required("La imagen es requerida"),
+                imageUrl: Yup.string().required("La imagen es requerida"),
                 category: Yup.string()
                   .required("La categoría es requerida")
                   .matches(
@@ -98,17 +96,15 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit }) {
                     "No se permiten caracteres especiales"
                   )
                   .matches(/^[A-Z]/, "La primera letra debe ser mayúscula"),
-                price: Yup.number()
-                  .typeError("El precio debe ser un número")
-                  .positive("El precio debe ser positivo")
-                  .required("El precio es requerido"),
+                price: Yup.string()
+                  .required("El precio es requerido")
+                  .matches(/^\$/, "El precio debe comenzar con el símbolo '$'")
+                  .matches(
+                    /^\$\d+(\.\d{1,2})?$/,
+                    "El precio debe ser un número positivo válido"
+                  ),
               })}
               onSubmit={(values, { setSubmitting }) => {
-                const agregarSigno = `$${values.price}`;
-                values = {
-                  ...values,
-                  price: agregarSigno,
-                };
                 setSubmitting(false);
                 const action = foodToEdit ? putFood : postFood;
                 const text = foodToEdit
@@ -125,6 +121,7 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit }) {
                   text,
                   confirm
                 );
+                setInputValue("");
                 setFoodToEdit(null);
                 handleClose();
               }}
@@ -133,12 +130,11 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit }) {
             >
               {({ isSubmitting, resetForm }) => (
                 <Form className="w-full">
-                  <TextInput label="ID" name="id" />
                   <TextInput label="NAME" name="name" />
-                  <TextInput label="DESCRIPTION" name="description" rows="3" />
-                  <TextInput label="IMAGE" name="image" />
-                  <TextInput label="CATEGORY" name="category" />
                   <TextInput label="PRICE" name="price" />
+                  <TextInput label="DESCRIPTION" name="description" rows="3" />
+                  <TextInput label="CATEGORY" name="category" />
+                  <TextInput label="IMAGE URL" name="imageUrl" />
                   <FormButtons
                     foodToEdit={foodToEdit}
                     isSubmitting={isSubmitting}

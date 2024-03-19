@@ -38,14 +38,27 @@ function Table({
               key={Object.values(row).values[0] + i.toString()}
               className="border-b-2 border-slate-300 h-[4rem]"
             >
-              {Object.values(row).map((cell, j) => (
-                <td
-                  key={"Cell" + i.toString() + j.toString()}
-                  className="justify-between items-center font-light text-black max-md:flex-wrap max-md:max-w-full"
-                >
-                  {cell}
+              {row.imageUrl && (
+                <td className="flex justify-center items-center font-light text-black max-md:flex-wrap max-md:max-w-full">
+                  <img
+                    src={row.imageUrl}
+                    alt={`Imagen de ${row.name}`}
+                    className="mt-3 h-16 w-16 object-cover rounded-full"
+                  />
                 </td>
-              ))}
+              )}
+              {Object.values(row)
+                .filter(
+                  (value, index) => Object.keys(row)[index] !== "imageUrl"
+                )
+                .map((cell, j) => (
+                  <td
+                    key={"Cell" + i.toString() + j.toString()}
+                    className="justify-between items-center font-light text-black max-md:flex-wrap max-md:max-w-full"
+                  >
+                    {cell}
+                  </td>
+                ))}
               <td
                 key={"Cell" + i.toString() + "components"}
                 className="flex gap-5 h-full h-[4rem] items-center font-light text-black "
