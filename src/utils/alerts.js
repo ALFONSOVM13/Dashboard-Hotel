@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 export default {
   seeAlert(dispatch, id, values, action, text, confirm) {
     Swal.fire({
-      title: "Advertencia",
+      title: "Warning",
       text: text,
       icon: "warning",
       showCancelButton: true,

@@ -72,35 +72,35 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
               }}
               validationSchema={Yup.object().shape({
                 name: Yup.string()
-                  .required("El nombre es requerido")
-                  .matches(/^[A-Z]/, "La primera letra debe ser mayúscula")
+                  .required("The name is required")
+                  .matches(/^[A-Z]/, "The first letter must be uppercase.")
                   .matches(
                     /^[a-zA-Z\s]*$/,
-                    "El nombre solo puede contener letras y espacios"
+                    "The name can only contain letters and spaces."
                   ),
                 description: Yup.string()
-                  .required("La descripción es requerida")
+                  .required("The description is required.")
                   .matches(
                     /^[A-Z][a-zA-Z0-9\s,.-]*$/,
-                    "La primera letra debe ser mayúscula y solo se permiten letras, espacios, números, comas y puntos"
+                    "The first letter must be uppercase and only letters, spaces, numbers, commas, and periods are allowed."
                   )
-                  .min(10, "La descripción debe tener al menos 10 caracteres")
+                  .min(10, "The description must have at least 10 characters.")
                   .max(
                     400,
-                    "La descripción no puede tener más de 100 caracteres"
+                    "The description cannot have more than 100 characters."
                   ),
-                imageUrl: Yup.string().required("La imagen es requerida"),
+                imageUrl: Yup.string().required("The image is required."),
                 category: Yup.string()
-                  .required("La categoría es requerida")
+                  .required("The category is required.")
                   .matches(
                     /^[a-zA-Z0-9\s]*$/,
-                    "No se permiten caracteres especiales"
+                    "No special characters are allowed."
                   )
-                  .matches(/^[A-Z]/, "La primera letra debe ser mayúscula"),
+                  .matches(/^[A-Z]/, "The first letter must be uppercase."),
                 price: Yup.string()
-                  .required("El precio es requerido")
+                  .required("The price is required.")
                   .matches(/^\d+(\.\d{1,2})?$/, {
-                    message: "El precio debe ser un número positivo válido",
+                    message: "The price must be a valid positive number.",
                     excludeEmptyString: true,
                   }),
               })}
@@ -108,11 +108,11 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
                 setSubmitting(false);
                 const action = foodToEdit ? putFood : postFood;
                 const text = foodToEdit
-                  ? "¿Estas seguro que quieres editar esta comida?"
-                  : "¿Estas seguro que quieres crear esta comida?";
+                  ? "Are you sure you want to edit this meal?"
+                  : "Are you sure you want to create this meal?";
                 const confirm = foodToEdit
-                  ? ["Editado correctamente", "", "success"]
-                  : ["Creado correctamente", "", "success"];
+                  ? ["Edited successfully.", "", "success"]
+                  : ["Created successfully.", "", "success"];
                 alertFunctions.seeAlert(
                   dispatch,
                   foodToEdit ? foodToEdit.id : null,
