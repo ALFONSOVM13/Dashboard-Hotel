@@ -13,7 +13,6 @@ const rootReducer = combineReducers({
   reservationsReducer,
   roomTypesReducer,
 });
-console.log(rootReducer);
 
 const store = createStore(
   rootReducer,

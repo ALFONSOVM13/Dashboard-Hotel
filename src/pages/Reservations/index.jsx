@@ -1,17 +1,24 @@
-import { useState, useEffect } from "react";
 import Button from "../../components/NewButton/index.jsx";
 import PaginationControl from "../../components/PaginationControl";
 import TabTitle from "../../components/TabTitle";
 import Table from "../../components/Table";
-import functions from "../../utils/index.js";
 import ReservedButtons from "../../components/ReservedButtons/index.jsx";
 import SearchBar from "../../components/SearchBar/index.jsx";
+import useTableSearchPagination from "../../hooks/useTableSearchPagination.jsx";
+import { useEffect } from "react";
+import functions from "../../utils/index.js";
 
 function Reservations() {
-  const [inputValue, setInputValue] = useState("");
-  const [data, setData] = useState([]);
-  const [pagination, setPagination] = useState({ page: 1, size: 10, items: 0 });
-  const [searchResults, setSearchResults] = useState([]);
+  const {
+    pagination,
+    setPagination,
+    searchResults,
+    inputValue,
+    handleInputChange,
+    data,
+    setData,
+  } = useTableSearchPagination();
+
   useEffect(() => {
     (async () => {
       fetch("http://localhost:5173/data/reservations.json")
@@ -28,32 +35,9 @@ function Reservations() {
           ]);
           setPagination({ ...pagination, items: data.length });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log("Error: ", error));
     })();
   }, []);
-
-  useEffect(() => {
-    if (!inputValue) {
-      setSearchResults([]);
-      setPagination({ ...pagination, items: data.length, page: 1 });
-      return;
-    }
-    const filteredData = data.filter((item) => {
-      return (
-        item.roomNumber.toString().includes(inputValue) ||
-        item.guestUsername.toLowerCase().includes(inputValue.toLowerCase()) ||
-        item.checkIn.toLowerCase().includes(inputValue.toLowerCase()) ||
-        item.checkOut.toLowerCase().includes(inputValue.toLowerCase())
-      );
-    });
-    setSearchResults(filteredData);
-    setPagination({ ...pagination, items: filteredData.length, page: 1 });
-  }, [inputValue]);
-
-  const handleInputChange = (event) => {
-    const value = event.target.value;
-    setInputValue(value);
-  };
 
   return (
     <>

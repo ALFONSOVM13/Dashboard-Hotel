@@ -20,7 +20,9 @@ const roomTypesReducer = (state = initialState, { type, payload }) => {
     case DELETE_ROOMTYPE:
       return {
         ...state,
-        allRoomTypes: payload,
+        allRoomTypes: [
+          ...state.allRoomTypes.filter((roomType) => roomType.id !== payload),
+        ],
       };
 
     case PUT_ROOMTYPE:

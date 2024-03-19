@@ -10,7 +10,7 @@ import axios from "axios";
 export const getAllFoods = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get("http://localhost:3002/api/dishes");
+      const response = await axios.get("http://localhost:3001/api/dishes");
       const filteredData = response.data.map(
         ({ createdAt, updatedAt, ...rest }) => rest
       );
@@ -29,7 +29,7 @@ export const deleteFood = (id) => {
   return async (dispatch) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3002/api/dishes/${id}`
+        `http://localhost:3001/api/dishes/${id}`
       );
       const filteredData = response.data.map(
         ({ createdAt, updatedAt, ...rest }) => rest
@@ -48,7 +48,7 @@ export const putFood = (id, product) => {
   return async (dispatch) => {
     try {
       const response = await axios.put(
-        `http://localhost:3002/api/dishes/${id}`,
+        `http://localhost:3001/api/dishes/${id}`,
         product
       );
       const filteredData = response.data.map(
@@ -68,7 +68,7 @@ export const postFood = (product) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        "http://localhost:3002/api/dishes",
+        "http://localhost:3001/api/dishes",
         product
       );
       const filteredData = response.data.map(

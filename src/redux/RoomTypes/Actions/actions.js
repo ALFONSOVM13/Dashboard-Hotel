@@ -3,14 +3,16 @@ import {
   DELETE_ROOMTYPE,
   PUT_ROOMTYPE,
   CREATE_ROOMTYPE,
+  GET_ROOMTYPE,
 } from "./actionsTypes";
 
 import axios from "axios";
+const url = "http://localhost:3001";
 
 export const getAllRoomTypes = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get("http://localhost:3001/roomTypes");
+      const response = await axios.get(`${url}/roomTypes`);
       dispatch({
         type: GET_ALL_ROOMTYPES,
         payload: response.data,
@@ -24,12 +26,18 @@ export const getAllRoomTypes = () => {
 export const deleteRoomType = (id) => {
   return async (dispatch) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:3001/roomTypes/${id}`
-      );
+      const response = await axios
+        .delete(`${url}/roomTypes/${id}`, {
+          data: {
+            verification: "admin",
+          },
+        })
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error));
+
       return dispatch({
         type: DELETE_ROOMTYPE,
-        payload: response.data,
+        payload: id,
       });
     } catch (error) {
       throw new Error(error);
@@ -40,10 +48,7 @@ export const deleteRoomType = (id) => {
 export const putRoomType = (id, product) => {
   return async (dispatch) => {
     try {
-      const response = await axios.put(
-        `http://localhost:3001/roomTypes/${id}`,
-        product
-      );
+      const response = await axios.put(`${url}/roomTypes/${id}`, product);
       return dispatch({
         type: PUT_ROOMTYPE,
         payload: response.data,
@@ -57,10 +62,7 @@ export const putRoomType = (id, product) => {
 export const createRoomType = (product) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3001/roomTypes",
-        product
-      );
+      const response = await axios.post(`${url}/roomTypes`, product);
       return dispatch({
         type: CREATE_ROOMTYPE,
         payload: response.data,
