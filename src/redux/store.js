@@ -3,6 +3,7 @@ import { thunk } from "redux-thunk";
 import foodsReducer from "./Foods/Reducers/FoodsReducer";
 import roomsReducer from "./Rooms/Reducers/RoomsReducer";
 import reservationsReducer from "./Reservations/Reducers/ReservationsReducer";
+import roomTypesReducer from "./RoomTypes/Reducers/RoomsTypesReducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -10,7 +11,9 @@ const rootReducer = combineReducers({
   foodsReducer,
   roomsReducer,
   reservationsReducer,
+  roomTypesReducer,
 });
+console.log(rootReducer);
 
 const store = createStore(
   rootReducer,

@@ -14,7 +14,7 @@ const foodsReducer = (state = initialState, { type, payload }) => {
     case GET_ALL_FOODS:
       return {
         ...state,
-        allFoods: payload,
+        allFoods: [...payload],
       };
 
     case DELETE_FOOD:

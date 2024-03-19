@@ -1,34 +1,34 @@
 import {
-  GET_ALL_FOODS,
-  DELETE_FOOD,
-  PUT_FOOD,
-  POST_FOOD,
+  GET_ALL_ROOMTYPES,
+  DELETE_ROOMTYPE,
+  PUT_ROOMTYPE,
+  CREATE_ROOMTYPE,
 } from "./actionsTypes";
 
 import axios from "axios";
 
-export const getAllFoods = () => {
+export const getAllRoomTypes = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get("http://localhost:3001/api/dishes");
+      const response = await axios.get("http://localhost:3001/roomTypes");
       dispatch({
-        type: GET_ALL_FOODS,
+        type: GET_ALL_ROOMTYPES,
         payload: response.data,
       });
     } catch (error) {
-      throw new Error("Error de red al intentar obtener alimentos.");
+      throw new Error("Can't get room types");
     }
   };
 };
 
-export const deleteFood = (id) => {
+export const deleteRoomType = (id) => {
   return async (dispatch) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3001/api/dishes/${id}`
+        `http://localhost:3001/roomTypes/${id}`
       );
       return dispatch({
-        type: DELETE_FOOD,
+        type: DELETE_ROOMTYPE,
         payload: response.data,
       });
     } catch (error) {
@@ -37,15 +37,15 @@ export const deleteFood = (id) => {
   };
 };
 
-export const putFood = (id, product) => {
+export const putRoomType = (id, product) => {
   return async (dispatch) => {
     try {
       const response = await axios.put(
-        `http://localhost:3001/api/menu/${id}`,
+        `http://localhost:3001/roomTypes/${id}`,
         product
       );
       return dispatch({
-        type: PUT_FOOD,
+        type: PUT_ROOMTYPE,
         payload: response.data,
       });
     } catch (error) {
@@ -54,15 +54,15 @@ export const putFood = (id, product) => {
   };
 };
 
-export const postFood = (product) => {
+export const createRoomType = (product) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/menu",
+        "http://localhost:3001/roomTypes",
         product
       );
       return dispatch({
-        type: POST_FOOD,
+        type: CREATE_ROOMTYPE,
         payload: response.data,
       });
     } catch (error) {

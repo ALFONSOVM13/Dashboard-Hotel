@@ -14,7 +14,7 @@ import alertFunctions from "../../utils/alerts";
 
 function RestaurantMenu() {
   const dispatch = useDispatch();
-  const allFoods = useSelector((state) => state.allFoods);
+  const { allFoods } = useSelector((state) => state.foodsReducer);
   const [inputValue, setInputValue] = useState("");
   const [pagination, setPagination] = useState({ page: 1, size: 10, items: 0 });
   const [showForm, setShowForm] = useState(false);
@@ -22,38 +22,38 @@ function RestaurantMenu() {
   const [foodToEdit, setFoodToEdit] = useState(null);
   const [dataLoaded, setDataLoaded] = useState(false);
 
-  // useEffect(() => {
-  //   dispatch(getAllFoods())
-  //     .then(() => {
-  //       setDataLoaded(true);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getAllFoods())
+      .then(() => {
+        setDataLoaded(true);
+      })
+      .catch((error) => console.log(error));
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (dataLoaded) {
-  //     setPagination({
-  //       ...pagination,
-  //       items: allFoods.length,
-  //     });
-  //   }
-  // }, [allFoods, dataLoaded]);
+  useEffect(() => {
+    if (dataLoaded) {
+      setPagination({
+        ...pagination,
+        items: allFoods.length,
+      });
+    }
+  }, [allFoods, dataLoaded]);
 
-  // useEffect(() => {
-  //   if (!inputValue) {
-  //     setSearchResults([]);
-  //     setPagination({ ...pagination, items: allFoods.length });
-  //     return;
-  //   }
-  //   const filteredData = allFoods.filter((item) => {
-  //     return (
-  //       item.name.toLowerCase().includes(inputValue.toLowerCase()) ||
-  //       item.category.toLowerCase().includes(inputValue.toLowerCase())
-  //     );
-  //   });
-  //   setSearchResults(filteredData);
-  //   setPagination({ ...pagination, page: 1, items: filteredData.length });
-  // }, [inputValue]);
+  useEffect(() => {
+    if (!inputValue) {
+      setSearchResults([]);
+      setPagination({ ...pagination, items: allFoods.length });
+      return;
+    }
+    const filteredData = allFoods.filter((item) => {
+      return (
+        item.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+        item.category.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    });
+    setSearchResults(filteredData);
+    setPagination({ ...pagination, page: 1, items: filteredData.length });
+  }, [inputValue]);
 
   const handleInputChange = (event) => {
     const value = event.target.value;
