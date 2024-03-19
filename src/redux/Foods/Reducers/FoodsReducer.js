@@ -20,19 +20,19 @@ const foodsReducer = (state = initialState, { type, payload }) => {
     case DELETE_FOOD:
       return {
         ...state,
-        allFoods: [...state.allFoods.filter((food) => food.id !== payload)],
+        allFoods: [...payload],
       };
 
     case PUT_FOOD:
       return {
         ...state,
-        allFoods: payload,
+        allFoods: [...payload],
       };
 
     case POST_FOOD:
       return {
         ...state,
-        allFoods: payload,
+        allFoods: [...payload],
       };
 
     default:
