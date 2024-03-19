@@ -42,7 +42,8 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: "800px",
-            height: "800px",
+            height: "auto",
+
             bgcolor: "background.paper",
             border: "2px solid #000",
             boxShadow: 24,
@@ -98,11 +99,10 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
                   .matches(/^[A-Z]/, "La primera letra debe ser mayúscula"),
                 price: Yup.string()
                   .required("El precio es requerido")
-                  .matches(/^\$/, "El precio debe comenzar con el símbolo '$'")
-                  .matches(
-                    /^\$\d+(\.\d{1,2})?$/,
-                    "El precio debe ser un número positivo válido"
-                  ),
+                  .matches(/^\d+(\.\d{1,2})?$/, {
+                    message: "El precio debe ser un número positivo válido",
+                    excludeEmptyString: true,
+                  }),
               })}
               onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(false);
