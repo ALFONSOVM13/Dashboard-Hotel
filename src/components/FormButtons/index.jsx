@@ -2,7 +2,6 @@
 import React from "react";
 
 const FormButtons = ({ isSubmitting, resetForm, foodToEdit }) => {
-  console.log(resetForm);
   const handleClearFields = () => {
     resetForm();
   };

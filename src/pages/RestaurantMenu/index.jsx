@@ -93,8 +93,8 @@ function RestaurantMenu() {
       id,
       null,
       deleteFood,
-      "¿Estas seguro que quieres borrarlo?",
-      ["Borrado correctamente", "", "success"]
+      "Are you sure you want to delete it?",
+      ["Deleted successfully.", "", "success"]
     );
     setInputValue("");
   };
@@ -135,10 +135,10 @@ function RestaurantMenu() {
             headers={[
               "Image",
               "ID",
-              "Nombre",
-              "Categoria",
-              "Precio",
-              "Descripcion",
+              "Name",
+              "Category",
+              "Price",
+              "Description",
               "Actions",
             ]}
             data={searchResults.length > 0 ? searchResults : allFoods}
