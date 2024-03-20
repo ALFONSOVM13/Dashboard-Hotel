@@ -1,25 +1,26 @@
 import { Dialog } from "@headlessui/react";
+import exampleImg from "./example.jpg";
 export default function RoomManagementModal({ isOpen, onClose }) {
   const roomTypes = [
     {
       name: "Presidential Room",
       description: "You must be a President to reserve this room",
-      imageUrl: "{{ext_12}}",
+      imageUrl: exampleImg,
     },
     {
       name: "Presidential Room",
       description: "You must be a President to reserve this room",
-      imageUrl: "{{ext_13}}",
+      imageUrl: exampleImg,
     },
     {
       name: "Presidential Room",
       description: "You must be a President to reserve this room",
-      imageUrl: "{{ext_14}}",
+      imageUrl: exampleImg,
     },
     {
       name: "Presidential Room",
       description: "You must be a President to reserve this room",
-      imageUrl: "{{ext_15}}",
+      imageUrl: exampleImg,
     },
   ];
   return (

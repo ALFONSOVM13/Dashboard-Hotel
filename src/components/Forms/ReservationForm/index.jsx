@@ -27,7 +27,7 @@ function ReservationForm({ roomNumber }) {
         }}
         validationSchema={Yup.object().shape({
           guestName: Yup.string().required("The guest name is required"),
-          roomNumber: Yup.string().required("La contraseña es requerida"),
+          roomNumber: Yup.string(),
           cel: Yup.string()
             .required("Cellphone required")
             .min(8, "The cellphone number must be at least 10 digits"),
