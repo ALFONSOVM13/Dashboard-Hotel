@@ -9,30 +9,30 @@ const initialState = {
   allFoods: [],
 };
 
-const rootReducer = (state = initialState, { type, payload }) => {
+const foodsReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_ALL_FOODS:
       return {
         ...state,
-        allFoods: payload,
+        allFoods: [...payload],
       };
 
     case DELETE_FOOD:
       return {
         ...state,
-        allFoods: payload,
+        allFoods: [...payload],
       };
 
     case PUT_FOOD:
       return {
         ...state,
-        allFoods: payload,
+        allFoods: [...payload],
       };
 
     case POST_FOOD:
       return {
         ...state,
-        allFoods: payload,
+        allFoods: [...payload],
       };
 
     default:
@@ -42,4 +42,4 @@ const rootReducer = (state = initialState, { type, payload }) => {
   }
 };
 
-export default rootReducer;
+export default foodsReducer;

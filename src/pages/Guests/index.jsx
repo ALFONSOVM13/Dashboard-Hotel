@@ -73,7 +73,7 @@ function Guests() {
 
   return (
     <>
-      <div className="flex flex-col px-5 w-full max-md:max-w-full">
+      <div className="flex flex-col px-5 pr-10 pt-10 w-full max-md:max-w-full">
         <TabTitle title="Guest Management" />
         <SearchBar
           text="Name, Email"

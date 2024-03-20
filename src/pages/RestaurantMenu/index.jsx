@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  deleteFood,
-  getAllFoods,
-} from "../../redux/FoodsReducer/Actions/actions";
+import { deleteFood, getAllFoods } from "../../redux/Foods/Actions/actions";
 
 import TabTitle from "../../components/TabTitle";
 import Button from "../../components/NewButton";
@@ -13,10 +10,11 @@ import Table from "../../components/Table";
 import EditDeleteButtons from "../../components/EditDeleteButtons/ActionsButtons";
 import FoodForm from "../../components/Forms/FoodForm";
 import SearchBar from "../../components/SearchBar";
+import alertFunctions from "../../utils/alerts";
 
 function RestaurantMenu() {
   const dispatch = useDispatch();
-  const allFoods = useSelector((state) => state.allFoods);
+  const { allFoods } = useSelector((state) => state.foodsReducer);
   const [inputValue, setInputValue] = useState("");
   const [pagination, setPagination] = useState({ page: 1, size: 10, items: 0 });
   const [showForm, setShowForm] = useState(false);
@@ -25,9 +23,11 @@ function RestaurantMenu() {
   const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    dispatch(getAllFoods()).then(() => {
-      setDataLoaded(true);
-    });
+    dispatch(getAllFoods())
+      .then(() => {
+        setDataLoaded(true);
+      })
+      .catch((error) => console.log(error));
   }, [dispatch]);
 
   useEffect(() => {
@@ -38,7 +38,30 @@ function RestaurantMenu() {
       });
     }
   }, [allFoods, dataLoaded]);
+  useEffect(() => {
+    if (dataLoaded) {
+      setPagination({
+        ...pagination,
+        items: allFoods.length,
+      });
+    }
+  }, [allFoods, dataLoaded]);
 
+  useEffect(() => {
+    if (!inputValue) {
+      setSearchResults([]);
+      setPagination({ ...pagination, items: allFoods.length });
+      return;
+    }
+    const filteredData = allFoods.filter((item) => {
+      return (
+        item.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+        item.category.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    });
+    setSearchResults(filteredData);
+    setPagination({ ...pagination, page: 1, items: filteredData.length });
+  }, [inputValue]);
   useEffect(() => {
     if (!inputValue) {
       setSearchResults([]);
@@ -65,8 +88,14 @@ function RestaurantMenu() {
   };
 
   const handleDelete = (id) => {
-    dispatch(deleteFood(id));
-    window.alert(`se borro correctamente la comida con en id ${id}`);
+    alertFunctions.seeAlert(
+      dispatch,
+      id,
+      null,
+      deleteFood,
+      "Are you sure you want to delete it?",
+      ["Deleted successfully.", "", "success"]
+    );
     setInputValue("");
   };
 
@@ -93,33 +122,38 @@ function RestaurantMenu() {
             setShowForm={setShowForm}
             foodToEdit={foodToEdit}
             setFoodToEdit={setFoodToEdit}
+            setInputValue={setInputValue}
           />
         )}
       </div>
       <div className="flex flex-col px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
         <PaginationControl pagination={pagination} control={setPagination} />
-        <Table
-          headers={[
-            "ID",
-            "Nombre",
-            "Precio",
-            "Descripcion",
-            "Categoria",
-            "Image",
-            "Actions",
-          ]}
-          data={searchResults.length > 0 ? searchResults : allFoods}
-          Components={(props) => (
-            <EditDeleteButtons
-              {...props}
-              handleDelete={handleDelete}
-              handleEdit={handleEdit}
-            />
-          )}
-          idName="id"
-          size={pagination.size}
-          page={pagination.page}
-        />
+        {inputValue !== "" && searchResults.length === 0 ? (
+          <h3>{`No results for "${inputValue}" search...`}</h3>
+        ) : (
+          <Table
+            headers={[
+              "Image",
+              "ID",
+              "Name",
+              "Category",
+              "Price",
+              "Description",
+              "Actions",
+            ]}
+            data={searchResults.length > 0 ? searchResults : allFoods}
+            Components={(props) => (
+              <EditDeleteButtons
+                {...props}
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+              />
+            )}
+            idName="id"
+            size={pagination.size}
+            page={pagination.page}
+          />
+        )}
       </div>
     </>
   );
