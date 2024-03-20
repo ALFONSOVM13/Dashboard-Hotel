@@ -7,7 +7,11 @@ export default function RoomTypes({ action, control }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllRoomTypes()).then((response) => console.log(response));
+    try {
+      dispatch(getAllRoomTypes());
+    } catch (err) {
+      console.log("Error in fetching room types", err);
+    }
   }, []);
 
   return (

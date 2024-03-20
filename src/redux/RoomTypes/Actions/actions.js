@@ -64,14 +64,13 @@ export const createRoomType = (product) => {
     try {
       const response = await axios.post(`${url}/roomTypes`, product);
       const { data } = response;
-      console.log("Response", data);
 
       return dispatch({
         type: CREATE_ROOMTYPE,
         payload: data.roomType,
       });
     } catch (error) {
-      throw new Error(error);
+      alert("The action wasn't completed: " + error.response.data.message);
     }
   };
 };
