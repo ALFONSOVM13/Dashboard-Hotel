@@ -25,15 +25,23 @@ export default function RoomManagementModal({ isOpen, onClose }) {
   const [showModalEditRoomTypes, setShowModalEditRoomTypes] = useState(false);
 
   useEffect(() => {
-    dispatch(getAllRoomTypes()).then((response) => console.log(response));
+    try {
+      dispatch(getAllRoomTypes());
+    } catch (error) {
+      console.log(error);
+    }
+  }, [isOpen]);
+  useEffect(() => {
     setData([
-      ...allRoomTypes.map((type) => ({
-        name: type.name,
-        description: type.description,
-        imageUrl: exampleImg,
-      })),
+      ...allRoomTypes
+        .map((type) => ({
+          name: type.name,
+          description: type.description,
+          imageUrl: exampleImg,
+        }))
+        .filter((item) => item.name !== "Not Assigned"),
     ]);
-  }, []);
+  }, [allRoomTypes, isOpen]);
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       {" "}

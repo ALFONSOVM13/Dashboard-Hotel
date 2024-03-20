@@ -37,9 +37,7 @@ export default function ModalRoomTypesEdit({ control, id, edit = false }) {
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     } else {
-      dispatch(createRoomType(inputs))
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+      dispatch(createRoomType(inputs)).then((res) => console.log(res));
     }
     control(false);
   };
