@@ -10,7 +10,9 @@ import axios from "axios";
 export const getAllFoods = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get("http://localhost:3001/api/dishes");
+      const response = await axios.get(
+        "https://backend-hotelesmeralda.onrender.com/api/dishes"
+      );
       const filteredData = response.data.map(
         ({ createdAt, updatedAt, ...rest }) => rest
       );
@@ -25,11 +27,10 @@ export const getAllFoods = () => {
 };
 
 export const deleteFood = (id) => {
-  console.log(id);
   return async (dispatch) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3001/api/dishes/${id}`
+        `https://backend-hotelesmeralda.onrender.com/api/dishes/${id}`
       );
       const filteredData = await response.data.dishes.map(
         ({ createdAt, updatedAt, ...rest }) => rest
@@ -48,10 +49,10 @@ export const putFood = (id, product) => {
   return async (dispatch) => {
     try {
       const response = await axios.patch(
-        `https://localhost:3001/api/dishes/${id}`,
+        `https://backend-hotelesmeralda.onrender.com/api/dishes/${id}`,
         product
       );
-      const filteredData = response.data.dishes.map(
+      const filteredData = response.data.allDishes.map(
         ({ createdAt, updatedAt, ...rest }) => rest
       );
       return dispatch({
@@ -68,10 +69,10 @@ export const postFood = (product) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/dishes",
+        "https://backend-hotelesmeralda.onrender.com/api/dishes",
         product
       );
-      const filteredData = response.data.map(
+      const filteredData = response.data.allDishes.map(
         ({ createdAt, updatedAt, ...rest }) => rest
       );
       return dispatch({

@@ -15,13 +15,15 @@ const FormButtons = ({ isSubmitting, resetForm, foodToEdit }) => {
       >
         {foodToEdit ? "EDIT FOOD" : "CREATE FOOD"}
       </button>
-      <button
-        type="button"
-        onClick={handleClearFields}
-        className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-      >
-        CLEAR FIELDS
-      </button>
+      {foodToEdit ? null : (
+        <button
+          type="button"
+          onClick={handleClearFields}
+          className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+        >
+          CLEAR FIELDS
+        </button>
+      )}
     </div>
   );
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import {
   GET_ALL_FOODS,
   DELETE_FOOD,
@@ -26,13 +27,13 @@ const foodsReducer = (state = initialState, { type, payload }) => {
     case PUT_FOOD:
       return {
         ...state,
-        allFoods: [...payload],
+        allFoods: payload,
       };
 
     case POST_FOOD:
       return {
         ...state,
-        allFoods: [...payload],
+        allFoods: payload,
       };
 
     default:
