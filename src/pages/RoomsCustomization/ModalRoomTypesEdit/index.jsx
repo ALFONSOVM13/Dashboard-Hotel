@@ -9,7 +9,7 @@ export default function ModalRoomTypesEdit({ control, id }) {
   const [data, setData] = useState({});
   const [error, setError] = useState({ name: "", description: "" });
   const closeModal = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     control(false);
   };
   const saveChanges = (e) => {
@@ -50,7 +50,7 @@ export default function ModalRoomTypesEdit({ control, id }) {
     }));
   };
   return (
-    <section className="fixed flex items-center justify-center z-[100] inset-0">
+    <section className="fixed flex items-center justify-center z-[100] inset-0 bg-[rgba(12,12,12,0.3)]">
       {" "}
       <div className="flex flex-col px-16 py-9 bg-white rounded-3xl max-w-[626px] max-md:px-5 shadow-md shadow-slate-600">
         {" "}
@@ -67,6 +67,7 @@ export default function ModalRoomTypesEdit({ control, id }) {
               <div className="flex flex-col grow text-base font-medium tracking-normal text-gray-700 max-md:mt-10">
                 {" "}
                 <InputField
+                  type={"text"}
                   label="Room Type Name"
                   name={"name"}
                   value={inputs.name}
@@ -74,6 +75,7 @@ export default function ModalRoomTypesEdit({ control, id }) {
                   error={error.name}
                 />{" "}
                 <InputField
+                  type={"textarea"}
                   label="Description"
                   name={"description"}
                   value={inputs.description}

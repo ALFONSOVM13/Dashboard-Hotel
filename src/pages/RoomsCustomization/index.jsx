@@ -9,9 +9,11 @@ import { useEffect, useState } from "react";
 import RoomTypes from "../../components/RoomTypes/index.jsx";
 import functions from "../../utils/index.js";
 import ModalRoomTypesEdit from "./ModalRoomTypesEdit/index.jsx";
+import RoomManagementModal from "../../components/RoomManagementModal/index.jsx";
 
 function RoomsCustomization() {
   const [roomType, setRoomType] = useState(null);
+  const [management, setManagement] = useState(false);
   const [showModalEditRoomTypes, setShowModalEditRoomTypes] = useState(false);
   const {
     pagination,
@@ -49,13 +51,16 @@ function RoomsCustomization() {
     //     .catch((error) => console.log("Error: ", error));
     // })();
   }, []);
-
   return (
     <>
       <div className="flex flex-col px-5 pr-10 pt-10 w-full max-md:max-w-full">
         <div className="flex flex-col justify-between items-center">
           <TabTitle title="Rooms Customization" />
-          <RoomTypes action={showModal} control={setRoomType} />
+          <RoomTypes action={showModal} control={setManagement} />
+          <RoomManagementModal
+            isOpen={management}
+            onClose={() => setManagement(false)}
+          />
           {showModalEditRoomTypes && (
             <ModalRoomTypesEdit
               control={setShowModalEditRoomTypes}
