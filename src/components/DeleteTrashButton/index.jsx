@@ -6,20 +6,20 @@ import { deleteRoomType } from "../../redux/RoomTypes/Actions/actions";
 
 export default function DeleteTrashButton({ data, control }) {
   const dispatch = useDispatch();
-  const showConfirmation = () => {
-    confirmation
-      .seeAlert(
+  const showConfirmation = async () => {
+    try {
+      await confirmation.seeAlert(
         dispatch,
         data.id,
         {},
         { text: "delete", execute: deleteRoomType },
         `Are you sure to delete "${data.name}" room type?`,
-        ["The room type was deleted successfully!", "Accept", "info"]
-      )
-      .then((response) => {
-        console.log(response);
-        control();
-      });
+        ["The room type was deleted successfully!", "Accept", "info"],
+        control
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div

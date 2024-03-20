@@ -1,8 +1,8 @@
 import Swal from "sweetalert2";
 
 export default {
-  seeAlert(dispatch, id, values, action, text, confirm) {
-    Swal.fire({
+  async seeAlert(dispatch, id, values, action, text, confirm, successCallback) {
+    await Swal.fire({
       title: "Warning",
       text: text,
       icon: "warning",
@@ -19,6 +19,7 @@ export default {
         } else {
           dispatch(action.execute(values));
         }
+        successCallback();
         Swal.fire({
           title: confirm[0],
           text: confirm[1],
