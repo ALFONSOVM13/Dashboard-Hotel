@@ -31,7 +31,7 @@ export const deleteFood = (id) => {
       const response = await axios.delete(
         `http://localhost:3001/api/dishes/${id}`
       );
-      const filteredData = response.data.map(
+      const filteredData = await response.data.dishes.map(
         ({ createdAt, updatedAt, ...rest }) => rest
       );
       return dispatch({
@@ -47,11 +47,11 @@ export const deleteFood = (id) => {
 export const putFood = (id, product) => {
   return async (dispatch) => {
     try {
-      const response = await axios.put(
-        `http://localhost:3001/api/dishes/${id}`,
+      const response = await axios.patch(
+        `https://localhost:3001/api/dishes/${id}`,
         product
       );
-      const filteredData = response.data.map(
+      const filteredData = response.data.dishes.map(
         ({ createdAt, updatedAt, ...rest }) => rest
       );
       return dispatch({
