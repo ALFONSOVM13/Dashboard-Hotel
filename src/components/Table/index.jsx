@@ -59,14 +59,14 @@ function Table({
                     {cell}
                   </td>
                 ))}
-              <td
-                key={"Cell" + i.toString() + "components"}
-                className="flex gap-5 h-full h-[4rem] items-center font-light text-black "
-              >
-                {Components !== undefined && (
+              {Components !== undefined && (
+                <td
+                  key={"Cell" + i.toString() + "components"}
+                  className="flex gap-5 h-full h-[4rem] items-center font-light text-black "
+                >
                   <Components id={`${row[idName]}`} data={row} />
-                )}
-              </td>
+                </td>
+              )}
             </tr>
           ))}
       </tbody>

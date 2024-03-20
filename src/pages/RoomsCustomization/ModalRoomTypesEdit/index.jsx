@@ -3,8 +3,14 @@ import Button from "../../../components/Button";
 import InputField from "../../../components/InputField";
 import DeleteTrashButton from "../../../components/DeleteTrashButton";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import {
+  putRoomType,
+  createRoomType,
+} from "../../../redux/RoomTypes/Actions/actions";
 
-export default function ModalRoomTypesEdit({ control, id }) {
+export default function ModalRoomTypesEdit({ control, id, edit = false }) {
+  const dispatch = useDispatch();
   const [inputs, setInputs] = useState({ name: "", description: "" });
   const [data, setData] = useState({});
   const [error, setError] = useState({ name: "", description: "" });
@@ -24,19 +30,30 @@ export default function ModalRoomTypesEdit({ control, id }) {
     else if (inputs.description.trim().length < 10)
       errors.description = "Description must be at least 10 characters long.";
     setError({ ...errors });
-    console.log(errors);
     if (errors.name !== "" || errors.description !== "") return;
+    //Saving changes
+    if (edit) {
+      dispatch(putRoomType(id, inputs))
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    } else {
+      dispatch(createRoomType(inputs))
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
     control(false);
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3001/roomTypes?id=${id}`)
-      .then((res) => res.json())
-      .then((result) => {
-        setInputs({ ...result[0] });
-        setData({ ...result[0] });
-      })
-      .catch((err) => console.log(err));
+    if (edit) {
+      fetch(`http://localhost:3001/roomTypes?id=${id}`)
+        .then((res) => res.json())
+        .then((result) => {
+          setInputs({ ...result[0] });
+          setData({ ...result[0] });
+        })
+        .catch((err) => console.log(err));
+    }
   }, []);
 
   const handleChange = (e) => {
@@ -84,7 +101,7 @@ export default function ModalRoomTypesEdit({ control, id }) {
                 />{" "}
               </div>{" "}
             </div>{" "}
-            <DeleteTrashButton data={data} control={closeModal} />
+            {edit && <DeleteTrashButton data={data} control={closeModal} />}
           </div>{" "}
         </div>{" "}
         <div className="flex gap-5 self-center mt-14 text-base font-semibold tracking-normal text-center text-white max-md:mt-10">

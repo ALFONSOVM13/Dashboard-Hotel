@@ -28,13 +28,17 @@ const roomTypesReducer = (state = initialState, { type, payload }) => {
     case PUT_ROOMTYPE:
       return {
         ...state,
-        allRoomTypes: payload,
+        allRoomTypes: [
+          ...state.allRoomTypes.map((toUpdate) =>
+            toUpdate.id === payload.id ? payload : toUpdate
+          ),
+        ],
       };
 
     case CREATE_ROOMTYPE:
       return {
         ...state,
-        allRoomTypes: payload,
+        allRoomTypes: [...state.allRoomTypes, payload],
       };
 
     default:

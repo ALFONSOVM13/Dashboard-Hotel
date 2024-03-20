@@ -65,6 +65,7 @@ function RoomsCustomization() {
             <ModalRoomTypesEdit
               control={setShowModalEditRoomTypes}
               id={roomType}
+              edit={true}
             />
           )}
         </div>
