@@ -26,15 +26,17 @@ const FormButtons = ({
             : "CREATE FOOD"
           : submitText}
       </button>
-      {clearButton && (
-        <button
-          type="button"
-          onClick={handleClearFields}
-          className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-        >
-          {clearText}
-        </button>
-      )}
+      {foodToEdit
+        ? null
+        : clearButton && (
+            <button
+              type="button"
+              onClick={handleClearFields}
+              className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+            >
+              {clearText}
+            </button>
+          )}
     </div>
   );
 };
