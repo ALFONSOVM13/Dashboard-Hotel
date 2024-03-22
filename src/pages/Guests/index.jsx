@@ -1,22 +1,29 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import users from "../../data";
 import TabTitle from "../../components/TabTitle";
 import Button from "../../components/NewButton";
 import PaginationControl from "../../components/PaginationControl";
 import Table from "../../components/Table";
-import EditDeletButtons from "../../components/EditDeleteButtons/ActionsButtons/index";
+import EditButton from "../../components/EditButton/index";
 import SearchBar from "../../components/SearchBar";
+import { useDispatch } from "react-redux";
+import UserForm from "../../components/Forms/UserForm";
 
 function Guests() {
+  const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState({ page: 1, size: 10, items: 0 });
   const [inputValue, setInputValue] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [showUserForm, setShowUserForm] = useState(false);
 
   useEffect(() => {
     const updateDataAndPagination = async () => {
       setData([
         ...users.map((user) => {
           return {
+            id: user.id,
             name: user.nombre,
             email: user.email,
             is_Active: user.is_Active === true ? "ACTIVE" : "INACTIVE",
@@ -31,6 +38,22 @@ function Guests() {
     updateDataAndPagination();
   }, []);
 
+  useEffect(() => {
+    if (!inputValue) {
+      setSearchResults([]);
+      setPagination({ ...pagination, items: data.length });
+      return;
+    }
+    const filteredData = data.filter((item) => {
+      return (
+        item.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+        item.email.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    });
+    setSearchResults(filteredData);
+    setPagination({ ...pagination, page: 1, items: filteredData.length });
+  }, [inputValue]);
+
   const handleInputChange = (event) => {
     const value = event.target.value;
     setInputValue(value);
@@ -42,6 +65,7 @@ function Guests() {
       setData([
         ...users.map((user) => {
           return {
+            id: user.id,
             name: user.nombre,
             email: user.email,
             is_Active: user.is_Active === true ? "ACTIVE" : "INACTIVE",
@@ -58,6 +82,7 @@ function Guests() {
       setData([
         ...filtered.map((user) => {
           return {
+            id: user.id,
             name: user.nombre,
             email: user.email,
             is_Active: user.is_Active === true ? "ACTIVE" : "INACTIVE",
@@ -109,14 +134,18 @@ function Guests() {
             </div>
           </div>
         </div>
-        <Table
-          headers={["Full Name", "Email", "Status", "Actions"]}
-          data={data}
-          Components={EditDeletButtons}
-          idName="usersTable"
-          size={pagination.size}
-          page={pagination.page}
-        />
+        {inputValue !== "" && searchResults.length === 0 ? (
+          <h3>{`No results for "${inputValue}" search...`}</h3>
+        ) : (
+          <Table
+            headers={["ID", "Full Name", "Email", "Status", "Edit"]}
+            data={searchResults.length > 0 ? searchResults : data}
+            Components={EditButton}
+            idName="id"
+            size={pagination.size}
+            page={pagination.page}
+          />
+        )}
       </div>
     </>
   );

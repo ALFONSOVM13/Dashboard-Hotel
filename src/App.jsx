@@ -12,6 +12,8 @@ import Notifications from "./pages/Notifications";
 import RestaurantMenu from "./pages/RestaurantMenu";
 import EditReservation from "./pages/Reservations/EditReservation";
 import { useRef } from "react";
+import EditGuest from "./pages/Guests/EditGuest";
+import CreateGuest from "./pages/Guests/CreateGuest";
 
 function App() {
   const sideBar = useRef();
@@ -54,6 +56,7 @@ function App() {
               path="reservations/:reservationId"
               element={<EditReservation />}
             />
+            <Route path="guests/:id" element={<EditGuest />} />
             <Route path="offers" element={<Offers />} />
             <Route path="employees" element={<Employees />} />
             <Route path="roomsCustomization" element={<RoomsCustomization />} />
