@@ -45,7 +45,7 @@ function App() {
       <Sidebar controlador={sideBar} />
       <div
         ref={tabcontent}
-        className="flex justify-start min-h-screen flex-col w-full pl-[300px] transition-all duration-500 ease-in-out"
+        className="flex justify-start min-h-screen flex-col w-[95%] pl-[300px] transition-all duration-500 ease-in-out"
       >
         <Routes>
           <Route path="/" element={<LoginPage />} />

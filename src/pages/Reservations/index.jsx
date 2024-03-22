@@ -41,7 +41,7 @@ function Reservations() {
 
   return (
     <>
-      <div className="flex flex-col px-5 pr-10 pt-10 w-full max-md:max-w-full">
+      <div className="flex flex-col px-5 pr-10 pt-10 w-full">
         <div className="flex justify-between items-center">
           <TabTitle title="Reserved Rooms" />
           <Button text="New Reservation" />

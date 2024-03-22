@@ -51,7 +51,7 @@ export const putRoomType = (id, product) => {
       const response = await axios.put(`${url}/roomTypes/${id}`, product);
       return dispatch({
         type: PUT_ROOMTYPE,
-        payload: response.data,
+        payload: { ...product, id: id },
       });
     } catch (error) {
       throw new Error(error);
@@ -63,12 +63,14 @@ export const createRoomType = (product) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${url}/roomTypes`, product);
+      const { data } = response;
+
       return dispatch({
         type: CREATE_ROOMTYPE,
-        payload: response.data,
+        payload: data.roomType,
       });
     } catch (error) {
-      throw new Error(error);
+      alert("The action wasn't completed: " + error.response.data.message);
     }
   };
 };

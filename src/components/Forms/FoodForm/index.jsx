@@ -135,10 +135,10 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
                   <TextInput label="CATEGORY" name="category" />
                   <TextInput label="IMAGE URL" name="imageUrl" />
                   <FormButtons
-                    itemToEdit={foodToEdit}
+                    clearText={"CLEAR FIELDS"}
+                    foodToEdit={foodToEdit}
                     isSubmitting={isSubmitting}
                     resetForm={resetForm}
-                    name="FOOD"
                   />
                 </Form>
               )}

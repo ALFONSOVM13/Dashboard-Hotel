@@ -21,23 +21,19 @@ function ReservationForm({ roomNumber }) {
       <Formik
         initialValues={{
           roomNumber: "",
-          guestUsername: "",
-          dni: "",
-          phoneNumber: "",
-          status: "",
-          gender: "",
+          guestName: "",
+          cel: "",
+          email: "",
         }}
         validationSchema={Yup.object().shape({
-          guestUsername: Yup.string().required("El email es requerido"),
-          roomNumber: Yup.string().required("La contraseña es requerida"),
-          dni: Yup.string()
-            .required("El DNI es requerido")
-            .max(8, "El Dni no puede tener mas de 8 caracteres"),
-          phoneNumber: Yup.string()
-            .required("El PHONE NUMBER es requerido")
-            .max(15, "El PHONE NUMBER no puede tener mas de 15 caracteres"),
-          status: Yup.string().required("El STATUS es requerido"),
-          gender: Yup.string().required("El GENDER es requerido"),
+          guestName: Yup.string().required("The guest name is required"),
+          roomNumber: Yup.string(),
+          cel: Yup.string()
+            .required("Cellphone required")
+            .min(8, "The cellphone number must be at least 10 digits"),
+          email: Yup.string()
+            .email("Fill with a valid email")
+            .required("The e-mail is required"),
         })}
         onSubmit={(values, { setSubmitting }) => {
           console.log(values);
@@ -46,7 +42,7 @@ function ReservationForm({ roomNumber }) {
         validateOnChange={false}
         validateOnBlur={false}
       >
-        {({ isSubmitting, handleReset }) => (
+        {({ isSubmitting }) => (
           <Form className="w-full">
             <div className=" grid grid-cols-1 md:grid-cols-2">
               <SelectInput
@@ -63,18 +59,24 @@ function ReservationForm({ roomNumber }) {
                 action={seeProfile}
                 buttonText={"See profile"}
               />
-              <TextInput label="Room Name" name="roomaName" labelAlign="left" />
-              <TextInput
-                label="PHONE NUMBER"
-                name="phoneNumber"
+              <SelectInput
+                label="Room Type"
+                name="roomType"
+                options={[
+                  "Presidential Room",
+                  "Standard Room",
+                  "Championship Room",
+                ]}
+                initialValue={"Not assigned"}
                 labelAlign="left"
               />
-              <TextInput label="STATUS" name="status" labelAlign="left" />
-              <TextInput label="GENDER" name="gender" labelAlign="left" />
+              <TextInput label="Cell phone" name="cel" labelAlign="left" />
+              <TextInput label="E-mail" name="email" labelAlign="left" />
             </div>
             <FormButtons
               isSubmitting={isSubmitting}
-              handleReset={handleReset}
+              clearButton={false}
+              submitText="Save Reservation Info"
             />
           </Form>
         )}

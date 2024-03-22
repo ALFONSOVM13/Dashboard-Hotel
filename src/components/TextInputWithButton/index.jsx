@@ -10,6 +10,10 @@ const TextInputWithButton = ({
   action,
   buttonText,
 }) => {
+  const pressedButton = (e) => {
+    e.preventDefault();
+    action();
+  };
   const inputField = (
     <div className="w-full flex justify-between items-end">
       {rows ? (
@@ -27,7 +31,7 @@ const TextInputWithButton = ({
         />
       )}
       <button
-        onClick={action}
+        onClick={pressedButton}
         className="w-[25%] h-[3rem] bg-purple-800 text-white"
       >
         {buttonText}

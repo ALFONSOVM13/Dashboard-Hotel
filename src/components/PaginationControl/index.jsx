@@ -43,8 +43,8 @@ function PaginationControl({ pagination, control }) {
   };
   return (
     <>
-      <div className="flex w-full justify-between mb-5">
-        <div className="flex z-10 gap-3.5 items-center self-end mt-0 mr-16 text-xs tracking-normal text-gray-500 whitespace-nowrap max-md:mr-2.5">
+      <div className="flex w-[100%] justify-between mb-5">
+        <div className="flex z-10 gap-3.5 items-center self-end mt-0  text-xs tracking-normal text-gray-500 whitespace-nowrap max-md:mr-2.5">
           <div className="self-stretch my-auto">Showing</div>
           <div className="self-stretch my-auto font-bold">
             {pagination.size * (pagination.page - 1) +
