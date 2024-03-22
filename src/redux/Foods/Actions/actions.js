@@ -11,7 +11,8 @@ export const getAllFoods = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get("http://localhost:3001/api/dishes");
-      const filteredData = response.data.map(
+
+      const filteredData = response.data.dishes.map(
         ({ createdAt, updatedAt, ...rest }) => rest
       );
       dispatch({
@@ -19,6 +20,8 @@ export const getAllFoods = () => {
         payload: filteredData,
       });
     } catch (error) {
+      console.log(error);
+
       throw new Error("Error de red al intentar obtener alimentos.");
     }
   };

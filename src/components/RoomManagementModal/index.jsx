@@ -9,6 +9,9 @@ import { getAllRoomTypes } from "../../redux/RoomTypes/Actions/actions";
 import ModalRoomTypesEdit from "../../pages/RoomsCustomization/ModalRoomTypesEdit";
 import { useState } from "react";
 import Table from "../Table";
+import DeleteButton from "./DeleteButton";
+import EditButton from "./EditButton";
+import confirmation from "../../utils/alerts2";
 export default function RoomManagementModal({ isOpen, onClose }) {
   const {
     pagination,
@@ -23,6 +26,27 @@ export default function RoomManagementModal({ isOpen, onClose }) {
   const dispatch = useDispatch();
 
   const [showModalEditRoomTypes, setShowModalEditRoomTypes] = useState(false);
+
+  const closeModal = (e) => {
+    if (e) e.preventDefault();
+    setShowModalEditRoomTypes(false);
+  };
+
+  const showConfirmation = async () => {
+    try {
+      await confirmation.seeAlert(
+        dispatch,
+        data.id,
+        {},
+        { text: "delete", execute: deleteRoomType },
+        `Are you sure to delete "${data.name}" room type?`,
+        ["The room type was deleted successfully!", "Accept", "info"],
+        closeModal
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     try {
@@ -52,11 +76,11 @@ export default function RoomManagementModal({ isOpen, onClose }) {
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />{" "}
       <div className="fixed inset-0 flex items-center justify-center p-4">
         {" "}
-        <Dialog.Panel className="flex flex-col pt-11 pb-7 bg-white rounded-3xl max-w-[710px]">
+        <Dialog.Panel className="flex flex-col pt-11 pb-7 bg-white rounded-3xl max-w-[710px] max-h-[95%] ">
           {" "}
-          <header className="flex flex-col pl-9 w-full max-md:pl-5 max-md:max-w-full">
+          <header className="flex flex-col px-5 w-full w-full max-md:pl-5 max-md:max-w-full">
             {" "}
-            <Dialog.Title className="self-start ml-8 text-4xl font-semibold tracking-wide text-neutral-500 max-md:max-w-full">
+            <Dialog.Title className="self-start text-4xl font-semibold tracking-wide text-neutral-500 max-md:max-w-full">
               {" "}
               Room Type Management{" "}
             </Dialog.Title>{" "}
@@ -75,17 +99,18 @@ export default function RoomManagementModal({ isOpen, onClose }) {
               New Room Type{" "}
             </button>{" "}
           </header>{" "}
-          <main className="flex flex-col pr-6 pl-16 mt-2.5 w-full max-md:px-5 max-md:max-w-full">
+          <main className="flex flex-col pr-6 pl-6 mt-2.5 w-full max-md:px-5 max-md:max-w-full">
             {" "}
             <div className="max-md:max-w-full">
               {" "}
-              <div className="flex gap-5 flex-col max-md:gap-0">
+              <div className="flex gap-0 flex-col max-md:gap-0">
                 {" "}
-                <div className="flex flex-col w-[79%] max-md:ml-0 max-md:w-full">
+                <div className="flex flex-col w-full max-md:ml-0 max-md:w-full">
                   <SearchBar
                     text="Room #, Room Name, Date"
                     value={inputValue}
                     action={handleInputChange}
+                    stretch={true}
                   />
                   <PaginationControl
                     pagination={pagination}
@@ -97,11 +122,18 @@ export default function RoomManagementModal({ isOpen, onClose }) {
                     <h3>{`No results for "${inputValue}" search...`}</h3>
                   ) : (
                     <Table
-                      headers={["Image Preview", "Name", "Description"]}
+                      headers={[
+                        "Image Preview",
+                        "Name",
+                        "Description",
+                        "Actions",
+                      ]}
                       data={searchResults.length > 0 ? searchResults : data}
-                      idName="roomNumber"
+                      idName="id"
                       size={pagination.size}
                       page={pagination.page}
+                      maxHeight={"max-h-[200px]"}
+                      Components={ActionButtons}
                     />
                   )}
                 </div>
@@ -109,7 +141,7 @@ export default function RoomManagementModal({ isOpen, onClose }) {
             </div>{" "}
             <button
               onClick={onClose}
-              className="justify-center self-end px-16 py-4 mt-12 text-base font-semibold tracking-normal text-center text-white whitespace-nowrap bg-amber-700 rounded shadow-sm max-md:px-5 max-md:mt-10"
+              className="justify-center self-end px-8 py-3 mt-12 text-base font-semibold tracking-normal text-center text-white whitespace-nowrap bg-amber-700 rounded shadow-sm max-md:px-5 max-md:mt-10"
             >
               {" "}
               Exit{" "}
@@ -118,5 +150,14 @@ export default function RoomManagementModal({ isOpen, onClose }) {
         </Dialog.Panel>{" "}
       </div>{" "}
     </Dialog>
+  );
+}
+
+function ActionButtons({ id, handleDelete, handleEdit }) {
+  return (
+    <div className="flex justify-center gap-3 w-full h-full items-center p-2">
+      <EditButton id={id} handleEdit={handleEdit} />
+      <DeleteButton id={id} handleDelete={handleDelete} />
+    </div>
   );
 }

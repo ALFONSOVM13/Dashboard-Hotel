@@ -6,7 +6,7 @@ export default function Item() {
     <>
       <button
         onClick={() => navigate(-1)}
-        className="bg-[rgb(103,211,87)] py-3 px-5 uppercase font-bold text-white"
+        className="bg-[rgb(56,114,47)] py-3 px-5 uppercase font-bold text-white shadow-emerald-900 shadow-md"
       >
         Back
       </button>

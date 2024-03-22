@@ -15,10 +15,12 @@ function Table({
   idName = "",
   size = 10,
   page = 0,
+  maxHeight = false,
 }) {
-  const [pointer, setPointer] = useState(0);
   return (
-    <table>
+    <table
+      className={`block ${maxHeight ? maxHeight + " overflow-y-auto" : ""}`}
+    >
       <thead>
         <tr className="border-b-2 border-b-gray-200 shadow-sm shadow-slate-500">
           {headers.map((header, i) => (
@@ -60,10 +62,7 @@ function Table({
                   </td>
                 ))}
               {Components !== undefined && (
-                <td
-                  key={"Cell" + i.toString() + "components"}
-                  className="flex gap-5 h-full h-[4rem] items-center font-light text-black "
-                >
+                <td key={"Cell" + i.toString() + "components"}>
                   <Components id={`${row[idName]}`} data={row} />
                 </td>
               )}

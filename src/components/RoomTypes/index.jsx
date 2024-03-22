@@ -15,7 +15,7 @@ export default function RoomTypes({ action, control }) {
   }, []);
 
   return (
-    <section className="flex flex-col self-start items-center max-w-[300px] mt-5">
+    <section className="flex flex-col self-start items-center w-[280px] mt-5">
       {" "}
       <header className="flex gap-5 self-stretch px-5 w-full">
         {" "}
@@ -31,17 +31,19 @@ export default function RoomTypes({ action, control }) {
           Manage{" "}
         </button>{" "}
       </header>{" "}
-      {allRoomTypes.map(
-        (roomType) =>
-          roomType.name !== "Not Assigned" && (
-            <RoomTypeItem
-              key={roomType.name}
-              id={roomType.id}
-              name={roomType.name}
-              action={action}
-            />
-          )
-      )}{" "}
+      <div className="h-[130px] overflow-y-auto mt-3">
+        {allRoomTypes.map(
+          (roomType) =>
+            roomType.name !== "Not Assigned" && (
+              <RoomTypeItem
+                key={roomType.name}
+                id={roomType.id}
+                name={roomType.name}
+                action={action}
+              />
+            )
+        )}
+      </div>
     </section>
   );
 }
