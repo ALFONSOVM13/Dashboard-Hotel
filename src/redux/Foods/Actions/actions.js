@@ -7,12 +7,11 @@ import {
 
 import axios from "axios";
 
+const { VITE_BACKEND_URL } = import.meta.env;
 export const getAllFoods = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(
-        "https://backend-hotelesmeralda.onrender.com/api/dishes"
-      );
+      const response = await axios.get(`${VITE_BACKEND_URL}api/dishes`);
       const filteredData = response.data.dishes.map(
         ({ createdAt, updatedAt, ...rest }) => rest
       );
@@ -32,7 +31,7 @@ export const deleteFood = (id) => {
   return async (dispatch) => {
     try {
       const response = await axios.delete(
-        `https://backend-hotelesmeralda.onrender.com/api/dishes/${id}`
+        `${VITE_BACKEND_URL}api/dishes/${id}`
       );
       const filteredData = await response.data.dishes.map(
         ({ createdAt, updatedAt, ...rest }) => rest
@@ -51,7 +50,7 @@ export const putFood = (id, product) => {
   return async (dispatch) => {
     try {
       const response = await axios.patch(
-        `https://backend-hotelesmeralda.onrender.com/api/dishes/${id}`,
+        `${VITE_BACKEND_URL}api/dishes/${id}`,
         product
       );
       const filteredData = response.data.allDishes.map(
@@ -71,7 +70,7 @@ export const postFood = (product) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        "https://backend-hotelesmeralda.onrender.com/api/dishes",
+        "${VITE_BACKEND_URL}api/dishes",
         product
       );
       const filteredData = response.data.allDishes.map(

@@ -12,8 +12,11 @@ import Notifications from "./pages/Notifications";
 import RestaurantMenu from "./pages/RestaurantMenu";
 import EditReservation from "./pages/Reservations/EditReservation";
 import { useRef } from "react";
+import AdminLoginForm from "./pages/LoginPage";
+import { useLocation } from "react-router-dom";
 
 function App() {
+  const location = useLocation();
   const sideBar = useRef();
   const tabcontent = useRef();
 
@@ -40,13 +43,13 @@ function App() {
   return (
     // <Provider store={store}>
     <div className="flex">
-      <Sidebar controlador={sideBar} />
+      {location.pathname !== "/" && <Sidebar controlador={sideBar} />}
       <div
         ref={tabcontent}
         className="flex justify-start min-h-screen flex-col w-[95%] pl-[300px] transition-all duration-500 ease-in-out"
       >
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<AdminLoginForm />} />
           <Route path="dashboard">
             <Route path="guests" element={<Guests />} />
             <Route path="reservations" element={<Reservations />} />

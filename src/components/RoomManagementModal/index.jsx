@@ -65,6 +65,7 @@ export default function RoomManagementModal({ isOpen, onClose }) {
         }))
         .filter((item) => item.name !== "Not Assigned"),
     ]);
+    setPagination({ ...pagination, items: data.length });
   }, [allRoomTypes, isOpen]);
   return (
     <Dialog

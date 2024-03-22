@@ -7,12 +7,14 @@ import {
 } from "./actionsTypes";
 
 import axios from "axios";
-const url = "http://localhost:3001";
+const { VITE_BACKEND_URL } = import.meta.env;
 
 export const getAllRoomTypes = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${url}/roomTypes`);
+      const response = await axios.get(`${VITE_BACKEND_URL}/api/roomstypes`);
+      console.log(response);
+
       dispatch({
         type: GET_ALL_ROOMTYPES,
         payload: response.data,
@@ -23,11 +25,28 @@ export const getAllRoomTypes = () => {
   };
 };
 
+export const getRoomType = (id = null) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `${VITE_BACKEND_URL}/api/roomstypes${id ? `?id=${id}` : ""}`
+      );
+
+      dispatch({
+        type: GET_ROOMTYPE,
+        payload: response.data[0],
+      });
+    } catch (error) {
+      throw new Error("Can't get room types");
+    }
+  };
+};
+
 export const deleteRoomType = (id) => {
   return async (dispatch) => {
     try {
-      const response = await axios
-        .delete(`${url}/roomTypes/${id}`, {
+      await axios
+        .delete(`${VITE_BACKEND_URL}/api/roomstypes/${id}`, {
           data: {
             verification: "admin",
           },
@@ -48,7 +67,10 @@ export const deleteRoomType = (id) => {
 export const putRoomType = (id, product) => {
   return async (dispatch) => {
     try {
-      const response = await axios.put(`${url}/roomTypes/${id}`, product);
+      const response = await axios.put(
+        `${VITE_BACKEND_URL}/api/roomstypes/${id}`,
+        product
+      );
       return dispatch({
         type: PUT_ROOMTYPE,
         payload: { ...product, id: id },
@@ -62,7 +84,10 @@ export const putRoomType = (id, product) => {
 export const createRoomType = (product) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${url}/roomTypes`, product);
+      const response = await axios.post(
+        `${VITE_BACKEND_URL}/api/roomstypes`,
+        product
+      );
       const { data } = response;
 
       return dispatch({

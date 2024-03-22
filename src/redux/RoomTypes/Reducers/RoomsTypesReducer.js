@@ -3,10 +3,12 @@ import {
   DELETE_ROOMTYPE,
   PUT_ROOMTYPE,
   CREATE_ROOMTYPE,
+  GET_ROOMTYPE,
 } from "../Actions/actionsTypes";
 
 const initialState = {
   allRoomTypes: [],
+  selectedRoomType: {},
 };
 
 const roomTypesReducer = (state = initialState, { type, payload }) => {
@@ -15,6 +17,11 @@ const roomTypesReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         allRoomTypes: payload,
+      };
+    case GET_ROOMTYPE:
+      return {
+        ...state,
+        selectedRoomType: payload,
       };
 
     case DELETE_ROOMTYPE:
