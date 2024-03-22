@@ -13,7 +13,7 @@ export const getAllFoods = () => {
       const response = await axios.get(
         "https://backend-hotelesmeralda.onrender.com/api/dishes"
       );
-      const filteredData = response.data.map(
+      const filteredData = response.data.dishes.map(
         ({ createdAt, updatedAt, ...rest }) => rest
       );
       dispatch({

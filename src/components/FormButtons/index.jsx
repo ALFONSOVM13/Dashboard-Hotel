@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 
-const FormButtons = ({ isSubmitting, resetForm, foodToEdit }) => {
+const FormButtons = ({ isSubmitting, resetForm, itemToEdit, name }) => {
   const handleClearFields = () => {
     resetForm();
   };
@@ -13,9 +13,9 @@ const FormButtons = ({ isSubmitting, resetForm, foodToEdit }) => {
         disabled={isSubmitting}
         className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
       >
-        {foodToEdit ? "EDIT FOOD" : "CREATE FOOD"}
+        {itemToEdit ? `EDIT ${name}` : `CREATE ${name}`}
       </button>
-      {foodToEdit ? null : (
+      {itemToEdit ? null : (
         <button
           type="button"
           onClick={handleClearFields}

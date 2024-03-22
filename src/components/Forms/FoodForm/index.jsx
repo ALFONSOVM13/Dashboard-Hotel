@@ -43,7 +43,6 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
             transform: "translate(-50%, -50%)",
             width: "800px",
             height: "auto",
-
             bgcolor: "background.paper",
             border: "2px solid #000",
             boxShadow: 24,
@@ -136,9 +135,10 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
                   <TextInput label="CATEGORY" name="category" />
                   <TextInput label="IMAGE URL" name="imageUrl" />
                   <FormButtons
-                    foodToEdit={foodToEdit}
+                    itemToEdit={foodToEdit}
                     isSubmitting={isSubmitting}
                     resetForm={resetForm}
+                    name="FOOD"
                   />
                 </Form>
               )}
