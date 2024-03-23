@@ -51,6 +51,10 @@ function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="dashboard">
             <Route path="guests" element={<Guests />} />
+            <Route
+              path="guests/createguest/newguest"
+              element={<CreateGuest />}
+            />
             <Route path="reservations" element={<Reservations />} />
             <Route
               path="reservations/:reservationId"

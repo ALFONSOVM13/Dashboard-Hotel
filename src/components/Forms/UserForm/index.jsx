@@ -9,6 +9,8 @@ import FormTitle from "../../FormTittle";
 import SelectInput from "../../SelectInput";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import Swal from "sweetalert2";
+import { ErrorMessage } from "formik";
 
 function UserForm({ id }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -70,17 +72,35 @@ function UserForm({ id }) {
         })}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(false);
+
+          Swal.fire({
+            title: "Warning",
+            text: id
+              ? "Are you sure you want to edit this guest?"
+              : "Are you sure you want to create this user?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+          }).then((response) => {
+            if (response.isConfirmed) {
+              Swal.fire("User created successfully", "", "success");
+            } else if (response.isDismissed) {
+              return;
+            }
+          });
         }}
         validateOnChange={true}
         validateOnBlur={true}
       >
-        {({ isSubmitting, resetForm, setFieldValue }) => (
+        {({ isSubmitting, setFieldValue }) => (
           <Form className="w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex flex-col items-center">
                 <img
                   loading="lazy"
-                  srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&"
+                  src={photoUrl}
                   className="self-center max-w-full rounded-full border-2 border-solid aspect-square border-black border-opacity-30 w-[174px]"
                 />
                 <button
@@ -89,6 +109,11 @@ function UserForm({ id }) {
                 >
                   Change Profile Pic
                 </button>
+                <ErrorMessage
+                  name="photo_url"
+                  component="div"
+                  className="text-red-500 text-sm mt-2"
+                />
                 <Modal
                   open={isModalOpen}
                   onClose={handleCloseModal}
@@ -105,7 +130,7 @@ function UserForm({ id }) {
                       top: "50%",
                       left: "50%",
                       transform: "translate(-50%, -50%)",
-                      width: "800px",
+                      width: "600px",
                       height: "auto",
                       bgcolor: "background.paper",
                       border: "2px solid #b2a9a9",
@@ -117,7 +142,7 @@ function UserForm({ id }) {
                       <div>
                         <img
                           loading="lazy"
-                          srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/b946393d3903eecc7aa58b4352cddc636a106c377b0971321ff16cbc2b4de8ee?apiKey=22cfe7d1cd2045f2bf1d80be45287514&"
+                          src={photoUrl}
                           className="self-center max-w-full rounded-full border-2 border-solid aspect-square border-black border-opacity-30 w-[174px]"
                         />
                       </div>
@@ -133,6 +158,10 @@ function UserForm({ id }) {
                         <button
                           onClick={() => {
                             setFieldValue("photo_url", photoUrl);
+                            Swal.fire({
+                              icon: "success",
+                              title: "Photo saved successfully",
+                            });
                             handleCloseModal();
                           }}
                           className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
@@ -141,7 +170,13 @@ function UserForm({ id }) {
                         </button>
                         <button
                           className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                          onClick={handleCloseModal}
+                          onClick={() => {
+                            Swal.fire({
+                              icon: "warning",
+                              title: "Photo not saved",
+                            });
+                            handleCloseModal();
+                          }}
                         >
                           Close
                         </button>
@@ -174,7 +209,7 @@ function UserForm({ id }) {
                 />
               </div>
             </div>
-            <UserFormButtons isSubmitting={isSubmitting} />
+            <UserFormButtons isSubmitting={isSubmitting} id={id} />
           </Form>
         )}
       </Formik>
