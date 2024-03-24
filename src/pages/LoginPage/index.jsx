@@ -45,8 +45,8 @@ export default function AdminLoginForm() {
     Navigate("/dashboard");
   };
   return (
-    <form className="flex flex-col p-6 bg-white rounded max-w-[463px] my-auto">
-      <header className="flex gap-1.5 self-center ml-10 text-base font-extrabold whitespace-nowrap">
+    <form className="flex flex-col p-6 bg-white rounded max-w-[463px] m-auto">
+      <header className="flex gap-1.5 self-left text-base font-extrabold whitespace-nowrap mb-5">
         <Logo />
         <h4 className="my-auto bg-clip-text text-ellipsis">
           Hotel Esmeralda Resort & Spa
@@ -87,9 +87,7 @@ export default function AdminLoginForm() {
           type="password"
           id="password"
           placeholder="Password"
-          value=""
           className="justify-center px-3 py-2 mt-1 text-sm whitespace-nowrap rounded border-2 border-solid border-slate-500 text-ellipsis text-zinc-900 bg-slate-100 w-full"
-          readOnly
         />
         <EyeIcon />
       </div>
