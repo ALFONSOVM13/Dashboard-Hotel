@@ -8,8 +8,8 @@ function UserFormButtons({ isSubmitting, id }) {
 
   const handleCancel = () => {
     Swal.fire({
-      title: "",
-      text: "Are you sure?",
+      title: "Are you sure?",
+      text: "",
       icon: "warning",
       showDenyButton: true,
       confirmButtonText: "Yes",
@@ -23,14 +23,14 @@ function UserFormButtons({ isSubmitting, id }) {
 
   const handleDelete = () => {
     Swal.fire({
-      title: "",
-      text: "Are you sure?",
+      title: "Are you sure?",
+      text: "",
       icon: "warning",
       showDenyButton: true,
       confirmButtonText: "Yes",
     }).then((response) => {
       if (response.isConfirmed) {
-        Swal.fire("", "User deleted", "success");
+        Swal.fire("User deleted", "", "success");
         navigate(-1);
       }
     });
@@ -47,6 +47,7 @@ function UserFormButtons({ isSubmitting, id }) {
           Save
         </button>
         <button
+          type="button"
           onClick={handleCancel}
           className="flex flex-col flex-1 justify-center hover:border-none px-12 py-4 bg-orange-900 rounded shadow-sm max-md:px-5"
         >

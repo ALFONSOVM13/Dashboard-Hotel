@@ -33,7 +33,7 @@ function UserForm({ id }) {
           email: "",
           dni: "",
           phoneNumber: "",
-          status: "",
+          rol: "",
           gender: "",
           adress: "",
           photo_url: photoUrl,
@@ -63,16 +63,16 @@ function UserForm({ id }) {
             .required("The address is required.")
             .max(100, "The address cannot have more than 100 characters."),
           photo_url: Yup.string().required("The photo is required."),
-          status: Yup.string()
-            .required("The status is required.")
-            .oneOf(["Active", "Inactive"], "Invalid status."),
+          rol: Yup.string()
+            .required("The rol is required.")
+            .notOneOf(["---"], "Please select a valid rol."),
           gender: Yup.string()
             .required("The gender is required.")
-            .oneOf(["Male", "Female", "Other"], "Invalid gender."),
+            .notOneOf(["---"], "Please select a valid gender."),
         })}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(false);
-
+          console.log("hiciste click en submit");
           Swal.fire({
             title: "Warning",
             text: id
@@ -196,15 +196,15 @@ function UserForm({ id }) {
                   labelAlign="left"
                 />
                 <SelectInput
-                  label="STATUS"
-                  name="status"
-                  options={["Active", "Inactive"]}
+                  label="ROL"
+                  name="rol"
+                  options={["---", "Active", "Inactive"]}
                   labelAlign="left"
                 />
                 <SelectInput
                   label="GENDER"
                   name="gender"
-                  options={["Male", "Female", "Other"]}
+                  options={["---", "Male", "Female", "Other"]}
                   labelAlign="left"
                 />
               </div>
