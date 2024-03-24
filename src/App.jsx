@@ -12,6 +12,8 @@ import Notifications from "./pages/Notifications";
 import RestaurantMenu from "./pages/RestaurantMenu";
 import EditReservation from "./pages/Reservations/EditReservation";
 import { useRef } from "react";
+import EditGuest from "./pages/Guests/EditGuest";
+import CreateGuest from "./pages/Guests/CreateGuest";
 import AdminLoginForm from "./pages/LoginPage";
 import { useLocation } from "react-router-dom";
 
@@ -52,11 +54,16 @@ function App() {
           <Route path="/" element={<AdminLoginForm />} />
           <Route path="dashboard">
             <Route path="guests" element={<Guests />} />
+            <Route
+              path="guests/createguest/newguest"
+              element={<CreateGuest />}
+            />
             <Route path="reservations" element={<Reservations />} />
             <Route
               path="reservations/:reservationId"
               element={<EditReservation />}
             />
+            <Route path="guests/:id" element={<EditGuest />} />
             <Route path="offers" element={<Offers />} />
             <Route path="employees" element={<Employees />} />
             <Route path="roomsCustomization" element={<RoomsCustomization />} />
