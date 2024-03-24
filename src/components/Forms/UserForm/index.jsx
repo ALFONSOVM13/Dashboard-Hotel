@@ -15,6 +15,12 @@ import { ErrorMessage } from "formik";
 function UserForm({ id }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [photoUrl, setPhotoUrl] = useState("");
+  const [password, setPassword] = useState("");
+
+  const generateRandomPassword = () => {
+    const randomPassword = Math.random().toString(36).slice(-8);
+    setPassword(randomPassword);
+  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -31,7 +37,7 @@ function UserForm({ id }) {
         initialValues={{
           name: "",
           email: "",
-          dni: "",
+          password: password,
           phoneNumber: "",
           rol: "",
           gender: "",
@@ -49,9 +55,8 @@ function UserForm({ id }) {
               "Invalid characters in the name."
             )
             .max(50, "The name cannot have more than 50 characters."),
-          dni: Yup.string()
-            .required("The ID card is required.")
-            .max(8, "The ID card cannot have more than 8 characters."),
+          password: Yup.string().required("The password is required."),
+
           phoneNumber: Yup.string()
             .required("The phone number is required.")
             .matches(
@@ -188,7 +193,22 @@ function UserForm({ id }) {
               <div className="flex flex-col">
                 <TextInput label="FULLNAME" name="name" labelAlign="left" />
                 <TextInput label="EMAIL" name="email" labelAlign="left" />
-                <TextInput label="DNI" name="dni" labelAlign="left" />
+                <TextInput
+                  label="PASSWORD"
+                  name="password"
+                  labelAlign="left"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    generateRandomPassword();
+                    setFieldValue("password", password);
+                  }}
+                  className="bg-blue-500 text-white rounded py-2 px-4 mt-2"
+                >
+                  Generate Password
+                </button>
                 <TextInput label="ADRESS" name="adress" labelAlign="left" />
                 <TextInput
                   label="PHONE NUMBER"
