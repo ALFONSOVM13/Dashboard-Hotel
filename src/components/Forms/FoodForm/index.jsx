@@ -8,6 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import TextInput from "../../TextInput";
+import SelectInput from "../../SelectInput";
 import FormButtons from "../../FormButtons";
 import FormTitle from "../../FormTittle";
 import { postFood, putFood } from "../../../redux/Foods/Actions/actions";
@@ -74,8 +75,8 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
                   .required("The name is required")
                   .matches(/^[A-Z]/, "The first letter must be uppercase.")
                   .matches(
-                    /^[a-zA-Z\s]*$/,
-                    "The name can only contain letters and spaces."
+                    /^[A-Za-z\u00C0-\u024F\s']*$/,
+                    "Invalid characters in the name."
                   ),
                 description: Yup.string()
                   .required("The description is required.")
@@ -91,11 +92,7 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
                 imageUrl: Yup.string().required("The image is required."),
                 category: Yup.string()
                   .required("The category is required.")
-                  .matches(
-                    /^[a-zA-Z0-9\s]*$/,
-                    "No special characters are allowed."
-                  )
-                  .matches(/^[A-Z]/, "The first letter must be uppercase."),
+                  .notOneOf(["---"], "Please select a valid gender."),
                 price: Yup.string()
                   .required("The price is required.")
                   .matches(/^\d+(\.\d{1,2})?$/, {
@@ -132,7 +129,20 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
                   <TextInput label="NAME" name="name" />
                   <TextInput label="PRICE" name="price" />
                   <TextInput label="DESCRIPTION" name="description" rows="3" />
-                  <TextInput label="CATEGORY" name="category" />
+                  <SelectInput
+                    label="CATEGORY"
+                    name="category"
+                    options={[
+                      "---",
+                      "Driks",
+                      "Burger",
+                      "Italian",
+                      "Japanese",
+                      "Dessert",
+                      "Mexican",
+                      "Snacks",
+                    ]}
+                  />
                   <TextInput label="IMAGE URL" name="imageUrl" />
                   <FormButtons
                     clearText={"CLEAR FIELDS"}
