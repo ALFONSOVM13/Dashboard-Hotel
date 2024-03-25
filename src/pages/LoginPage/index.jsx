@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 function Logo() {
@@ -35,14 +35,39 @@ function CheckboxIcon() {
   );
 }
 
-export default function AdminLoginForm() {
-  const [error, setError] = useState({ user: "", password: "" });
-  const Navigate = useNavigate();
+export default function LoginPage({ user, setUser, setSession }) {
+  const [error, setError] = useState([]);
+  const [inputs, setInputs] = useState({ user: "", password: "" });
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
+    let errors = [];
     e.preventDefault();
     //Validacion
-    Navigate("/dashboard");
+    if (!inputs.user || !inputs.password) {
+      errors.push("All fields are required");
+    } else if (inputs.user !== "admin") {
+      errors.push("Invalid username or password.");
+    } else if (
+      !/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,80}$/.test(
+        inputs.password
+      )
+    ) {
+      errors.push(
+        "The password must contain at least one number and one special character, and six characters at least"
+      );
+    } else {
+      //Comprobar usuario y contraseña en BD
+      setUser(inputs);
+      setSession(true);
+      navigate("/dashboard");
+    }
+    setError(errors);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputs((prevValue) => ({ ...prevValue, [name]: value }));
   };
   return (
     <form className="flex flex-col p-6 bg-white rounded max-w-[463px] m-auto">
@@ -63,9 +88,12 @@ export default function AdminLoginForm() {
         Email Address
       </label>
       <input
+        onChange={handleChange}
+        value={inputs.user}
+        name="user"
         type="email"
         id="email"
-        placeholder="hello@example.com"
+        placeholder="hello@example.com, username"
         className="justify-center px-3 py-2 mt-1 text-sm whitespace-nowrap rounded border-2 border-solid border-slate-500 text-ellipsis text-zinc-900 bg-slate-100"
       />
       <div className="flex gap-5 mt-6">
@@ -84,16 +112,19 @@ export default function AdminLoginForm() {
       </div>
       <div className="flex w-full  relative ">
         <input
+          onChange={handleChange}
+          value={inputs.password}
           type="password"
           id="password"
+          name="password"
           placeholder="Password"
           className="justify-center px-3 py-2 mt-1 text-sm whitespace-nowrap rounded border-2 border-solid border-slate-500 text-ellipsis text-zinc-900 bg-slate-100 w-full"
         />
         <EyeIcon />
       </div>
-      {error.password && (
+      {error.length > 0 && (
         <p className="mt-1 text-sm font-light text-red-600 whitespace-nowrap text-ellipsis">
-          Please enter correct password
+          {error[0]}
         </p>
       )}
       <label className="flex gap-2 mt-6 text-sm text-zinc-900">

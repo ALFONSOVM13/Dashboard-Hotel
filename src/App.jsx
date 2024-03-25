@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import Guests from "./pages/Guests";
 import Reservations from "./pages/Reservations";
@@ -11,18 +11,38 @@ import OfferNotifications from "./pages/OfferNotifications";
 import Notifications from "./pages/Notifications";
 import RestaurantMenu from "./pages/RestaurantMenu";
 import EditReservation from "./pages/Reservations/EditReservation";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import EditGuest from "./pages/Guests/EditGuest";
 import CreateGuest from "./pages/Guests/CreateGuest";
-import AdminLoginForm from "./pages/LoginPage";
-import { useLocation } from "react-router-dom";
+import ProtectedRoute from "./utils/ProtectedRoute";
+import { useLocalStorage } from "react-use";
+import RegisterPage from "./pages/RegisterPage";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
+  const [user, setUser] = useLocalStorage("user", {
+    user: "",
+    token: "",
+  });
+  const [logged, setLogged] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
   const sideBar = useRef();
   const tabcontent = useRef();
 
+  const noSideBarRoutes = ["/", "/register"];
+
+  useEffect(() => {
+    console.log(user.user, logged, user);
+    if (user.user === "") {
+      navigate("/");
+      setLogged(false);
+    } else {
+      setLogged(true);
+    }
+  }, [location.pathname, logged]);
   const handleMenu = (e) => {
+    if (!e) return;
     let screenWidth = window.innerWidth;
     let sidebar = sideBar.current;
     let tabContent = tabcontent.current;
@@ -45,19 +65,38 @@ function App() {
   return (
     // <Provider store={store}>
     <div className="flex">
-      {location.pathname !== "/" && <Sidebar controlador={sideBar} />}
+      {!noSideBarRoutes.includes(location.pathname) && (
+        <Sidebar controlador={sideBar} setSession={setLogged} />
+      )}
       <div
         ref={tabcontent}
         className="flex justify-start min-h-screen flex-col w-[95%] pl-[300px] transition-all duration-500 ease-in-out"
       >
         <Routes>
-          <Route path="/" element={<AdminLoginForm />} />
+          <Route
+            path="/"
+            element={
+              <LoginPage user={user} setUser={setUser} setSession={setLogged} />
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <RegisterPage
+                user={user}
+                setUser={setUser}
+                setSession={setLogged}
+              />
+            }
+          />
+          {/* <Route
+            element={<ProtectedRoute canActivate={logged} redirectPath="/" />}
+          > */}
           <Route path="dashboard">
-            <Route path="guests" element={<Guests />} />
-            <Route
-              path="guests/createguest/newguest"
-              element={<CreateGuest />}
-            />
+            <Route path="" element={<Dashboard />} />
+            <Route path="guests" element={<Guests />}>
+              <Route path="createguest/newguest" element={<CreateGuest />} />
+            </Route>
             <Route path="reservations" element={<Reservations />} />
             <Route
               path="reservations/:reservationId"
@@ -71,6 +110,7 @@ function App() {
             <Route path="notifications" element={<Notifications />} />
             <Route path="restaurantMenu" element={<RestaurantMenu />} />
           </Route>
+          {/* </Route> */}
         </Routes>
       </div>
     </div>

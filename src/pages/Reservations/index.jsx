@@ -21,7 +21,7 @@ function Reservations() {
 
   useEffect(() => {
     (async () => {
-      fetch("${BACKEND_URL}data/reservations.json")
+      fetch("/data/reservations.json")
         .then((response) => response.json())
         .then((data) => {
           setData([
