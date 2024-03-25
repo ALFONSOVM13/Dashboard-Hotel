@@ -33,23 +33,7 @@ function RoomsCustomization() {
 
   useEffect(() => {
     setData([]);
-    // (async () => {
-    //   fetch("http://localhost:5173/data/reservations.json")
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //       setData([
-    //         ...data.map((reservation) => {
-    //           return {
-    //             ...reservation,
-    //             checkIn: functions.convertirFechaAAmPm(reservation.checkIn),
-    //             checkOut: functions.convertirFechaAAmPm(reservation.checkOut),
-    //           };
-    //         }),
-    //       ]);
-    //       setPagination({ ...pagination, items: data.length });
-    //     })
-    //     .catch((error) => console.log("Error: ", error));
-    // })();
+   
   }, []);
   return (
     <>

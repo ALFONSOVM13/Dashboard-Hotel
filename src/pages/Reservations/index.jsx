@@ -21,7 +21,7 @@ function Reservations() {
 
   useEffect(() => {
     (async () => {
-      fetch("http://localhost:5173/data/reservations.json")
+      fetch("/data/reservations.json")
         .then((response) => response.json())
         .then((data) => {
           setData([

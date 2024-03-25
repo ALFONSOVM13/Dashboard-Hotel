@@ -3,10 +3,11 @@ import Button from "../../../components/Button";
 import InputField from "../../../components/InputField";
 import DeleteTrashButton from "../../../components/DeleteTrashButton";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   putRoomType,
   createRoomType,
+  getRoomType,
 } from "../../../redux/RoomTypes/Actions/actions";
 
 export default function ModalRoomTypesEdit({ control, id, edit = false }) {
@@ -14,6 +15,8 @@ export default function ModalRoomTypesEdit({ control, id, edit = false }) {
   const [inputs, setInputs] = useState({ name: "", description: "" });
   const [data, setData] = useState({});
   const [error, setError] = useState({ name: "", description: "" });
+  const { selectedRoomType } = useSelector((state) => state.roomTypesReducer);
+
   const closeModal = (e) => {
     if (e) e.preventDefault();
     control(false);
@@ -44,15 +47,20 @@ export default function ModalRoomTypesEdit({ control, id, edit = false }) {
 
   useEffect(() => {
     if (edit) {
-      fetch(`http://localhost:3001/roomTypes?id=${id}`)
-        .then((res) => res.json())
-        .then((result) => {
-          setInputs({ ...result[0] });
-          setData({ ...result[0] });
-        })
-        .catch((err) => console.log(err));
+      dispatch(getRoomType(id)).catch((err) => console.log(err));
     }
   }, []);
+
+  useEffect(() => {
+    if (edit) {
+      setInputs({ ...selectedRoomType });
+      setData({ ...selectedRoomType });
+    }
+  }, [selectedRoomType]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   const handleChange = (e) => {
     setError((prevValue) => ({

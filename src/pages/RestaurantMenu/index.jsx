@@ -103,35 +103,39 @@ function RestaurantMenu() {
           />
         )}
       </div>
-      <div className="flex flex-col px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
-        <PaginationControl pagination={pagination} control={setPagination} />
-        {inputValue !== "" && searchResults.length === 0 ? (
-          <h3>{`No results for "${inputValue}" search...`}</h3>
-        ) : (
-          <Table
-            headers={[
-              "Image",
-              "ID",
-              "Name",
-              "Category",
-              "Price",
-              "Description",
-              "Actions",
-            ]}
-            data={searchResults.length > 0 ? searchResults : allFoods}
-            Components={(props) => (
-              <EditDeleteButtons
-                {...props}
-                handleDelete={handleDelete}
-                handleEdit={handleEdit}
-              />
-            )}
-            idName="id"
-            size={pagination.size}
-            page={pagination.page}
-          />
-        )}
-      </div>
+      {allFoods.length > 0 ? (
+        <div className="flex flex-col px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
+          <PaginationControl pagination={pagination} control={setPagination} />
+          {inputValue !== "" && searchResults.length === 0 ? (
+            <h3>{`No results for "${inputValue}" search...`}</h3>
+          ) : (
+            <Table
+              headers={[
+                "Image",
+                "ID",
+                "Name",
+                "Category",
+                "Price",
+                "Description",
+                "Actions",
+              ]}
+              data={searchResults.length > 0 ? searchResults : allFoods}
+              Components={(props) => (
+                <EditDeleteButtons
+                  {...props}
+                  handleDelete={handleDelete}
+                  handleEdit={handleEdit}
+                />
+              )}
+              idName="id"
+              size={pagination.size}
+              page={pagination.page}
+            />
+          )}
+        </div>
+      ) : (
+        <h2 className="text-xl mt-5">No plates in BD. Please create one.</h2>
+      )}
     </>
   );
 }
