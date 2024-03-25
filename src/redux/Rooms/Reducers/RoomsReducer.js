@@ -14,7 +14,7 @@ const roomsReducer = (state = initialState, { type, payload }) => {
     case GET_ALL_ROOMS:
       return {
         ...state,
-        allRooms: payload,
+        allRooms: [...payload],
       };
 
     case DELETE_ROOM:

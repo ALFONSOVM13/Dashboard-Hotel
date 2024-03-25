@@ -48,16 +48,16 @@ function App() {
     let tabContent = tabcontent.current;
 
     if (screenWidth < 700) {
-      sidebar.classList.remove("left-0");
-      sidebar.classList.add("left-[-300px]");
-      tabContent.classList.remove("pl-[300px]");
-      tabContent.classList.add("pl-0");
+      sidebar.classList?.remove("left-0");
+      sidebar.classList?.add("left-[-300px]");
+      tabContent.classList?.remove("pl-[300px]");
+      tabContent.classList?.add("pl-0");
     } else {
-      sidebar.classList.remove("left-[-300px]");
-      sidebar.classList.add("left-0");
+      sidebar.classList?.remove("left-[-300px]");
+      sidebar.classList?.add("left-0");
 
-      tabContent.classList.remove("pl-0");
-      tabContent.classList.add("pl-[300px]");
+      tabContent.classList?.remove("pl-0");
+      tabContent.classList?.add("pl-[300px]");
     }
   };
 

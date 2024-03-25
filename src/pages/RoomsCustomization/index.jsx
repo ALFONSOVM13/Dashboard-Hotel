@@ -1,4 +1,3 @@
-import Button from "../../components/NewButton/index.jsx";
 import PaginationControl from "../../components/PaginationControl";
 import TabTitle from "../../components/TabTitle";
 import Table from "../../components/Table";
@@ -6,12 +5,15 @@ import ReservedButtons from "../../components/ReservedButtons/index.jsx";
 import SearchBar from "../../components/SearchBar/index.jsx";
 import useTableSearchPagination from "../../hooks/useTableSearchPagination.jsx";
 import { useEffect, useState } from "react";
+import { getAllRooms } from "../../redux/Rooms/Actions/actions.js";
+import { useDispatch, useSelector } from "react-redux";
 import RoomTypes from "../../components/RoomTypes/index.jsx";
-import functions from "../../utils/index.js";
 import ModalRoomTypesEdit from "./ModalRoomTypesEdit/index.jsx";
 import RoomManagementModal from "../../components/RoomManagementModal/index.jsx";
 
 function RoomsCustomization() {
+  const dispatch = useDispatch();
+  const { allRooms } = useSelector((state) => state.roomsReducer);
   const [roomType, setRoomType] = useState(null);
   const [management, setManagement] = useState(false);
   const [showModalEditRoomTypes, setShowModalEditRoomTypes] = useState(false);
@@ -32,9 +34,24 @@ function RoomsCustomization() {
   };
 
   useEffect(() => {
-    setData([]);
-   
+    dispatch(getAllRooms());
   }, []);
+
+  useEffect(() => {
+    setData([
+      ...allRooms.map(
+        ({ room_number, room_type, max_capacity, is_active, status }) => ({
+          room_number,
+          room_type,
+          max_capacity,
+          services: null,
+          is_active,
+          status,
+        })
+      ),
+    ]);
+    setPagination({ ...pagination, items: data.length });
+  }, [allRooms]);
   return (
     <>
       <div className="flex flex-col px-5 pr-10 pt-10 w-full max-md:max-w-full">
@@ -76,7 +93,7 @@ function RoomsCustomization() {
             ]}
             data={searchResults.length > 0 ? searchResults : data}
             Components={ReservedButtons}
-            idName="roomNumber"
+            idName="room_number"
             size={pagination.size}
             page={pagination.page}
           />
