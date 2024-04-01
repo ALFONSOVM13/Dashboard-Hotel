@@ -1,4 +1,5 @@
 import {
+  GET_ROOM,
   GET_ALL_ROOMS,
   DELETE_ROOM,
   PUT_ROOM,
@@ -7,6 +8,7 @@ import {
 
 const initialState = {
   allRooms: [],
+  selectedRoom: {},
 };
 
 const roomsReducer = (state = initialState, { type, payload }) => {
@@ -15,6 +17,11 @@ const roomsReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         allRooms: [...payload],
+      };
+    case GET_ROOM:
+      return {
+        ...state,
+        selectedRoom: { ...payload },
       };
 
     case DELETE_ROOM:
@@ -26,7 +33,11 @@ const roomsReducer = (state = initialState, { type, payload }) => {
     case PUT_ROOM:
       return {
         ...state,
-        allRooms: payload,
+        allRooms: [
+          ...state.allRooms.map((room) =>
+            Number(room.id) === payload.id ? payload : room
+          ),
+        ],
       };
 
     case CREATE_ROOM:

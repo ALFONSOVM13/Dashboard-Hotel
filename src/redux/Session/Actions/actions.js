@@ -1,15 +1,9 @@
-import {
-  GET_ALL_ROOMTYPES,
-  DELETE_ROOMTYPE,
-  PUT_ROOMTYPE,
-  CREATE_ROOMTYPE,
-  GET_ROOMTYPE,
-} from "./actionsTypes";
+import { CREATE_SESSION, CLOSE_SESSION } from "./actionsTypes";
 
 import axios from "axios";
 const { VITE_BACKEND_URL } = import.meta.env;
 
-export const getAllRoomTypes = () => {
+export const createSession = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${VITE_BACKEND_URL}/api/roomstypes`);

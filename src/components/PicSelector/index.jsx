@@ -1,0 +1,40 @@
+import React, { useState } from "react";
+
+const PicSelector = ({ className }) => {
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      setSelectedImage(e.target.result);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  return (
+    <div className="">
+      <div className="text-left my-7 text-base font-medium tracking-normal text-gray-700">
+        Room Picture
+      </div>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        className="w-full text-ellipsis"
+      />
+      {selectedImage && (
+        <div
+          className={`img-container w-[200px] h-[200px] bg-cover rounded-xl border-slate-400 border my-3`}
+          style={{ backgroundImage: `url(${selectedImage})` }}
+        ></div>
+      )}
+    </div>
+  );
+};
+
+export default PicSelector;

@@ -4,6 +4,7 @@ import {
   PUT_ROOMTYPE,
   CREATE_ROOMTYPE,
   GET_ROOMTYPE,
+  CLEAR_ROOMTYPE,
 } from "../Actions/actionsTypes";
 
 const initialState = {
@@ -46,6 +47,12 @@ const roomTypesReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         allRoomTypes: [...state.allRoomTypes, payload],
+      };
+
+    case CLEAR_ROOMTYPE:
+      return {
+        ...state,
+        selectedRoomType: payload,
       };
 
     default:
