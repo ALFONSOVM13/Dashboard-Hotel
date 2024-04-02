@@ -15,10 +15,12 @@ function Table({
   idName = "",
   size = 10,
   page = 0,
+  maxHeight = false,
 }) {
-  const [pointer, setPointer] = useState(0);
   return (
-    <table>
+    <table
+      className={`block ${maxHeight ? maxHeight + " overflow-y-auto" : ""}`}
+    >
       <thead>
         <tr className="border-b-2 border-b-gray-200 shadow-sm shadow-slate-500">
           {headers.map((header, i) => (
@@ -36,24 +38,34 @@ function Table({
           data.slice(size * (page - 1), size * page).map((row, i) => (
             <tr
               key={Object.values(row).values[0] + i.toString()}
-              className="border-b-2 border-slate-300 h-[4rem]"
+              className="h-[5rem]"
             >
-              {Object.values(row).map((cell, j) => (
-                <td
-                  key={"Cell" + i.toString() + j.toString()}
-                  className="justify-between items-center font-light text-black max-md:flex-wrap max-md:max-w-full"
-                >
-                  {cell}
+              {row.imageUrl && (
+                <td className="flex justify-center items-center font-light text-black max-md:flex-wrap max-md:max-w-full">
+                  <img
+                    src={row.imageUrl}
+                    alt={`Imagen de ${row.name}`}
+                    className="mt-3 h-16 w-16 object-cover rounded-full"
+                  />
                 </td>
-              ))}
-              <td
-                key={"Cell" + i.toString() + "components"}
-                className="flex gap-5 h-full h-[4rem] items-center font-light text-black "
-              >
-                {Components !== undefined && (
-                  <Components className="flex" id={`${row[idName]}`} />
-                )}
-              </td>
+              )}
+              {Object.values(row)
+                .filter(
+                  (value, index) => Object.keys(row)[index] !== "imageUrl"
+                )
+                .map((cell, j) => (
+                  <td
+                    key={"Cell" + i.toString() + j.toString()}
+                    className="justify-between items-center font-light text-black max-md:flex-wrap max-md:max-w-full"
+                  >
+                    {cell}
+                  </td>
+                ))}
+              {Components !== undefined && (
+                <td key={"Cell" + i.toString() + "components"}>
+                  <Components id={`${row[idName]}`} data={row} />
+                </td>
+              )}
             </tr>
           ))}
       </tbody>

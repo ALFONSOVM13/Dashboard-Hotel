@@ -2,7 +2,7 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
 
-const TextInput = ({ label, name, rows }) => {
+const TextInput = ({ label, name, rows, labelAlign = "center" }) => {
   const inputField = rows ? (
     <Field
       as="textarea"
@@ -19,8 +19,14 @@ const TextInput = ({ label, name, rows }) => {
   );
 
   return (
-    <div className="flex flex-col w-full">
-      <label>{label}</label>
+    <div className={`flex flex-col w-full mt-4`}>
+      <label
+        className={`text-bold text-lg ${
+          labelAlign === "center" ? "" : "text-left pl-5"
+        }`}
+      >
+        {label}
+      </label>
       {inputField}
       <ErrorMessage
         name={name}

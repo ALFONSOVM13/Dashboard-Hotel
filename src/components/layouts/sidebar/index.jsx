@@ -3,10 +3,10 @@ import ListOption from "../../ListOption";
 import ProfileDock from "../../ProfileDock";
 import { useRef } from "react";
 
-function Sidebar({ controlador }) {
+function Sidebar({ controlador, setSession }) {
   return (
     <div
-      className="fixed transition-all duration-500 flex flex-col py-6 bg-white shadow-sm w-[30%] lg:w-[20%] self-start top-0 bottom-0 h-full z-100 md:text-2xl"
+      className="fixed transition-all duration-500 flex flex-col py-6 bg-white shadow-sm w-[300px]  self-start top-0 bottom-0 h-full z-100 md:text-2xl"
       ref={controlador}
     >
       <div className="flex flex-col items-left px-6 w-full">
@@ -14,7 +14,11 @@ function Sidebar({ controlador }) {
           Hotel Esmeralda Resort & Spa
         </div>
 
-        <ProfileDock name="Luis Alberto" email="luiluego@gmail.com" />
+        <ProfileDock
+          name="Luis Alberto"
+          email="luiluego@gmail.com"
+          setSession={setSession}
+        />
         <ListCategory text="Portal Customization" icon="mosaic" />
         <ListCategory text="Manage" icon="hamburguer" />
         <ListOption text={"Guest"} link={"/dashboard/guests"} active={true} />
