@@ -143,6 +143,7 @@ export default function RoomManagementModal({ isOpen, onClose }) {
 
 function ActionButtons({ id, data }) {
   const handleEdit = () => {};
+  const handleDelete = () => {};
 
   // const handleDelete = async () => {
   //   try {

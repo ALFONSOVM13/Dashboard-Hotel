@@ -19,6 +19,7 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import { useLocalStorage } from "react-use";
 import RegisterPage from "./pages/RegisterPage";
 import Dashboard from "./pages/Dashboard";
+import RoomCreate from "./pages/RoomCreate";
 
 function App() {
   const [user, setUser] = useLocalStorage("user", {
@@ -102,6 +103,7 @@ function App() {
               <Route path="roomsCustomization">
                 <Route path="" element={<RoomsCustomization />} />
                 <Route path=":roomId" element={<RoomEdit />} />
+                <Route path="create" element={<RoomCreate />} />
               </Route>
               <Route
                 path="offerNotifications"

@@ -28,7 +28,7 @@ function RoomEdit() {
       double_bed: "",
       air_conditioning: "",
       jacuzzi: "",
-      internet_connection_connection: "",
+      internet_connection: "",
       tv: "",
       phone: "",
       minibar: "",
@@ -120,10 +120,12 @@ function RoomEdit() {
 
   const save = (e) => {
     e.preventDefault();
-    dispatch(patchRoom(roomId, roomData))
-      .then(console.log("Hecho"))
-      .catch(console.log("Fail"));
-    navigate(-1);
+    try {
+      dispatch(patchRoom(roomId, roomData));
+      navigate(-1);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const cancel = (e) => {
@@ -146,8 +148,8 @@ function RoomEdit() {
             />
             <p className="mt-5 text-left leading-relaxed">
               <span className="text-md font-bold">Description:</span> <br />
-              {roomData.room_type?.description.slice(0, 120) +
-                (roomData.room_type?.description.length > 117 ? "..." : "")}
+              {roomData.room_type?.description?.slice(0, 120) +
+                (roomData.room_type?.description?.length > 117 ? "..." : "")}
             </p>
             <PicSelector />
           </div>

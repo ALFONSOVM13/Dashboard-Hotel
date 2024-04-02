@@ -166,10 +166,10 @@ export const createRoom = (product) => {
       );
       return dispatch({
         type: CREATE_ROOM,
-        payload: response.data,
+        payload: normalizeResponse(response.data[0]),
       });
     } catch (error) {
-      throw new Error(error);
+      console.log(error.message);
     }
   };
 };

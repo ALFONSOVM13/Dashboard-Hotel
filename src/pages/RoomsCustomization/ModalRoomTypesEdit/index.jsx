@@ -54,7 +54,7 @@ export default function ModalRoomTypesEdit({ control, id, edit = false }) {
   useEffect(() => {
     if (edit) {
       dispatch(getRoomType(id)).catch((err) => console.log(err));
-    }
+    } else setLoading(false);
   }, []);
 
   useEffect(() => {

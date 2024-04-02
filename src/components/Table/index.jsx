@@ -82,13 +82,13 @@ function Table({
                         <span
                           className={`p-2 ${
                             cell === "available"
-                              ? "bg-green-600"
+                              ? "bg-green-200"
                               : cell === "maintenance"
-                              ? "bg-yellow-600"
+                              ? "bg-yellow-200"
                               : cell === "busy"
-                              ? "bg-red-600"
+                              ? "bg-red-200"
                               : ""
-                          } rounded-xl font-bold text-white w-[120px] block`}
+                          } rounded-xl font-bold text-black w-[120px] block`}
                         >
                           {cell.charAt(0).toUpperCase() +
                             cell.slice(1).toLowerCase()}
@@ -99,11 +99,11 @@ function Table({
                       )
                     ) : typeof cell === "boolean" ? (
                       cell ? (
-                        <span className="p-2 bg-green-600 rounded-xl font-bold text-white w-[120px] block">
+                        <span className="p-2 bg-green-200 rounded-xl font-bold text-black w-[120px] block">
                           Active
                         </span>
                       ) : (
-                        <span className="p-2 bg-red-600 rounded-xl font-bold text-white w-[120px] block">
+                        <span className="p-2 bg-red-200 rounded-xl font-bold text-black w-[120px] block">
                           Inactive
                         </span>
                       )
