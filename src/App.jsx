@@ -86,12 +86,15 @@ function App() {
           <Route path="register" element={<RegisterPage />} />
           <Route
             element={<ProtectedRoute canActivate={logged} redirectPath="/" />}
+
           >
             <Route path="dashboard">
               <Route path="" element={<Dashboard />} />
-              <Route path="guests" element={<Guests />}>
-                <Route path="createguest/newguest" element={<CreateGuest />} />
-              </Route>
+             <Route path="guests" element={<Guests />} />
+            <Route
+              path="guests/createguest/newguest"
+              element={<CreateGuest />}
+            />
               <Route path="reservations" element={<Reservations />} />
               <Route
                 path="reservations/:reservationId"
@@ -112,6 +115,7 @@ function App() {
               <Route path="notifications" element={<Notifications />} />
               <Route path="restaurantMenu" element={<RestaurantMenu />} />
             </Route>
+
           </Route>
         </Routes>
       </div>
