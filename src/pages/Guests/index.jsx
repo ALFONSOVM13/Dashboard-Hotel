@@ -14,32 +14,38 @@ function Guests() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { allUsers } = useSelector((state) => state.usersReducer);
-  const [data, setData] = useState([]);
+  console.log(allUsers);
   const [pagination, setPagination] = useState({ page: 1, size: 10, items: 0 });
   const [inputValue, setInputValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    const updateDataAndPagination = async () => {
-      dispatch(getAllUsers());
-      setData(users);
+    dispatch(getAllUsers())
+      .then(() => {
+        setDataLoaded(true);
+      })
+      .catch((error) => console.log(error));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (dataLoaded) {
       setPagination({
         ...pagination,
-        items: data.length,
+        items: allUsers.length,
       });
-    };
-    updateDataAndPagination();
-  }, []);
+    }
+  }, [allUsers, dataLoaded]);
 
   useEffect(() => {
     if (!inputValue) {
       setSearchResults([]);
-      setPagination({ ...pagination, items: data.length });
+      setPagination({ ...pagination, items: allUsers.length });
       return;
     }
-    const filteredData = data.filter((item) => {
+    const filteredData = allUsers.filter((item) => {
       return (
-        item.nombre.toLowerCase().includes(inputValue.toLowerCase()) ||
+        item.username.toLowerCase().includes(inputValue.toLowerCase()) ||
         item.email.toLowerCase().includes(inputValue.toLowerCase())
       );
     });
@@ -58,8 +64,8 @@ function Guests() {
 
   const mapData = (dataArray) => {
     return dataArray.map((item) => {
-      const { id, nombre, email, rol } = item;
-      return { id, nombre, email, rol };
+      const { id, username, email, role } = item;
+      return { id, username, email, role };
     });
   };
 
@@ -85,7 +91,7 @@ function Guests() {
         ) : (
           <Table
             headers={["ID", "Full Name", "Email", "Rol", "Edit"]}
-            data={mapData(searchResults.length > 0 ? searchResults : data)}
+            data={mapData(searchResults.length > 0 ? searchResults : allUsers)}
             Components={EditButton}
             idName="id"
             size={pagination.size}
