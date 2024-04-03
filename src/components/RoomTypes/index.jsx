@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import RoomTypeItem from "../RoomTypeItem";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllRoomTypes } from "../../redux/RoomTypes/Actions/actions";
+import Loading from "../Loading";
 export default function RoomTypes({ action, control }) {
+  const [loading, setLoading] = useState(true);
   const { allRoomTypes } = useSelector((state) => state.roomTypesReducer);
   const dispatch = useDispatch();
 
@@ -13,6 +15,12 @@ export default function RoomTypes({ action, control }) {
       console.log("Error in fetching room types", err);
     }
   }, []);
+
+  useEffect(() => {
+    if (allRoomTypes.length > 0) {
+      setLoading(false);
+    }
+  }, [allRoomTypes]);
 
   return (
     <section className="flex flex-col self-start items-center w-[280px] mt-5">
@@ -31,18 +39,20 @@ export default function RoomTypes({ action, control }) {
           Manage{" "}
         </button>{" "}
       </header>{" "}
-      <div className="h-[130px] overflow-y-auto mt-3">
-        {allRoomTypes.map(
-          (roomType) =>
-            roomType.name !== "Not Assigned" && (
-              <RoomTypeItem
-                key={roomType.name}
-                id={roomType.id}
-                name={roomType.name}
-                action={action}
-              />
-            )
-        )}
+      <div className="h-[130px] overflow-y-auto mt-3 w-[250px]">
+        <Loading state={loading}>
+          {allRoomTypes.map(
+            (roomType) =>
+              roomType.name !== "Not Assigned" && (
+                <RoomTypeItem
+                  key={roomType.name}
+                  id={roomType.id}
+                  name={roomType.name}
+                  action={action}
+                />
+              )
+          )}
+        </Loading>
       </div>
     </section>
   );

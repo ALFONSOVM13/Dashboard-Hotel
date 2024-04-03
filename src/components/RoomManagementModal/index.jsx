@@ -32,22 +32,6 @@ export default function RoomManagementModal({ isOpen, onClose }) {
     setShowModalEditRoomTypes(false);
   };
 
-  const showConfirmation = async () => {
-    try {
-      await confirmation.seeAlert(
-        dispatch,
-        data.id,
-        {},
-        { text: "delete", execute: deleteRoomType },
-        `Are you sure to delete "${data.name}" room type?`,
-        ["The room type was deleted successfully!", "Accept", "info"],
-        closeModal
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     try {
       dispatch(getAllRoomTypes());
@@ -60,7 +44,10 @@ export default function RoomManagementModal({ isOpen, onClose }) {
       ...allRoomTypes
         .map((type) => ({
           name: type.name,
-          description: type.description,
+          description:
+            type.description.length > 38
+              ? `${type.description.slice(0, 35)}...`
+              : type.description,
           imageUrl: exampleImg,
         }))
         .filter((item) => item.name !== "Not Assigned"),
@@ -154,9 +141,27 @@ export default function RoomManagementModal({ isOpen, onClose }) {
   );
 }
 
-function ActionButtons({ id, handleDelete, handleEdit }) {
+function ActionButtons({ id, data }) {
+  const handleEdit = () => {};
+  const handleDelete = () => {};
+
+  // const handleDelete = async () => {
+  //   try {
+  //     await confirmation.seeAlert(
+  //       dispatch,
+  //       data.id,
+  //       {},
+  //       { text: "delete", execute: deleteRoomType },
+  //       `Are you sure to delete "${data.name}" room type?`,
+  //       ["The room type was deleted successfully!", "Accept", "info"],
+  //       closeModal
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   return (
-    <div className="flex justify-center gap-3 w-full h-full items-center p-2">
+    <div className="flex justify-center gap-3 w-full h-full items-center p-2 cursor-pointer">
       <EditButton id={id} handleEdit={handleEdit} />
       <DeleteButton id={id} handleDelete={handleDelete} />
     </div>

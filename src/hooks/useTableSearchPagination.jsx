@@ -15,7 +15,7 @@ export default function useTableSearchPagination() {
     const filteredData = data.filter((item) => {
       return Object.values(item)
         .map((value) =>
-          value.toString().toUpperCase().includes(inputValue.toUpperCase())
+          value?.toString().toUpperCase().includes(inputValue.toUpperCase())
         )
         .includes(true);
     });

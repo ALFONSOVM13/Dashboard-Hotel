@@ -4,6 +4,7 @@ import {
   PUT_ROOMTYPE,
   CREATE_ROOMTYPE,
   GET_ROOMTYPE,
+  CLEAR_ROOMTYPE,
 } from "./actionsTypes";
 
 import axios from "axios";
@@ -13,7 +14,6 @@ export const getAllRoomTypes = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${VITE_BACKEND_URL}/api/roomstypes`);
-      console.log(response);
 
       dispatch({
         type: GET_ALL_ROOMTYPES,
@@ -97,5 +97,14 @@ export const createRoomType = (product) => {
     } catch (error) {
       alert("The action wasn't completed: " + error.response.data.message);
     }
+  };
+};
+
+export const clearRoomType = () => {
+  return (dispatch) => {
+    return dispatch({
+      type: CLEAR_ROOMTYPE,
+      payload: [],
+    });
   };
 };

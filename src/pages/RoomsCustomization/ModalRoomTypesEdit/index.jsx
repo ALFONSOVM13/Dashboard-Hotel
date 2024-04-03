@@ -8,17 +8,21 @@ import {
   putRoomType,
   createRoomType,
   getRoomType,
+  clearRoomType,
 } from "../../../redux/RoomTypes/Actions/actions";
+import Loading from "../../../components/Loading";
 
 export default function ModalRoomTypesEdit({ control, id, edit = false }) {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
   const [inputs, setInputs] = useState({ name: "", description: "" });
-  const [data, setData] = useState({});
   const [error, setError] = useState({ name: "", description: "" });
   const { selectedRoomType } = useSelector((state) => state.roomTypesReducer);
 
   const closeModal = (e) => {
     if (e) e.preventDefault();
+    dispatch(clearRoomType());
+    setLoading(true);
     control(false);
   };
   const saveChanges = (e) => {
@@ -42,25 +46,28 @@ export default function ModalRoomTypesEdit({ control, id, edit = false }) {
     } else {
       dispatch(createRoomType(inputs)).then((res) => console.log(res));
     }
+    setInputs({ name: "", description: "" });
+    setLoading(true);
     control(false);
   };
 
   useEffect(() => {
     if (edit) {
       dispatch(getRoomType(id)).catch((err) => console.log(err));
-    }
+    } else setLoading(false);
   }, []);
 
   useEffect(() => {
-    if (edit) {
+    if (edit && selectedRoomType.name) {
+      console.log(selectedRoomType.name);
       setInputs({ ...selectedRoomType });
-      setData({ ...selectedRoomType });
+      setLoading(false);
     }
   }, [selectedRoomType]);
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    console.log("Cargando: ", loading);
+  }, [loading]);
 
   const handleChange = (e) => {
     setError((prevValue) => ({
@@ -76,59 +83,61 @@ export default function ModalRoomTypesEdit({ control, id, edit = false }) {
     <section className="fixed flex items-center justify-center z-[100] inset-0 bg-[rgba(12,12,12,0.3)]">
       {" "}
       <div className="flex flex-col px-16 py-9 bg-white rounded-3xl max-w-[626px] max-md:px-5 shadow-md shadow-slate-600">
-        {" "}
-        <h1 className="text-4xl font-semibold tracking-wide text-neutral-500 max-md:max-w-full">
+        <Loading state={loading}>
           {" "}
-          Room Type Customization
-        </h1>{" "}
-        <div className="mt-7 max-md:max-w-full">
-          {" "}
-          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+          <h1 className="text-4xl font-semibold tracking-wide text-neutral-500 max-md:max-w-full">
             {" "}
-            <div className="flex flex-col w-9/12 max-md:ml-0 max-md:w-full">
+            Room Type Customization
+          </h1>{" "}
+          <div className="mt-7 max-md:max-w-full">
+            {" "}
+            <div className="flex gap-5 max-md:flex-col max-md:gap-0">
               {" "}
-              <div className="flex flex-col grow text-base font-medium tracking-normal text-gray-700 max-md:mt-10">
+              <div className="flex flex-col w-9/12 max-md:ml-0 max-md:w-full">
                 {" "}
-                <InputField
-                  type={"text"}
-                  label="Room Type Name"
-                  name={"name"}
-                  value={inputs.name}
-                  handler={handleChange}
-                  error={error.name}
-                />{" "}
-                <InputField
-                  type={"textarea"}
-                  label="Description"
-                  name={"description"}
-                  value={inputs.description}
-                  handler={handleChange}
-                  error={error.description}
-                />{" "}
+                <div className="flex flex-col grow text-base font-medium tracking-normal text-gray-700 max-md:mt-10">
+                  {" "}
+                  <InputField
+                    type={"text"}
+                    label="Room Type Name"
+                    name={"name"}
+                    value={inputs.name}
+                    handler={handleChange}
+                    error={error.name}
+                  />{" "}
+                  <InputField
+                    type={"textarea"}
+                    label="Description"
+                    name={"description"}
+                    value={inputs.description}
+                    handler={handleChange}
+                    error={error.description}
+                  />{" "}
+                </div>{" "}
               </div>{" "}
+              {edit && <DeleteTrashButton data={inputs} control={closeModal} />}
             </div>{" "}
-            {edit && <DeleteTrashButton data={data} control={closeModal} />}
           </div>{" "}
-        </div>{" "}
-        <div className="flex gap-5 self-center mt-14 text-base font-semibold tracking-normal text-center text-white max-md:mt-10">
-          {" "}
-          <div className="flex flex-col flex-1 justify-center">
+          <div className="flex gap-5 self-center mt-14 text-base font-semibold tracking-normal text-center text-white max-md:mt-10">
             {" "}
-            <Button className="bg-indigo-900" action={saveChanges}>
-              Save Changes
-            </Button>{" "}
-          </div>{" "}
-          <div className="flex flexcol flex-1 justify-center whitespace-nowrap">
-            {" "}
-            <Button
-              className="bg-amber-700 px-12 py-4 max-md:px-5"
-              action={closeModal}
-            >
+            <div className="flex flex-col flex-1 justify-center">
               {" "}
-              Cancel{" "}
-            </Button>{" "}
+              <Button className="bg-indigo-900" action={saveChanges}>
+                Save Changes
+              </Button>{" "}
+            </div>{" "}
+            <div className="flex flexcol flex-1 justify-center whitespace-nowrap">
+              {" "}
+              <Button
+                className="bg-amber-700 px-12 py-4 max-md:px-5"
+                action={closeModal}
+              >
+                {" "}
+                Cancel{" "}
+              </Button>{" "}
+            </div>{" "}
           </div>{" "}
-        </div>{" "}
+        </Loading>
       </div>{" "}
     </section>
   );
