@@ -44,7 +44,7 @@ function App() {
     }
   }, [location.pathname, logged]);
   const handleMenu = (e) => {
-    if (!e) return;
+    if (!e || noSideBarRoutes.includes(location.pathname)) return;
     let screenWidth = window.innerWidth;
     let sidebar = sideBar.current;
     let tabContent = tabcontent.current;
@@ -73,7 +73,7 @@ function App() {
       <div
         ref={tabcontent}
         className={`flex justify-start min-h-screen flex-col w-full ${
-          !noSideBarRoutes.includes(location.pathname) && " pl-[300px]"
+          !noSideBarRoutes.includes(location.pathname) ? " pl-[300px]" : "pl-0"
         } transition-all duration-500 ease-in-out`}
       >
         <Routes>
