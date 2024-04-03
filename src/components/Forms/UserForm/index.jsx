@@ -35,20 +35,21 @@ function UserForm({ id }) {
       <FormTitle title={id ? "EDIT AN USER" : "CREATE AN USER"} />
       <Formik
         initialValues={{
-          name: "",
+          full_name: "",
           email: "",
           password: password,
-          phoneNumber: "",
+          phone_number: "",
           rol: "",
+          document: "",
           gender: "",
-          adress: "",
+          address: "",
           photo_url: photoUrl,
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
             .email("Invalid email.")
             .required("The email is required."),
-          name: Yup.string()
+          full_name: Yup.string()
             .required("The name is required.")
             .matches(
               /^[A-Za-z\u00C0-\u024F\s']*$/,
@@ -56,15 +57,16 @@ function UserForm({ id }) {
             )
             .max(50, "The name cannot have more than 50 characters."),
           password: Yup.string().required("The password is required."),
-
-          phoneNumber: Yup.string()
+          document: Yup.string().required("The ID is required."),
+          country: Yup.string().required("The country is required."),
+          phone_number: Yup.string()
             .required("The phone number is required.")
             .matches(
               /^\+(?:[0-9] ?){6,14}[0-9]$/,
               "Invalid phone number format."
             )
             .max(20, "The phone number cannot have more than 20 characters."),
-          adress: Yup.string()
+          address: Yup.string()
             .required("The address is required.")
             .max(100, "The address cannot have more than 100 characters."),
           photo_url: Yup.string().required("The photo is required."),
@@ -191,7 +193,11 @@ function UserForm({ id }) {
                 </Modal>
               </div>
               <div className="flex flex-col">
-                <TextInput label="FULLNAME" name="name" labelAlign="left" />
+                <TextInput
+                  label="FULLNAME"
+                  name="full_name"
+                  labelAlign="left"
+                />
                 <TextInput label="EMAIL" name="email" labelAlign="left" />
                 <TextInput
                   label="PASSWORD"
@@ -209,16 +215,18 @@ function UserForm({ id }) {
                 >
                   Generate Password
                 </button>
-                <TextInput label="ADRESS" name="adress" labelAlign="left" />
+                <TextInput label="ADDRESS" name="address" labelAlign="left" />
                 <TextInput
                   label="PHONE NUMBER"
-                  name="phoneNumber"
+                  name="phone_number"
                   labelAlign="left"
                 />
+                <TextInput label="COUNTRY" name="country" labelAlign="left" />
+                <TextInput label="DOCUMENT" name="document" labelAlign="left" />
                 <SelectInput
                   label="ROL"
                   name="rol"
-                  options={["---", "Active", "Inactive"]}
+                  options={["---", "Admin", "Employee", "Customer"]}
                   labelAlign="left"
                 />
                 <SelectInput
