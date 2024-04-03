@@ -7,11 +7,13 @@ import PaginationControl from "../../components/PaginationControl";
 import Table from "../../components/Table";
 import EditButton from "../../components/EditButton/index";
 import SearchBar from "../../components/SearchBar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsers } from "../../redux/Users/Actions/actions";
 
 function Guests() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { allUsers } = useSelector((state) => state.usersReducer);
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState({ page: 1, size: 10, items: 0 });
   const [inputValue, setInputValue] = useState("");
@@ -19,6 +21,7 @@ function Guests() {
 
   useEffect(() => {
     const updateDataAndPagination = async () => {
+      dispatch(getAllUsers());
       setData(users);
       setPagination({
         ...pagination,

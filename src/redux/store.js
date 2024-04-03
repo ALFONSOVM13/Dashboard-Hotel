@@ -4,7 +4,7 @@ import foodsReducer from "./Foods/Reducers/FoodsReducer";
 import roomsReducer from "./Rooms/Reducers/RoomsReducer";
 import reservationsReducer from "./Reservations/Reducers/ReservationsReducer";
 import roomTypesReducer from "./RoomTypes/Reducers/RoomsTypesReducer";
-
+import usersReducer from "./Users/Reducers/UsersReducer";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
@@ -12,6 +12,7 @@ const rootReducer = combineReducers({
   roomsReducer,
   reservationsReducer,
   roomTypesReducer,
+  usersReducer,
 });
 
 const store = createStore(

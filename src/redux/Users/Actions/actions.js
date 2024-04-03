@@ -13,7 +13,7 @@ export const getAllUsers = () => {
       const response = await axios.get(`${VITE_BACKEND_URL}/auth/allUsers`);
       dispatch({
         type: GET_ALL_USERS,
-        payload: response.data,
+        payload: response.data.users,
       });
     } catch (error) {
       throw new Error("Can not get all users");
