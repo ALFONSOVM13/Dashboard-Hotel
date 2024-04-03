@@ -43,7 +43,7 @@ const roomsReducer = (state = initialState, { type, payload }) => {
     case CREATE_ROOM:
       return {
         ...state,
-        allRooms: [...state.allRoms, payload],
+        allRooms: [...state.allRooms, payload],
       };
 
     default:

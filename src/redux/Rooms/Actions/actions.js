@@ -164,9 +164,11 @@ export const createRoom = (product) => {
         `${VITE_BACKEND_URL}/api/rooms`,
         product
       );
+      console.log("Resultado: ", response.data);
+
       return dispatch({
         type: CREATE_ROOM,
-        payload: normalizeResponse(response.data[0]),
+        payload: normalizeResponse(response.data),
       });
     } catch (error) {
       console.log(error.message);

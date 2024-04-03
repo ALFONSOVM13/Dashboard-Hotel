@@ -14,9 +14,12 @@ import SaveCancelButtons from "../../components/SaveCancelButtons";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../components/InputField";
 import { all } from "axios";
+import PhotoUrlSelector from "../../components/PhotoUrlSelector";
+import SaveDontSaveCancel from "../../components/SaveDontSaveCancel";
 
 function RoomCreate() {
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
+  const [showSave, setShowSave] = useState(false);
   const initialValues = {
     id: "",
     is_active: true,
@@ -25,7 +28,11 @@ function RoomCreate() {
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp_WXkZhcWSMu1pQzz7wusWgJHIM-n3Yh28_TiWb8j8Q&s",
     price_per_night: 0,
     room_number: "",
-    room_type: { id: 1, name: "", description: "" },
+    room_type: {
+      description: "Not assigned to any room type",
+      id: 1,
+      name: "Not Assigned",
+    },
     services: {
       single_bed: 0,
       double_bed: 0,
@@ -51,31 +58,24 @@ function RoomCreate() {
     }
   }, []);
 
-  useEffect(() => {
-    if (allRoomTypes.length > 0)
-      setRoomData({
-        ...roomData,
-        room_type: allRoomTypes.find((roomType) => roomType.id === 1),
-      });
-  }, [allRoomTypes]);
-
   const validateRoom = () => {
-    const errors = [];
+    const errors = {};
     if (roomData.max_capacity < 0 || roomData.max_capacity > 20)
-      errors.push("Max capacity should be between 1 and 20");
-    else if (roomData.price_per_night <= 0)
-      errors.push("Price per night must be greater than zero");
-    else if (roomData.room_number.trim() === "")
-      errors.push("Room number cannot be empty or only spaces");
-    else if (roomData.photo_url.trim() === "")
-      errors.push("Photo URL cannot be empty or only spaces");
-    else if (roomData.status.trim() === "")
-      errors.push("Status field must be selected");
+      errors.max_capacity = "Max capacity should be between 1 and 20";
+    if (parseFloat(roomData.price_per_night) <= 0)
+      errors.price_per_night = "Price per night must be greater than zero";
+    if (roomData.room_number.trim() === "")
+      errors.room_number = "Room number cannot be empty or only spaces";
+    if (roomData.photo_url.trim() === "")
+      errors.photo_url = "Photo URL cannot be empty or only spaces";
+    if (roomData.status.trim() === "")
+      errors.status = "Status field must be selected";
     return errors;
   };
 
   const handleChange = (e, attrib = "") => {
     const { name, value } = e.target;
+    setErrors({ ...errors, [name]: "" });
     if (name === "room_type")
       setRoomData({
         ...roomData,
@@ -129,21 +129,24 @@ function RoomCreate() {
     console.log(roomData);
   }, [roomData]);
 
-  const save = (e) => {
-    e.preventDefault();
+  const handleSave = (e) => {
+    e !== undefined && e.preventDefault();
     try {
       const errors = validateRoom();
       console.log(errors);
-      if (errors.length === 0) {
+      if (Object.keys(errors).length === 0) {
         dispatch(createRoom(roomData));
         navigate(-1);
-      } else setErrors([...errors]);
+      } else {
+        setShowSave(false);
+        setErrors({ ...errors });
+      }
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  const cancel = (e) => {
+  const handleCancel = (e) => {
     e.preventDefault();
     navigate(-1);
   };
@@ -158,7 +161,7 @@ function RoomCreate() {
             name="room_number"
             label="Room Number"
             handler={handleChange}
-            error={errors?.room_number}
+            error={errors.room_number}
           />
           <SelectField
             label={"Room type"}
@@ -172,7 +175,12 @@ function RoomCreate() {
             {roomData.room_type?.description?.slice(0, 120) +
               (roomData.room_type?.description?.length > 117 ? "..." : "")}
           </p>
-          <PicSelector />
+          <PhotoUrlSelector
+            error={errors.photo_url}
+            handler={handleChange}
+            name={"photo_url"}
+            value={roomData.photo_url}
+          />
         </div>
         <div>
           <div className="flex w-full gap-2 lg:gap-5 pb-3 px-3 border-2 border-[rgba(10,10,10,0.2)] rounded-xl h-fit">
@@ -183,6 +191,7 @@ function RoomCreate() {
                 handler={handleChange}
                 range={[1, 20]}
                 value={roomData.max_capacity}
+                error={errors.max_capacity}
               />
             </div>
             <div className="flex flex-col w-1/2">
@@ -190,8 +199,8 @@ function RoomCreate() {
                 label={"Price Per Night"}
                 name={"price_per_night"}
                 handler={handleChange}
-                range={[1, 20]}
                 value={roomData.price_per_night}
+                error={errors.price_per_night}
               />
             </div>
           </div>
@@ -303,7 +312,16 @@ function RoomCreate() {
           </div>
         </div>
       </div>
-      <SaveCancelButtons saveHandler={save} cancelHandler={cancel} />
+      {showSave && (
+        <SaveDontSaveCancel
+          onSave={handleSave}
+          onCancel={() => setShowSave(false)}
+        />
+      )}
+      <SaveCancelButtons
+        saveHandler={() => setShowSave(true)}
+        cancelHandler={handleCancel}
+      />
     </div>
   );
 }

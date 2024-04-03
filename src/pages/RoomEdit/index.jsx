@@ -13,8 +13,11 @@ import PicSelector from "../../components/PicSelector";
 import HotelImages from "../../components/HotelImages";
 import SaveCancelButtons from "../../components/SaveCancelButtons";
 import { useNavigate } from "react-router-dom";
+import PhotoUrlSelector from "../../components/PhotoUrlSelector";
+import SaveDontSaveCancel from "../../components/SaveDontSaveCancel";
 
 function RoomEdit() {
+  const [errors, setErrors] = useState({});
   const initialValues = {
     id: "",
     is_active: "",
@@ -36,6 +39,7 @@ function RoomEdit() {
     status: "",
   };
   const { roomId } = useParams();
+  const [showSave, setShowSave] = useState(false);
   const [enabled, setEnabled] = useState();
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("");
@@ -66,6 +70,21 @@ function RoomEdit() {
     setLoading(roomData.id === Number(roomId) ? false : true);
     console.log(roomData);
   }, [roomData]);
+
+  const validateRoom = () => {
+    const errors = {};
+    if (roomData.max_capacity < 0 || roomData.max_capacity > 20)
+      errors.max_capacity = "Max capacity should be between 1 and 20";
+    if (parseFloat(roomData.price_per_night) <= 0)
+      errors.price_per_night = "Price per night must be greater than zero";
+    if (roomData.room_number.trim() === "")
+      errors.room_number = "Room number cannot be empty or only spaces";
+    if (roomData.photo_url.trim() === "")
+      errors.photo_url = "Photo URL cannot be empty or only spaces";
+    if (roomData.status.trim() === "")
+      errors.status = "Status field must be selected";
+    return errors;
+  };
 
   const handleChange = (e, attrib = "") => {
     const { name, value } = e.target;
@@ -118,17 +137,24 @@ function RoomEdit() {
     });
   }, [status]);
 
-  const save = (e) => {
-    e.preventDefault();
+  const handleSave = (e) => {
+    e !== undefined && e.preventDefault();
     try {
-      dispatch(patchRoom(roomId, roomData));
-      navigate(-1);
+      const errors = validateRoom();
+      console.log(errors);
+      if (Object.keys(errors).length === 0) {
+        dispatch(patchRoom(roomId, roomData));
+        navigate(-1);
+      } else {
+        setShowSave(false);
+        setErrors({ ...errors });
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const cancel = (e) => {
+  const handleCancel = (e) => {
     e.preventDefault();
     navigate(-1);
   };
@@ -145,13 +171,19 @@ function RoomEdit() {
               value={roomData.room_type?.id}
               options={allRoomTypes}
               handler={handleChange}
+              error={errors.room_number}
             />
             <p className="mt-5 text-left leading-relaxed">
               <span className="text-md font-bold">Description:</span> <br />
               {roomData.room_type?.description?.slice(0, 120) +
                 (roomData.room_type?.description?.length > 117 ? "..." : "")}
             </p>
-            <PicSelector />
+            <PhotoUrlSelector
+              error={errors.photo_url}
+              handler={handleChange}
+              name={"photo_url"}
+              value={roomData.photo_url}
+            />
           </div>
           <div>
             <div className="flex w-full gap-2 lg:gap-5 pb-3 px-3 border-2 border-[rgba(10,10,10,0.2)] rounded-xl h-fit">
@@ -162,6 +194,7 @@ function RoomEdit() {
                   handler={handleChange}
                   range={[1, 20]}
                   value={roomData.max_capacity}
+                  error={errors.max_capacity}
                 />
               </div>
               <div className="flex flex-col w-1/2">
@@ -171,6 +204,7 @@ function RoomEdit() {
                   handler={handleChange}
                   range={[1, 20]}
                   value={roomData.price_per_night}
+                  error={errors.price_per_night}
                 />
               </div>
             </div>
@@ -279,7 +313,16 @@ function RoomEdit() {
             </div>
           </div>
         </div>
-        <SaveCancelButtons saveHandler={save} cancelHandler={cancel} />
+        {showSave && (
+          <SaveDontSaveCancel
+            onSave={handleSave}
+            onCancel={() => setShowSave(false)}
+          />
+        )}
+        <SaveCancelButtons
+          saveHandler={() => setShowSave(true)}
+          cancelHandler={handleCancel}
+        />
       </div>
     </Loading>
   );

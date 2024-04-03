@@ -77,11 +77,7 @@ export default function PriceField({ label, name, value, handler, error }) {
         onKeyDown={allowDecimalAndNumbersOnly}
         onChange={handleChange}
       />{" "}
-      {error && (
-        <span className="text-left tracking-normal mt-2 text-[#ff1212]">
-          {error}
-        </span>
-      )}
+      {error !== "" && <span className="text-red-700 font-bold">{error}</span>}
     </>
   );
 }

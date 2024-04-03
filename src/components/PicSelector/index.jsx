@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
-const PicSelector = ({ className }) => {
+const PicSelector = ({ className, error, handler }) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
+    console.log(event.target.files);
     const reader = new FileReader();
 
     reader.onload = (e) => {
@@ -33,6 +34,7 @@ const PicSelector = ({ className }) => {
           style={{ backgroundImage: `url(${selectedImage})` }}
         ></div>
       )}
+      {error !== "" && <span className="text-red-700 font-bold">{error}</span>}
     </div>
   );
 };

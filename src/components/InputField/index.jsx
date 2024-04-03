@@ -30,10 +30,8 @@ export default function InputField({
           onChange={handler}
         />
       )}{" "}
-      {error && (
-        <span className="text-left tracking-normal mt-2 text-[#ff1212]">
-          {error}
-        </span>
+      {error !== "" && (
+        <span className="text-red-700 font-bold text-wrap">{error}</span>
       )}
     </>
   );
