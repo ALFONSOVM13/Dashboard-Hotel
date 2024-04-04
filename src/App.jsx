@@ -31,7 +31,30 @@ function App() {
   const navigate = useNavigate();
   const sideBar = useRef();
   const tabcontent = useRef();
+  const [darkMode, setDarkMode] = useState(false);
 
+  const toogleDarkMode = () => {
+    if (!darkMode) {
+      localStorage.theme = "light";
+      document.documentElement.classList.remove("dark");
+    } else {
+      localStorage.theme = "dark";
+      document.documentElement.classList.add("dark");
+    }
+    setDarkMode(!darkMode);
+  };
+
+  useEffect(() => {
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
   const noSideBarRoutes = ["/", "/register"];
   const noProtectedRoutes = ["/", "/register"];
 
@@ -66,15 +89,23 @@ function App() {
   window.addEventListener("resize", handleMenu);
   return (
     // <Provider store={store}>
-    <div className="flex">
+    <div
+      className={`flex dark:bg-[rgba(10,10,10,0.9)] dark:text-white transition-all duration-300`}
+    >
       {!noSideBarRoutes.includes(location.pathname) && (
-        <Sidebar controlador={sideBar} setSession={setLogged} />
+        <Sidebar
+          controlador={sideBar}
+          setSession={setLogged}
+          darkMode={darkMode}
+          toogleDarkMode={toogleDarkMode}
+        />
       )}
+
       <div
         ref={tabcontent}
-        className={`flex justify-start min-h-screen flex-col w-full ${
+        className={`dark:bg-black-900 flex justify-start min-h-screen flex-col w-full ${
           !noSideBarRoutes.includes(location.pathname) ? " pl-[300px]" : "pl-0"
-        } transition-all duration-500 ease-in-out`}
+        } transition-all duration-300 ease-in-out`}
       >
         <Routes>
           <Route

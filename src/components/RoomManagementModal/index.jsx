@@ -27,10 +27,10 @@ export default function RoomManagementModal({ isOpen, onClose }) {
 
   const [showModalEditRoomTypes, setShowModalEditRoomTypes] = useState(false);
 
-  const closeModal = (e) => {
-    if (e) e.preventDefault();
-    setShowModalEditRoomTypes(false);
-  };
+  // const closeModal = (e) => {
+  //   if (e) e.preventDefault();
+  //   setShowModalEditRoomTypes(false);
+  // };
 
   useEffect(() => {
     try {
@@ -64,11 +64,11 @@ export default function RoomManagementModal({ isOpen, onClose }) {
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />{" "}
       <div className="fixed inset-0 flex items-center justify-center p-4">
         {" "}
-        <Dialog.Panel className="flex flex-col pt-11 pb-7 bg-white rounded-3xl max-w-[710px] max-h-[95%] ">
+        <Dialog.Panel className="flex flex-col justify-between pt-11 pb-7 bg-white dark:bg-[#333333] rounded-3xl max-w-[710px] h-[100%] shadow-xl shadow-slate-800 dark:shadow-none">
           {" "}
           <header className="flex flex-col px-5 w-full w-full max-md:pl-5 max-md:max-w-full">
             {" "}
-            <Dialog.Title className="self-start text-4xl font-semibold tracking-wide text-neutral-500 max-md:max-w-full">
+            <Dialog.Title className="self-start text-4xl font-semibold tracking-wide dark:text-white text-neutral-500 max-md:max-w-full">
               {" "}
               Room Type Management{" "}
             </Dialog.Title>{" "}
@@ -78,7 +78,7 @@ export default function RoomManagementModal({ isOpen, onClose }) {
                 edit={false}
               />
             )}
-            <hr className="shrink-0 mt-3 h-px bg-black border border-black border-solid max-md:max-w-full" />{" "}
+            <hr className="shrink-0 mt-3 h-px dark:bg-slate-200 border-slate-300 bg-black border border-black border-solid max-md:max-w-full" />{" "}
             <button
               className="justify-center self-end px-5 py-2 mt-4 mr-7 text-base font-bold tracking-tight leading-6 text-center text-white bg-blue-600 rounded-md max-md:mr-2.5"
               onClick={() => setShowModalEditRoomTypes(true)}
@@ -87,11 +87,11 @@ export default function RoomManagementModal({ isOpen, onClose }) {
               New Room Type{" "}
             </button>{" "}
           </header>{" "}
-          <main className="flex flex-col pr-6 pl-6 mt-2.5 w-full max-md:px-5 max-md:max-w-full">
+          <main className="flex flex-col h-full pr-6 pl-6 mt-2.5 w-full max-md:px-5 max-md:max-w-full">
             {" "}
-            <div className="max-md:max-w-full">
+            <div className="max-md:max-w-full h-full">
               {" "}
-              <div className="flex gap-0 flex-col max-md:gap-0">
+              <div className="flex gap-0 flex-col max-md:gap-0 gap-5 h-full">
                 {" "}
                 <div className="flex flex-col w-full max-md:ml-0 max-md:w-full">
                   <SearchBar

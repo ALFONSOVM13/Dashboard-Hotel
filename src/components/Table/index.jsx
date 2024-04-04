@@ -6,7 +6,6 @@
   {propiedad1:"celda1Fila3",propiedad2:"celda1Fila3",propiedad3:"celda1Fila3"}
 ]
 */
-import { useState } from "react";
 import HotelImages from "../HotelImages";
 
 function Table({
@@ -21,7 +20,7 @@ function Table({
 }) {
   return (
     <table
-      className={`w-full block ${
+      className={`w-full block dark:text-[rgba(240,240,240,0.9)] ${
         maxHeight ? maxHeight + " overflow-y-auto" : ""
       }`}
     >
@@ -29,7 +28,7 @@ function Table({
         <tr className="border-b-2 border-b-gray-200 shadow-sm shadow-slate-500 w-full">
           {headers.map((header, i) => (
             <th
-              className="px-10 min-w-fit w-1/6 text-xl text-black capitalize "
+              className="px-10 min-w-fit w-1/6 dark:text-[rgba(240,240,240,0.9)]  text-xl text-black capitalize "
               key={header + i}
             >
               {header}
@@ -45,7 +44,7 @@ function Table({
               className="h-[5rem] w-full hover:bg-[rgba(200,200,200,0.3)] transition-all duration-300"
             >
               {row.imageUrl && (
-                <td className="flex justify-center items-center font-light text-black px-10 min-w-fit w-1/6 text-xl">
+                <td className="flex justify-center items-center font-light dark:text-[rgba(240,240,240,0.9)] text-black px-10 min-w-fit w-1/6 text-xl">
                   <img
                     src={row.imageUrl}
                     alt={`Imagen de ${row.name}`}
@@ -62,7 +61,7 @@ function Table({
                 .map((cell, j) => (
                   <td
                     key={"Cell" + i.toString() + j.toString()}
-                    className="justify-between p-5 items-center font-normal text-black max-md:flex-wrap max-md:max-w-full"
+                    className="justify-between p-5 items-center font-normal dark:text-[rgba(240,240,240,0.9)]  text-black max-md:flex-wrap max-md:max-w-full"
                   >
                     {typeof cell === "object" ? (
                       <div className="grid gap-3 grid-cols-3">
@@ -88,22 +87,30 @@ function Table({
                               : cell === "busy"
                               ? "bg-red-200"
                               : ""
-                          } rounded-xl font-bold text-black w-[120px] block`}
+                          } rounded-xl font-bold text-black w-[120px] block mx-auto`}
                         >
                           {cell.charAt(0).toUpperCase() +
                             cell.slice(1).toLowerCase()}
                         </span>
+                      ) : cell.indexOf("@") !== -1 ? (
+                        cell
                       ) : (
-                        cell.charAt(0).toUpperCase() +
-                        cell.slice(1).toLowerCase()
+                        cell
+                          .split(" ")
+                          .map(
+                            (text) =>
+                              text.charAt(0).toUpperCase() +
+                              text.slice(1).toLowerCase()
+                          )
+                          .join(" ")
                       )
                     ) : typeof cell === "boolean" ? (
                       cell ? (
-                        <span className="p-2 bg-green-200 rounded-xl font-bold text-black w-[120px] block">
+                        <span className="p-2 bg-green-200 rounded-xl font-bold text-black w-[120px] block mx-auto">
                           Active
                         </span>
                       ) : (
-                        <span className="p-2 bg-red-200 rounded-xl font-bold text-black w-[120px] block">
+                        <span className="p-2 bg-red-200 rounded-xl font-bold text-black w-[120px] block mx-auto">
                           Inactive
                         </span>
                       )

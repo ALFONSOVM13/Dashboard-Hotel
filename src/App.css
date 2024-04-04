@@ -39,3 +39,21 @@
 .read-the-docs {
   color: #888;
 }
+
+body {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dark {
+  --bg-color: #1a1c1e; /* Color de fondo oscuro */
+  --text-color: #ffffff; /* Color de texto blanco */
+}
+
+.light {
+  --bg-color: #ffffff; /* Color de fondo claro */
+  --text-color: #000000; /* Color de texto negro */
+}
+
+.bg-white {
+  background-color: var(--bg-color);
+}
