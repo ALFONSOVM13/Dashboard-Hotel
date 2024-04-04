@@ -104,7 +104,7 @@ function App() {
       <div
         ref={tabcontent}
         className={`dark:bg-black-900 flex justify-start min-h-screen flex-col w-full ${
-          !noSideBarRoutes.includes(location.pathname) ? " pl-[300px]" : "pl-0"
+          noSideBarRoutes.includes(location.pathname) ? " pl-0" : " pl-[300px]"
         } transition-all duration-300 ease-in-out`}
       >
         <Routes>
@@ -117,15 +117,14 @@ function App() {
           <Route path="register" element={<RegisterPage />} />
           <Route
             element={<ProtectedRoute canActivate={logged} redirectPath="/" />}
-
           >
             <Route path="dashboard">
               <Route path="" element={<Dashboard />} />
-             <Route path="guests" element={<Guests />} />
-            <Route
-              path="guests/createguest/newguest"
-              element={<CreateGuest />}
-            />
+              <Route path="guests" element={<Guests />} />
+              <Route
+                path="guests/createguest/newguest"
+                element={<CreateGuest />}
+              />
               <Route path="reservations" element={<Reservations />} />
               <Route
                 path="reservations/:reservationId"
@@ -146,7 +145,6 @@ function App() {
               <Route path="notifications" element={<Notifications />} />
               <Route path="restaurantMenu" element={<RestaurantMenu />} />
             </Route>
-
           </Route>
         </Routes>
       </div>
