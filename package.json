@@ -16,6 +16,8 @@
     "@mui/icons-material": "^5.15.13",
     "@mui/material": "^5.15.13",
     "axios": "^1.6.8",
+    "flowbite": "^2.3.0",
+    "flowbite-react": "^0.7.8",
     "formik": "^2.4.5",
     "localtunnel": "^2.0.2",
     "react": "^18.2.0",

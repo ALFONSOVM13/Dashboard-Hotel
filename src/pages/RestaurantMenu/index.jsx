@@ -84,7 +84,7 @@ function RestaurantMenu() {
 
   return (
     <>
-      <div className="flex flex-col px-5 w-full max-md:max-w-full">
+      <div className="flex flex-col px-5 pt-10 w-full max-md:max-w-full">
         <TabTitle title="Restaurant Menu" />
         <SearchBar
           text="Name, Category"

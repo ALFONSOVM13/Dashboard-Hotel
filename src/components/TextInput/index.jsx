@@ -8,13 +8,13 @@ const TextInput = ({ label, name, rows, labelAlign = "center" }) => {
       as="textarea"
       rows={rows}
       name={name}
-      className="border mt-4 mr-4 ml-4 py-2 px-3 text-gray-700 bg-white rounded-md"
+      className="border mt-4 mr-4 ml-4 py-2 px-3 dark:text-white  text-gray-700 bg-white rounded-md"
     />
   ) : (
     <Field
       type="text"
       name={name}
-      className="border mt-4 mr-4 ml-4 py-2 px-3 text-gray-700 bg-white rounded-md"
+      className="border mt-4 mr-4 ml-4 py-2 px-3 dark:text-white  text-gray-700 bg-white rounded-md"
     />
   );
 

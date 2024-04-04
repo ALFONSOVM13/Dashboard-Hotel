@@ -10,7 +10,7 @@ function SelectField({ label, name, value, handler, error, options = [] }) {
         {" "}
         <label
           htmlFor={name}
-          className="text-left mt-7 text-base font-medium tracking-normal text-gray-700"
+          className="text-left mt-7 text-base font-medium tracking-normal dark:text-white  text-gray-700"
         >
           {" "}
           {label}{" "}
@@ -18,7 +18,7 @@ function SelectField({ label, name, value, handler, error, options = [] }) {
         <select
           name={name}
           value={value || ""}
-          className="pl-3 shrink-0 mt-3.5 rounded-lg border border-solid bg-gray-200 bg-opacity-90 border-zinc-800 border-opacity-30 h-[41px]"
+          className="dark:text-black pl-3 shrink-0 mt-3.5 rounded-lg border border-solid bg-gray-100 bg-opacity-90 border-zinc-800 border-opacity-30 h-[41px]"
           onChange={handler}
         >
           {options.length > 0 &&

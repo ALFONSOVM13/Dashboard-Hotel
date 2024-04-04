@@ -27,7 +27,7 @@ export default function RoomTypes({ action, control }) {
       {" "}
       <header className="flex gap-5 self-stretch px-5 w-full">
         {" "}
-        <h2 className="flex-auto my-auto text-lg font-medium tracking-normal text-black">
+        <h2 className="flex-auto my-auto text-lg font-medium tracking-normal text-black dark:text-slate-200">
           {" "}
           Room Types{" "}
         </h2>{" "}

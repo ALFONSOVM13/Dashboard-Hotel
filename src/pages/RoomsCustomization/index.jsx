@@ -18,7 +18,7 @@ function RoomsCustomization() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { allRooms } = useSelector((state) => state.roomsReducer);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState();
   const [roomType, setRoomType] = useState(null);
   const [management, setManagement] = useState(false);
   const [showModalEditRoomTypes, setShowModalEditRoomTypes] = useState(false);
@@ -44,7 +44,6 @@ function RoomsCustomization() {
   }, []);
 
   useEffect(() => {
-    setLoading(true);
     setData([
       ...allRooms.map(
         ({
