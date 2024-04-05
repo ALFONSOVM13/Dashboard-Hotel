@@ -16,16 +16,11 @@ import { useEffect, useRef, useState } from "react";
 import EditGuest from "./pages/Guests/EditGuest";
 import CreateGuest from "./pages/Guests/CreateGuest";
 import ProtectedRoute from "./utils/ProtectedRoute";
-import { useLocalStorage } from "react-use";
 import RegisterPage from "./pages/RegisterPage";
 import Dashboard from "./pages/Dashboard";
 import RoomCreate from "./pages/RoomCreate";
 
 function App() {
-  const [user, setUser] = useLocalStorage("user", {
-    user: "",
-    token: "",
-  });
   const [logged, setLogged] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
@@ -34,7 +29,7 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
 
   const toogleDarkMode = () => {
-    if (!darkMode) {
+    if (darkMode) {
       localStorage.theme = "light";
       document.documentElement.classList.remove("dark");
     } else {
@@ -51,21 +46,24 @@ function App() {
         window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
       document.documentElement.classList.add("dark");
+      setDarkMode(true);
     } else {
       document.documentElement.classList.remove("dark");
+      setDarkMode(false);
     }
   }, []);
-  const noSideBarRoutes = ["/", "/register"];
-  const noProtectedRoutes = ["/", "/register"];
 
-  useEffect(() => {
-    if (user.user === "" && !noProtectedRoutes.includes(location.pathname)) {
-      navigate("/");
-      setLogged(false);
-    } else {
-      setLogged(true);
-    }
-  }, [location.pathname, logged]);
+  const noSideBarRoutes = ["/", "/register"];
+  // const noProtectedRoutes = ["/", "/register"];
+
+  // useEffect(() => {
+  //   if (user.user === "" && !noProtectedRoutes.includes(location.pathname)) {
+  //     navigate("/");
+  //     setLogged(false);
+  //   } else {
+  //     setLogged(true);
+  //   }
+  // }, [location.pathname, logged]);
   const handleMenu = (e) => {
     if (!e || noSideBarRoutes.includes(location.pathname)) return;
     let screenWidth = window.innerWidth;
@@ -85,6 +83,10 @@ function App() {
       tabContent?.classList?.add("pl-[300px]");
     }
   };
+
+  useEffect(() => {
+    console.log("DarkMode: ", darkMode);
+  }, [darkMode]);
 
   window.addEventListener("resize", handleMenu);
   return (
@@ -108,43 +110,35 @@ function App() {
         } transition-all duration-300 ease-in-out`}
       >
         <Routes>
-          <Route
-            path="/"
-            element={
-              <LoginPage user={user} setUser={setUser} setSession={setLogged} />
-            }
-          />
+          <Route path="/" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
-          <Route
+          {/* <Route
             element={<ProtectedRoute canActivate={logged} redirectPath="/" />}
-          >
-            <Route path="dashboard">
-              <Route path="" element={<Dashboard />} />
-              <Route path="guests" element={<Guests />} />
-              <Route
-                path="guests/createguest/newguest"
-                element={<CreateGuest />}
-              />
-              <Route path="reservations" element={<Reservations />} />
-              <Route
-                path="reservations/:reservationId"
-                element={<EditReservation />}
-              />
-              <Route path="guests/:id" element={<EditGuest />} />
-              <Route path="offers" element={<Offers />} />
-              <Route path="employees" element={<Employees />} />
-              <Route path="roomsCustomization">
-                <Route path="" element={<RoomsCustomization />} />
-                <Route path=":roomId" element={<RoomEdit />} />
-                <Route path="create" element={<RoomCreate />} />
-              </Route>
-              <Route
-                path="offerNotifications"
-                element={<OfferNotifications />}
-              />
-              <Route path="notifications" element={<Notifications />} />
-              <Route path="restaurantMenu" element={<RestaurantMenu />} />
+          > */}
+          <Route path="dashboard">
+            <Route path="" element={<Dashboard />} />
+            <Route path="guests" element={<Guests />} />
+            <Route
+              path="guests/createguest/newguest"
+              element={<CreateGuest />}
+            />
+            <Route path="reservations" element={<Reservations />} />
+            <Route
+              path="reservations/:reservationId"
+              element={<EditReservation />}
+            />
+            <Route path="guests/:id" element={<EditGuest />} />
+            <Route path="offers" element={<Offers />} />
+            <Route path="employees" element={<Employees />} />
+            <Route path="roomsCustomization">
+              <Route path="" element={<RoomsCustomization />} />
+              <Route path=":roomId" element={<RoomEdit />} />
+              <Route path="create" element={<RoomCreate />} />
             </Route>
+            <Route path="offerNotifications" element={<OfferNotifications />} />
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="restaurantMenu" element={<RestaurantMenu />} />
+            {/* </Route> */}
           </Route>
         </Routes>
       </div>

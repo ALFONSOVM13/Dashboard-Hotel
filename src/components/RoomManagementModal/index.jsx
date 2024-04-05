@@ -1,5 +1,5 @@
 import { Dialog } from "@headlessui/react";
-import exampleImg from "./example.jpg";
+import { deleteRoomType } from "../../redux/RoomTypes/Actions/actions";
 import SearchBar from "../SearchBar";
 import PaginationControl from "../PaginationControl";
 import { useEffect } from "react";
@@ -26,6 +26,15 @@ export default function RoomManagementModal({ isOpen, onClose }) {
   const dispatch = useDispatch();
 
   const [showModalEditRoomTypes, setShowModalEditRoomTypes] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+
+  const [roomType, setRoomType] = useState(null);
+
+  const showModal = (value, id) => {
+    setEditMode(true);
+    setRoomType(id);
+    setShowModalEditRoomTypes(value);
+  };
 
   // const closeModal = (e) => {
   //   if (e) e.preventDefault();
@@ -43,12 +52,13 @@ export default function RoomManagementModal({ isOpen, onClose }) {
     setData([
       ...allRoomTypes
         .map((type) => ({
+          id: type.id,
           name: type.name,
           description:
             type.description.length > 38
               ? `${type.description.slice(0, 35)}...`
               : type.description,
-          imageUrl: exampleImg,
+          // imageUrl: exampleImg,
         }))
         .filter((item) => item.name !== "Not Assigned"),
     ]);
@@ -75,13 +85,16 @@ export default function RoomManagementModal({ isOpen, onClose }) {
             {showModalEditRoomTypes && (
               <ModalRoomTypesEdit
                 control={setShowModalEditRoomTypes}
-                edit={false}
+                edit={editMode}
               />
             )}
             <hr className="shrink-0 mt-3 h-px dark:bg-slate-200 border-slate-300 bg-black border border-black border-solid max-md:max-w-full" />{" "}
             <button
               className="justify-center self-end px-5 py-2 mt-4 mr-7 text-base font-bold tracking-tight leading-6 text-center text-white bg-blue-600 rounded-md max-md:mr-2.5"
-              onClick={() => setShowModalEditRoomTypes(true)}
+              onClick={() => {
+                setEditMode(false);
+                setShowModalEditRoomTypes(true);
+              }}
             >
               {" "}
               New Room Type{" "}
@@ -111,7 +124,7 @@ export default function RoomManagementModal({ isOpen, onClose }) {
                   ) : (
                     <Table
                       headers={[
-                        "Image Preview",
+                        // "Image Preview",
                         "Name",
                         "Description",
                         "Actions",
@@ -121,12 +134,21 @@ export default function RoomManagementModal({ isOpen, onClose }) {
                       size={pagination.size}
                       page={pagination.page}
                       maxHeight={"max-h-[200px]"}
+                      setterModal1={showModal}
                       Components={ActionButtons}
+                      omitt="id"
                     />
                   )}
                 </div>
               </div>{" "}
             </div>{" "}
+            {showModalEditRoomTypes && (
+              <ModalRoomTypesEdit
+                control={setShowModalEditRoomTypes}
+                id={roomType}
+                edit={editMode}
+              />
+            )}
             <button
               onClick={onClose}
               className="justify-center self-end px-8 py-3 mt-12 text-base font-semibold tracking-normal text-center text-white whitespace-nowrap bg-amber-700 rounded shadow-sm max-md:px-5 max-md:mt-10"
@@ -141,9 +163,28 @@ export default function RoomManagementModal({ isOpen, onClose }) {
   );
 }
 
-function ActionButtons({ id, data }) {
-  const handleEdit = () => {};
-  const handleDelete = () => {};
+function ActionButtons({ id, data, setterModal1, setterModal2 }) {
+  const dispatch = useDispatch();
+  const handleEdit = () => {
+    console.log(id, data);
+    setterModal1(true, id);
+  };
+
+  const showConfirmation = async () => {
+    console.log("Hols");
+    try {
+      await confirmation.seeAlert(
+        dispatch,
+        data.id,
+        {},
+        { text: "delete", execute: deleteRoomType },
+        `Are you sure to delete "${data.name}" room type?`,
+        ["The room type was deleted successfully!", "Accept", "info"]
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // const handleDelete = async () => {
   //   try {
@@ -162,8 +203,8 @@ function ActionButtons({ id, data }) {
   // };
   return (
     <div className="flex justify-center gap-3 w-full h-full items-center p-2 cursor-pointer">
-      <EditButton id={id} handleEdit={handleEdit} />
-      <DeleteButton id={id} handleDelete={handleDelete} />
+      <EditButton handleEdit={handleEdit} />
+      <DeleteButton handleDelete={showConfirmation} />
     </div>
   );
 }

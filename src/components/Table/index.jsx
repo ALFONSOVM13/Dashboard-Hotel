@@ -17,6 +17,8 @@ function Table({
   page = 0,
   maxHeight = false,
   omitt = "",
+  setterModal1,
+  setterModal2,
 }) {
   return (
     <table
@@ -121,7 +123,12 @@ function Table({
                 ))}
               {Components !== undefined && (
                 <td key={"Cell" + i.toString() + "components"}>
-                  <Components id={`${row[idName]}`} data={row} />
+                  <Components
+                    id={`${row[idName]}`}
+                    data={row}
+                    setterModal1={setterModal1}
+                    setterModal2={setterModal2}
+                  />
                 </td>
               )}
             </tr>

@@ -72,7 +72,7 @@ export default function PriceField({ label, name, value, handler, error }) {
         min={0}
         name="formattedPrice"
         value={inputs.formattedPrice}
-        className="pl-3 shrink-0 mt-3.5 rounded-lg border border-solid bg-gray-200 bg-opacity-90 border-zinc-800 border-opacity-30 h-[41px]"
+        className="pl-3 shrink-0 mt-3.5 rounded-lg border border-solid bg-gray-100 bg-opacity-90 border-zinc-800 border-opacity-30 h-[41px] dark:text-black"
         onBlur={formatPrice}
         onKeyDown={allowDecimalAndNumbersOnly}
         onChange={handleChange}

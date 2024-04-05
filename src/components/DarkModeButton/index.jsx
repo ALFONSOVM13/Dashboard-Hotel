@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function DarkModeButton({ darkMode, setDarkMode }) {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState();
+
+  useEffect(
+    () => setIsChecked(darkMode), // Set the initial state based on whether or not we're in dark mode.
+    [darkMode] // Only run this effect once when `darkMode` changes.
+  );
 
   const toggleSwitch = () => {
-    setIsChecked(!isChecked);
     setDarkMode();
   };
   return (
@@ -26,7 +30,7 @@ function DarkModeButton({ darkMode, setDarkMode }) {
         <input
           type="checkbox"
           className="input"
-          checked={!darkMode}
+          checked={isChecked}
           onChange={toggleSwitch}
         />
         <span className="slider"></span>

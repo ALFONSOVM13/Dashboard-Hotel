@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import React from "react";
-import hamburguer from "./icons/hamburguer.svg";
-import mosaic from "./icons/mosaic.svg";
-import mail from "./icons/mail.svg";
+// import React from "react";
+// import hamburguer from "./icons/hamburguer.svg";
+// import mosaic from "./icons/mosaic.svg";
+// import mail from "./icons/mail.svg";
 
 function ListCategory({ text }) {
   return (
