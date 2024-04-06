@@ -16,33 +16,54 @@ import { useEffect, useRef, useState } from "react";
 import EditGuest from "./pages/Guests/EditGuest";
 import CreateGuest from "./pages/Guests/CreateGuest";
 import ProtectedRoute from "./utils/ProtectedRoute";
-import { useLocalStorage } from "react-use";
 import RegisterPage from "./pages/RegisterPage";
 import Dashboard from "./pages/Dashboard";
 import RoomCreate from "./pages/RoomCreate";
 
 function App() {
-  const [user, setUser] = useLocalStorage("user", {
-    user: "",
-    token: "",
-  });
   const [logged, setLogged] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
   const sideBar = useRef();
   const tabcontent = useRef();
+  const [darkMode, setDarkMode] = useState(false);
 
-  const noSideBarRoutes = ["/", "/register"];
-  const noProtectedRoutes = ["/", "/register"];
+  const toogleDarkMode = () => {
+    if (darkMode) {
+      localStorage.theme = "light";
+      document.documentElement.classList.remove("dark");
+    } else {
+      localStorage.theme = "dark";
+      document.documentElement.classList.add("dark");
+    }
+    setDarkMode(!darkMode);
+  };
 
   useEffect(() => {
-    if (user.user === "" && !noProtectedRoutes.includes(location.pathname)) {
-      navigate("/");
-      setLogged(false);
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+      setDarkMode(true);
     } else {
-      setLogged(true);
+      document.documentElement.classList.remove("dark");
+      setDarkMode(false);
     }
-  }, [location.pathname, logged]);
+  }, []);
+
+  const noSideBarRoutes = ["/", "/register"];
+  // const noProtectedRoutes = ["/", "/register"];
+
+  // useEffect(() => {
+  //   if (user.user === "" && !noProtectedRoutes.includes(location.pathname)) {
+  //     navigate("/");
+  //     setLogged(false);
+  //   } else {
+  //     setLogged(true);
+  //   }
+  // }, [location.pathname, logged]);
   const handleMenu = (e) => {
     if (!e || noSideBarRoutes.includes(location.pathname)) return;
     let screenWidth = window.innerWidth;
@@ -63,59 +84,61 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    console.log("DarkMode: ", darkMode);
+  }, [darkMode]);
+
   window.addEventListener("resize", handleMenu);
   return (
     // <Provider store={store}>
-    <div className="flex">
+    <div
+      className={`flex dark:bg-[rgba(10,10,10,0.9)] dark:text-white transition-all duration-300`}
+    >
       {!noSideBarRoutes.includes(location.pathname) && (
-        <Sidebar controlador={sideBar} setSession={setLogged} />
+        <Sidebar
+          controlador={sideBar}
+          setSession={setLogged}
+          darkMode={darkMode}
+          toogleDarkMode={toogleDarkMode}
+        />
       )}
+
       <div
         ref={tabcontent}
-        className={`flex justify-start min-h-screen flex-col w-full ${
-          !noSideBarRoutes.includes(location.pathname) ? " pl-[300px]" : "pl-0"
-        } transition-all duration-500 ease-in-out`}
+        className={`dark:bg-black-900 flex justify-start min-h-screen flex-col w-full ${
+          noSideBarRoutes.includes(location.pathname) ? " pl-0" : " pl-[300px]"
+        } transition-all duration-300 ease-in-out`}
       >
         <Routes>
-          <Route
-            path="/"
-            element={
-              <LoginPage user={user} setUser={setUser} setSession={setLogged} />
-            }
-          />
+          <Route path="/" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
-          <Route
+          {/* <Route
             element={<ProtectedRoute canActivate={logged} redirectPath="/" />}
-
-          >
-            <Route path="dashboard">
-              <Route path="" element={<Dashboard />} />
-             <Route path="guests" element={<Guests />} />
+          > */}
+          <Route path="dashboard">
+            <Route path="" element={<Dashboard />} />
+            <Route path="guests" element={<Guests />} />
             <Route
               path="guests/createguest/newguest"
               element={<CreateGuest />}
             />
-              <Route path="reservations" element={<Reservations />} />
-              <Route
-                path="reservations/:reservationId"
-                element={<EditReservation />}
-              />
-              <Route path="guests/:id" element={<EditGuest />} />
-              <Route path="offers" element={<Offers />} />
-              <Route path="employees" element={<Employees />} />
-              <Route path="roomsCustomization">
-                <Route path="" element={<RoomsCustomization />} />
-                <Route path=":roomId" element={<RoomEdit />} />
-                <Route path="create" element={<RoomCreate />} />
-              </Route>
-              <Route
-                path="offerNotifications"
-                element={<OfferNotifications />}
-              />
-              <Route path="notifications" element={<Notifications />} />
-              <Route path="restaurantMenu" element={<RestaurantMenu />} />
+            <Route path="reservations" element={<Reservations />} />
+            <Route
+              path="reservations/:reservationId"
+              element={<EditReservation />}
+            />
+            <Route path="guests/:id" element={<EditGuest />} />
+            <Route path="offers" element={<Offers />} />
+            <Route path="employees" element={<Employees />} />
+            <Route path="roomsCustomization">
+              <Route path="" element={<RoomsCustomization />} />
+              <Route path=":roomId" element={<RoomEdit />} />
+              <Route path="create" element={<RoomCreate />} />
             </Route>
-
+            <Route path="offerNotifications" element={<OfferNotifications />} />
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="restaurantMenu" element={<RestaurantMenu />} />
+            {/* </Route> */}
           </Route>
         </Routes>
       </div>

@@ -1,10 +1,10 @@
 import React from "react";
 import icon from "./trash.svg";
 
-function DeleteButton() {
+function DeleteButton({ handleDelete }) {
   return (
     <div>
-      <img src={icon} />
+      <img src={icon} onClick={handleDelete} alt="delete" />
     </div>
   );
 }

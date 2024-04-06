@@ -9,7 +9,7 @@ export default function InputField({
   return (
     <>
       {" "}
-      <div className="text-left mt-7 text-base font-medium tracking-normal text-gray-700">
+      <div className="text-left mt-7 text-base font-medium tracking-normal dark:text-white  text-gray-700">
         {" "}
         {label}{" "}
       </div>{" "}
@@ -17,7 +17,7 @@ export default function InputField({
         <textarea
           name={name}
           value={value}
-          className="px-3 shrink-0 mt-3.5 rounded-lg border border-solid bg-gray-200 bg-opacity-90 border-zinc-800 border-opacity-30 h-[100px]"
+          className="px-3 shrink-0 dark:text-black mt-3.5 rounded-lg border border-solid bg-gray-100 bg-opacity-90 border-zinc-800 border-opacity-30 h-[100px]"
           onChange={handler}
         ></textarea>
       ) : (
@@ -26,7 +26,7 @@ export default function InputField({
           name={name}
           placeholder={`Enter ${label}`}
           value={value}
-          className="pl-3 shrink-0 mt-3.5 rounded-lg border border-solid bg-gray-200 bg-opacity-90 border-zinc-800 border-opacity-30 h-[41px]"
+          className="pl-3 shrink-0 dark:text-black mt-3.5 rounded-lg border border-solid bg-gray-100 bg-opacity-90 border-zinc-800 border-opacity-30 h-[41px]"
           onChange={handler}
         />
       )}{" "}

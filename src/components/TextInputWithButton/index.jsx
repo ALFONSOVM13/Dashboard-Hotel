@@ -21,13 +21,13 @@ const TextInputWithButton = ({
           as="textarea"
           rows={rows}
           name={name}
-          className="border mt-4 ml-4 mr-4 py-2 px-3 text-gray-700 bg-white rounded-md flex-[2]"
+          className="border mt-4 ml-4 mr-4 py-2 px-3 dark:text-white  text-gray-700 bg-white rounded-md flex-[2]"
         />
       ) : (
         <Field
           type="text"
           name={name}
-          className="border mt-4 ml-4 mr-4 py-2 px-3 text-gray-700 bg-white rounded-md flex-[1]"
+          className="border mt-4 ml-4 mr-4 py-2 px-3 dark:text-white  text-gray-700 bg-white rounded-md flex-[1]"
         />
       )}
       <button

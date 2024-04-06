@@ -1,24 +1,17 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import axios from "axios";
 import Logo from "../../components/Logo";
 import PasswordInput from "../../components/LoginRegisterComponents/PasswordInput";
 import CheckBox from "../../components/LoginRegisterComponents/CheckBox";
 import Input from "../../components/LoginRegisterComponents/Input";
 import { Link } from "react-router-dom";
+import Loading from "../../components/Loading";
 
-function CheckboxIcon() {
-  return (
-    <img
-      loading="lazy"
-      src="https://cdn.builder.io/api/v1/image/assets/TEMP/8d0c326c1d928c10dad3b6eba5d1a1edf2d645660c3538e3902281f780805477?apiKey=a388e25d634c4683ada4dcefcdb81b2e&"
-      alt="Checkbox icon"
-      className="shrink-0 my-auto w-4 aspect-square"
-    />
-  );
-}
-
-export default function LoginPage({ user, setUser, setSession }) {
+export default function LoginPage() {
+  const [loading, setLoading] = useState();
+  const { VITE_BACKEND_URL } = import.meta.env;
   const [error, setError] = useState([]);
   const [inputs, setInputs] = useState({
     username: "",
@@ -27,7 +20,7 @@ export default function LoginPage({ user, setUser, setSession }) {
   });
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     let errors = [];
     e.preventDefault();
     //Validacion
@@ -45,9 +38,21 @@ export default function LoginPage({ user, setUser, setSession }) {
       );
     } else {
       //Comprobar usuario y contraseña en BD
-      setUser(inputs);
-      setSession(true);
-      navigate("/dashboard");
+      setLoading(true);
+      await axios
+        .post(`${VITE_BACKEND_URL}/auth/login`, {
+          usernameOrEmail: inputs.username,
+          password: inputs.password,
+        })
+        .then((response) => {
+          if (response.status === 200) console.log("logueo exitoso");
+          navigate("/dashboard");
+        })
+        .catch((err) => {
+          if (err.response.status === 401)
+            errors.push("Usuario  o Contraseña incorrectos.");
+        })
+        .finally(setLoading(false));
     }
     setError(errors);
   };
@@ -97,9 +102,10 @@ export default function LoginPage({ user, setUser, setSession }) {
         >
           Forgot Password
         </Link>
-      </div>
+      </div>{" "}
+      <Loading state={loading}>asd</Loading>{" "}
       {error.length > 0 && (
-        <p className="mt-1 text-sm font-light text-red-600 whitespace-nowrap text-ellipsis">
+        <p className="mt-1 text-sm font-bold text-red-600 white-space-nowrap text-ellipsis">
           {error[0]}
         </p>
       )}

@@ -19,7 +19,7 @@ export default {
         } else {
           dispatch(action.execute(values));
         }
-        successCallback();
+        if (successCallback) successCallback();
         Swal.fire({
           title: confirm[0],
           text: confirm[1],

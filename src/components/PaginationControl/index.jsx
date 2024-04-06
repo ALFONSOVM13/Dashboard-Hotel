@@ -44,7 +44,7 @@ function PaginationControl({ pagination, control }) {
   return (
     <>
       <div className="flex w-[100%] justify-between mb-5">
-        <div className="flex z-10 gap-3.5 items-center self-end mt-0  text-xs tracking-normal text-gray-500 whitespace-nowrap max-md:mr-2.5">
+        <div className="flex z-10 gap-3.5 items-center self-end mt-0  text-xs tracking-normal dark:text-[rgba(240,240,240,0.9)]  text-gray-500 whitespace-nowrap max-md:mr-2.5">
           <div className="self-stretch my-auto">Showing</div>
           <div className="self-stretch my-auto font-bold">
             {pagination.size * (pagination.page - 1) +
@@ -131,12 +131,12 @@ function PaginationControl({ pagination, control }) {
         </div>
 
         <div className="flex gap-5 w-[180px] text-xs items-center">
-          <div className="self-stretch my-auto text-gray-500">
+          <div className="self-stretch my-auto text-gray-500 dark:text-[rgba(240,240,240,0.9)] ">
             Show results by:
           </div>
           <div className="relative inline-flex">
             <select
-              className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
+              className="block appearance-none bg-white border border-gray-300 dark:bg-gray-700 dark:text-white text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
               onChange={changeResultsQuantity}
             >
               <option value="10">10</option>
@@ -144,7 +144,7 @@ function PaginationControl({ pagination, control }) {
               <option value="50">50</option>
               <option value="100">100</option>
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 dark:text-white  text-gray-700">
               <svg
                 className="fill-current h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"

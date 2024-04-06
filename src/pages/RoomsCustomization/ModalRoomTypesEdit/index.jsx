@@ -82,20 +82,21 @@ export default function ModalRoomTypesEdit({ control, id, edit = false }) {
   return (
     <section className="fixed flex items-center justify-center z-[100] inset-0 bg-[rgba(12,12,12,0.3)]">
       {" "}
-      <div className="flex flex-col px-16 py-9 bg-white rounded-3xl max-w-[626px] max-md:px-5 shadow-md shadow-slate-600">
+      <div className="flex flex-col px-16 py-9 justify-between pt-11 pb-7 bg-white dark:bg-[#333333] dark:border-gray-200/30 dark:border rounded-3xl w-[95%] max-w-[626px] max-md:px-5 shadow-md shadow-slate-600">
         <Loading state={loading}>
           {" "}
           <h1 className="text-4xl font-semibold tracking-wide text-neutral-500 max-md:max-w-full">
             {" "}
-            Room Type Customization
+            {edit ? "Room Type Customization" : "Room Creation"}
           </h1>{" "}
+          <hr className="shrink-0 mt-3 h-px dark:bg-slate-200 border-slate-300 bg-black border border-black border-solid max-md:max-w-full" />{" "}
           <div className="mt-7 max-md:max-w-full">
             {" "}
             <div className="flex gap-5 max-md:flex-col max-md:gap-0">
               {" "}
               <div className="flex flex-col w-9/12 max-md:ml-0 max-md:w-full">
                 {" "}
-                <div className="flex flex-col grow text-base font-medium tracking-normal text-gray-700 max-md:mt-10">
+                <div className="flex flex-col grow text-base font-medium tracking-normal dark:text-white  text-gray-700 max-md:mt-10">
                   {" "}
                   <InputField
                     type={"text"}

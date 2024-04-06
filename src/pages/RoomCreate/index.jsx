@@ -274,9 +274,9 @@ function RoomCreate() {
                   <span
                     className={`${
                       checked
-                        ? "p-3 bg-green-200 hover:bg-green-300"
-                        : "p-3 hover:bg-[rgba(10,10,10,0.1)]"
-                    } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1)] py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
+                        ? "p-3 dark:text-black bg-green-200 hover:bg-green-300"
+                        : "p-3 hover:bg-[rgba(10,10,10,0.1) dark:hover:bg-[rgba(255,255,255,0.1)]"
+                    } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1) py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
                   >
                     Available
                   </span>
@@ -287,9 +287,9 @@ function RoomCreate() {
                   <span
                     className={`${
                       checked
-                        ? "p-3 bg-yellow-200 hover:bg-yellow-300"
-                        : "p-3 hover:bg-[rgba(10,10,10,0.1)]"
-                    } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1)] py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
+                        ? "p-3 dark:text-black bg-yellow-200 hover:bg-yellow-300"
+                        : "p-3 hover:bg-[rgba(10,10,10,0.1) dark:hover:bg-[rgba(255,255,255,0.1)]"
+                    } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1)  py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
                   >
                     Maintenance
                   </span>
@@ -300,9 +300,9 @@ function RoomCreate() {
                   <span
                     className={`${
                       checked
-                        ? "p-3 bg-red-200 hover:bg-red-300"
-                        : "p-3 hover:bg-[rgba(10,10,10,0.1)]"
-                    } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1)] py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
+                        ? "p-3 dark:text-black bg-red-200 hover:bg-red-300 dark:hover:bg-red-300"
+                        : "p-3 hover:bg-[rgba(10,10,10,0.1) dark:hover:bg-[rgba(255,255,255,0.1)]"
+                    } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1)  py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
                   >
                     Busy
                   </span>
