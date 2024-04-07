@@ -1,7 +1,6 @@
 import PaginationControl from "../../components/PaginationControl";
 import TabTitle from "../../components/TabTitle";
 import Table from "../../components/Table";
-import ReservedButtons from "../../components/ReservedButtons/index.jsx";
 import SearchBar from "../../components/SearchBar/index.jsx";
 import useTableSearchPagination from "../../hooks/useTableSearchPagination.jsx";
 import { useEffect, useState } from "react";
@@ -13,12 +12,14 @@ import RoomManagementModal from "../../components/RoomManagementModal/index.jsx"
 import Loading from "../../components/Loading/index.jsx";
 import Button from "../../components/NewButton/index.jsx";
 import { useNavigate } from "react-router-dom";
+import RoomsButtons from "../../components/RoomsButtons/index.jsx";
+import { reconectar } from "../../utils/index.js";
 
 function RoomsCustomization() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { allRooms } = useSelector((state) => state.roomsReducer);
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(true);
   const [roomType, setRoomType] = useState(null);
   const [management, setManagement] = useState(false);
   const [showModalEditRoomTypes, setShowModalEditRoomTypes] = useState(false);
@@ -39,8 +40,22 @@ function RoomsCustomization() {
   };
 
   useEffect(() => {
-    setLoading(true);
-    dispatch(getAllRooms());
+    const obtenerData = async () => {
+      return await dispatch(getAllRooms())
+        .then(() => {
+          setLoading(false);
+          return true;
+        })
+        .catch(() => false);
+    };
+    const rec = async () => {
+      await reconectar(obtenerData);
+    };
+    if (allRooms.length === 0) {
+      rec();
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -66,7 +81,6 @@ function RoomsCustomization() {
       ),
     ]);
     setPagination({ ...pagination, items: data.length });
-    setLoading(false);
   }, [allRooms]);
 
   return (
@@ -116,7 +130,7 @@ function RoomsCustomization() {
               ]}
               data={searchResults.length > 0 ? searchResults : data}
               idName="id"
-              Components={ReservedButtons}
+              Components={RoomsButtons}
               size={pagination.size}
               page={pagination.page}
               omitt="id"

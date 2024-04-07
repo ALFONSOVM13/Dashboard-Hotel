@@ -3,16 +3,28 @@ import RoomTypeItem from "../RoomTypeItem";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllRoomTypes } from "../../redux/RoomTypes/Actions/actions";
 import Loading from "../Loading";
+import { reconectar } from "../../utils";
 export default function RoomTypes({ action, control }) {
   const [loading, setLoading] = useState(true);
   const { allRoomTypes } = useSelector((state) => state.roomTypesReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    try {
-      dispatch(getAllRoomTypes());
-    } catch (err) {
-      console.log("Error in fetching room types", err);
+    const obtenerData = async () => {
+      return await dispatch(getAllRoomTypes())
+        .then(() => {
+          setLoading(false);
+          return true;
+        })
+        .catch(() => false);
+    };
+    const rec = async () => {
+      await reconectar(obtenerData);
+    };
+    if (allRoomTypes.length === 0) {
+      rec();
+    } else {
+      setLoading(false);
     }
   }, []);
 

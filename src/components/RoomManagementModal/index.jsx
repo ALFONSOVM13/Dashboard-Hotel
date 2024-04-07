@@ -171,9 +171,8 @@ function ActionButtons({ id, data, setterModal1, setterModal2 }) {
   };
 
   const showConfirmation = async () => {
-    console.log("Hols");
     try {
-      await confirmation.seeAlert(
+      await confirmation.showConfirmation(
         dispatch,
         data.id,
         {},

@@ -65,10 +65,6 @@ export default function ModalRoomTypesEdit({ control, id, edit = false }) {
     }
   }, [selectedRoomType]);
 
-  useEffect(() => {
-    console.log("Cargando: ", loading);
-  }, [loading]);
-
   const handleChange = (e) => {
     setError((prevValue) => ({
       ...prevValue,
@@ -90,7 +86,7 @@ export default function ModalRoomTypesEdit({ control, id, edit = false }) {
             {edit ? "Room Type Customization" : "Room Creation"}
           </h1>{" "}
           <hr className="shrink-0 mt-3 h-px dark:bg-slate-200 border-slate-300 bg-black border border-black border-solid max-md:max-w-full" />{" "}
-          <div className="mt-7 max-md:max-w-full">
+          <div className="mt-5 max-md:max-w-full">
             {" "}
             <div className="flex gap-5 max-md:flex-col max-md:gap-0">
               {" "}

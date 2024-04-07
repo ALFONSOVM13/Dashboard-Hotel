@@ -12,7 +12,9 @@ const { VITE_BACKEND_URL } = import.meta.env;
 export const getAllRooms = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${VITE_BACKEND_URL}/api/rooms`);
+      const response = await axios
+        .get(`${VITE_BACKEND_URL}/api/rooms`)
+        .catch(() => console.log("Can't Obtain Rooms"));
       const orderedResponse = response.data.map((room) =>
         normalizeResponse(room)
       );
@@ -36,7 +38,7 @@ export const getAllRooms = () => {
         payload: orderedResponse,
       });
     } catch (error) {
-      throw new Error("Can't obtain Rooms.");
+      console.log("Cant connect with DB");
     }
   };
 };
@@ -103,6 +105,7 @@ export const patchRoom = (id, product) => {
       room_type,
       services,
       status,
+      photos,
     } = product;
     const { id: type_id } = room_type;
     const {
@@ -135,6 +138,7 @@ export const patchRoom = (id, product) => {
       tv,
       minibar,
       phone,
+      photos,
     };
 
     try {
@@ -184,6 +188,8 @@ const normalizeResponse = (room) => {
     photo_url: room.photo_url,
     price_per_night: room.price_per_night,
     room_number: room.room_number,
+    description: room.description || "",
+    photos: room.room_detail.photos,
     room_type: {
       id: room.type_id,
       name: room.room_type.name,

@@ -61,7 +61,7 @@ export default function PriceField({ label, name, value, handler, error }) {
   return (
     <>
       {" "}
-      <div className="text-left mt-7 text-base font-medium tracking-normal dark:text-white  text-gray-700">
+      <div className="text-left mt-5 text-base font-medium tracking-normal dark:text-white  text-gray-700">
         {" "}
         {label}{" "}
       </div>{" "}

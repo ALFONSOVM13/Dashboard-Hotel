@@ -14,7 +14,7 @@ function SearchBar({ text, value, action, stretch = false }) {
   return (
     <div
       className={`flex gap-3 px-9 py-5 ${
-        stretch ? " mt-0" : "mt-7"
+        stretch ? " mt-0" : "mt-5"
       } text-xs tracking-normal bg-white dark:bg-[#333333] rounded-lg text-slate-400 max-md:flex-wrap max-md:px-5 max-md:mt-10`}
     >
       <svg
