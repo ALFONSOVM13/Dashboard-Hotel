@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from "react";
+import { useSelector } from "react-redux";
 
-function ProfileDock({ name, role, image = "/img/noImage.png" }) {
+function ProfileDock({ image = "/img/noImage.png" }) {
+  const { loggedUser } = useSelector((state) => state.sessionReducer);
   return (
     <div className="flex gap-4 self-stretch my-5 font-medium w-[200px] mx-auto">
       <img
@@ -11,10 +13,11 @@ function ProfileDock({ name, role, image = "/img/noImage.png" }) {
       />
       <div className="flex flex-col flex-1 my-auto">
         <div className="text-sm xl:text-md 2xl:text-lg dark:text-slate-200 text-slate-800 text-left">
-          {name}
+          {loggedUser.username.charAt(0).toUpperCase() +
+            loggedUser.username.slice(1)}
         </div>
         <div className="mt-2 text-sm xl:text-md 2xl:text-lg tracking-normal text-slate-400 text-left">
-          {role}
+          {loggedUser.role.charAt(0).toUpperCase() + loggedUser.role.slice(1)}
         </div>
       </div>
     </div>

@@ -22,7 +22,7 @@ function Table({
 }) {
   return (
     <table
-      className={`w-full block dark:text-[rgba(240,240,240,0.9)] ${
+      className={`w-full overflow-x-auto block dark:text-[rgba(240,240,240,0.9)] ${
         maxHeight ? maxHeight + " overflow-y-auto" : ""
       }`}
     >
@@ -122,7 +122,7 @@ function Table({
                   </td>
                 ))}
               {Components !== undefined && (
-                <td key={"Cell" + i.toString() + "components"}>
+                <td key={"Cell" + i.toString() + "components"} className="p-3">
                   <Components
                     id={`${row[idName]}`}
                     data={row}
