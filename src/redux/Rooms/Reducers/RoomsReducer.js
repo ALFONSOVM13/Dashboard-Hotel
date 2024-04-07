@@ -27,7 +27,7 @@ const roomsReducer = (state = initialState, { type, payload }) => {
     case DELETE_ROOM:
       return {
         ...state,
-        allRooms: payload,
+        allRooms: [...state.allRooms.filter((room) => room.id !== payload.id)],
       };
 
     case PUT_ROOM:
