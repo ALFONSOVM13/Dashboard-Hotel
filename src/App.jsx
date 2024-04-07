@@ -93,7 +93,7 @@ function App() {
   return (
     // <Provider store={store}>
     <div
-      className={`flex dark:bg-[rgba(10,10,10,0.9)] dark:text-white transition-all duration-300 max-w-screen overflow-x-hidden`}
+      className={`flex dark:bg-[rgba(10,10,10,0.9)] transition-all duration-300 max-w-screen overflow-x-hidden`}
     >
       {!noSideBarRoutes.includes(location.pathname) && (
         <ProtectedRoute showLoading={false}>
@@ -123,31 +123,92 @@ function App() {
               path=""
               element={
                 <ProtectedRoute>
-                  <Dashboard />
+                  <></>
                 </ProtectedRoute>
               }
             />
-            <Route path="guests" element={<Guests />} />
+            <Route path="home" element={<Dashboard />} />
+            <Route
+              path="guests"
+              element={
+                <ProtectedRoute>
+                  <Guests />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="guests/createguest/newguest"
-              element={<CreateGuest />}
+              element={
+                <ProtectedRoute>
+                  <CreateGuest />
+                </ProtectedRoute>
+              }
             />
-            <Route path="reservations" element={<Reservations />} />
+            <Route
+              path="reservations"
+              element={
+                <ProtectedRoute>
+                  <Reservations />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="reservations/:reservationId"
               element={<EditReservation />}
             />
             <Route path="guests/:id" element={<EditGuest />} />
-            <Route path="offers" element={<Offers />} />
-            <Route path="employees" element={<Employees />} />
+            <Route
+              path="offers"
+              element={
+                <ProtectedRoute>
+                  <Offers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="employees"
+              element={
+                <ProtectedRoute>
+                  <Employees />
+                </ProtectedRoute>
+              }
+            />
             <Route path="roomsCustomization">
-              <Route path="" element={<RoomsCustomization />} />
+              <Route
+                path=""
+                element={
+                  <ProtectedRoute>
+                    <RoomsCustomization />
+                  </ProtectedRoute>
+                }
+              />
               <Route path=":roomId" element={<RoomEdit />} />
               <Route path="create" element={<RoomCreate />} />
             </Route>
-            <Route path="offerNotifications" element={<OfferNotifications />} />
-            <Route path="notifications" element={<Notifications />} />
-            <Route path="restaurantMenu" element={<RestaurantMenu />} />
+            <Route
+              path="offerNotifications"
+              element={
+                <ProtectedRoute>
+                  <OfferNotifications />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="notifications"
+              element={
+                <ProtectedRoute>
+                  <Notifications />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="restaurantMenu"
+              element={
+                <ProtectedRoute>
+                  <RestaurantMenu />
+                </ProtectedRoute>
+              }
+            />
             {/* </Route> */}
           </Route>
         </Routes>

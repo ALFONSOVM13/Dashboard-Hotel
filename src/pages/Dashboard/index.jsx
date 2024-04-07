@@ -39,12 +39,12 @@ function Dashboard() {
     },
   ];
   return (
-    <div>
+    <>
       <div className="flex flex-col px-5 pr-10 pt-10 w-full max-md:max-w-full">
         <TabTitle title="Dashboard" />
       </div>
-      <div className="flex items-center justify-around pt-10">
-        <div className="flex flex-col px-3 pt-3 pb-6 bg-white rounded-2xl leading-[150%] max-w-[300px] shadow-[1px_3px_9px_rgba(100,52,248,0.15)]">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 px-5 w-full max-w-[1500px] mx-auto items-center justify-around pt-10">
+        <div className="flex flex-col px-3 pt-3 pb-6 bg-white rounded-2xl  max-h-[108px] min-w-[180px] leading-[150%] max-w-[400px] shadow-[1px_3px_9px_rgba(100,52,248,0.15)]">
           <div className="flex gap-3.5 text-xs text-zinc-900">
             <img
               loading="lazy"
@@ -65,7 +65,7 @@ function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col px-3.5 pt-3 pb-6 bg-white rounded-2xl leading-[150%] max-w-[300px] shadow-[1px_3px_9px_rgba(100,52,248,0.15)]">
+        <div className="flex flex-col px-3.5 pt-3 pb-6 bg-white max-h-[108px] min-w-[180px] rounded-2xl leading-[150%] max-w-[400px] shadow-[1px_3px_9px_rgba(100,52,248,0.15)]">
           <div className="flex gap-3.5 text-xs text-zinc-900">
             <img
               loading="lazy"
@@ -86,7 +86,7 @@ function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col px-3.5 pt-3 pb-6 bg-white rounded-2xl leading-[150%] max-w-[300px] shadow-[1px_3px_9px_rgba(100,52,248,0.15)]">
+        <div className="flex flex-col px-3.5 pt-3 pb-6 bg-white max-h-[108px] min-w-[180px] rounded-2xl leading-[150%] max-w-[400px] shadow-[1px_3px_9px_rgba(100,52,248,0.15)]">
           <div className="flex gap-3.5 text-xs text-zinc-900">
             <img
               loading="lazy"
@@ -107,7 +107,7 @@ function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col px-3.5 pt-3 pb-6 bg-white rounded-2xl leading-[150%] max-w-[300px] shadow-[1px_3px_9px_rgba(100,52,248,0.15)]">
+        <div className="flex flex-col px-3.5 pt-3 pb-6 bg-white max-h-[108px] min-w-[180px] rounded-2xl leading-[150%] max-w-[400px] shadow-[1px_3px_9px_rgba(100,52,248,0.15)]">
           <div className="flex gap-3.5 text-xs text-zinc-900">
             <img
               loading="lazy"
@@ -129,20 +129,21 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row justify-center items-center p-5">
-        <div className="p-5">
+      {/* Graphics */}
+      <div className="flex flex-col xl:flex-row justify-center items-center p-5">
+        <div className="p-5 rounded-xl">
           <Chart
             options={options}
             series={series}
             type="area"
-            height={350}
-            width={850}
+            height={"100%"}
+            width={450}
           />
         </div>
-        <div className="p-5">
+        <div className="p-5 rounded-xl ">
           <Chart
-            height={350}
-            width={600}
+            height={"100%"}
+            width={450}
             type="bar"
             series={[
               { name: "Car Rental", data: [7, 5, 10] },
@@ -179,10 +180,10 @@ function Dashboard() {
           />
         </div>
       </div>
-      <div className="flex flex-col md:flex-row justify-center items-center p-5">
-        <div className="p-5">
+      <div className="flex flex-col xl:flex-row justify-center items-center p-5">
+        <div className="p-5 rounded-xl">
           <Chart
-            height={350}
+            height={"100%"}
             width={450}
             type="donut"
             series={[45000, 35000, 50000]}
@@ -214,9 +215,9 @@ function Dashboard() {
             }}
           />
         </div>
-        <div className="p-5">
+        <div className="p-5 rounded-xl">
           <Chart
-            height={350}
+            height={"100%"}
             width={450}
             type="area"
             series={[
@@ -261,9 +262,11 @@ function Dashboard() {
             }}
           />
         </div>
-        <div className="p-5">
+      </div>
+      <div className="flex flex-col xl:flex-row justify-center items-center p-5">
+        <div className="p-5 rounded-xl">
           <Chart
-            height={350}
+            height={"100%"}
             width={450}
             type="bar"
             series={[
@@ -299,7 +302,7 @@ function Dashboard() {
           />
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

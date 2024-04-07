@@ -48,7 +48,8 @@ function Sidebar({ controlador, darkMode, toogleDarkMode }) {
         />
 
         <ListCategory text="Analitycs" />
-        <ListCategory text="Messaging" icon="mail" />
+        <ListOption text="Dash Board" link={"/dashboard/home"} active={false} />
+        <ListCategory text="Messaging" />
         <ListOption
           text={"Offers Notifications"}
           link={"/dashboard/offerNotifications"}

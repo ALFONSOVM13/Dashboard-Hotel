@@ -52,7 +52,7 @@ export default function LoginPage() {
           if (response.status === 200) console.log("logueo exitoso");
           if (!Cookies.get("token"))
             Cookies.set("token", response.data.token, { expires: 1 / 48 });
-          navigate("/dashboard");
+          navigate("/dashboard/home");
         })
         .catch((err) => {
           if (err.response.status === 401)
