@@ -136,13 +136,13 @@ function Dashboard() {
             options={options}
             series={series}
             type="area"
-            height={"100%"}
+            height={350}
             width={450}
           />
         </div>
         <div className="p-5 rounded-xl ">
           <Chart
-            height={"100%"}
+            height={350}
             width={450}
             type="bar"
             series={[
@@ -183,7 +183,7 @@ function Dashboard() {
       <div className="flex flex-col xl:flex-row justify-center items-center p-5">
         <div className="p-5 rounded-xl">
           <Chart
-            height={"100%"}
+            height={350}
             width={450}
             type="donut"
             series={[45000, 35000, 50000]}
@@ -217,7 +217,7 @@ function Dashboard() {
         </div>
         <div className="p-5 rounded-xl">
           <Chart
-            height={"100%"}
+            height={350}
             width={450}
             type="area"
             series={[
@@ -266,7 +266,7 @@ function Dashboard() {
       <div className="flex flex-col xl:flex-row justify-center items-center p-5">
         <div className="p-5 rounded-xl">
           <Chart
-            height={"100%"}
+            height={350}
             width={450}
             type="bar"
             series={[
