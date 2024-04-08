@@ -31,6 +31,7 @@ function RoomCreate() {
     price_per_night: 0,
     room_number: "",
     description: "",
+    photos: [],
     room_type: {
       description: "Not assigned to any room type",
       id: 1,
