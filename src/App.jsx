@@ -19,6 +19,7 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import RegisterPage from "./pages/RegisterPage";
 import Dashboard from "./pages/Dashboard";
 import RoomCreate from "./pages/RoomCreate";
+import CreateReservation from "./pages/Reservations/CreateReservation";
 
 function App() {
   const [logged, setLogged] = useState(true);
@@ -144,18 +145,18 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="reservations"
-              element={
-                <ProtectedRoute>
-                  <Reservations />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="reservations/:reservationId"
-              element={<EditReservation />}
-            />
+            <Route path="reservations">
+              <Route
+                path=""
+                element={
+                  <ProtectedRoute>
+                    <Reservations />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path=":reservationId" element={<EditReservation />} />
+              <Route path="create" element={<CreateReservation />} />
+            </Route>
             <Route path="guests/:id" element={<EditGuest />} />
             <Route
               path="offers"

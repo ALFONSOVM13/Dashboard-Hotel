@@ -7,6 +7,7 @@ import SearchBar from "../../components/SearchBar/index.jsx";
 import useTableSearchPagination from "../../hooks/useTableSearchPagination.jsx";
 import { useEffect } from "react";
 import { convertirFechaAAmPm } from "../../utils/index.js";
+import { useNavigate } from "react-router-dom";
 
 function Reservations() {
   const {
@@ -18,6 +19,8 @@ function Reservations() {
     data,
     setData,
   } = useTableSearchPagination();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -44,7 +47,7 @@ function Reservations() {
       <div className="flex flex-col px-5 pr-10 pt-10 w-full">
         <div className="flex justify-between items-center">
           <TabTitle title="Reserved Rooms" />
-          <Button text="New Reservation" />
+          <Button text="New Reservation" onClick={() => navigate("create")} />
         </div>
         <SearchBar
           text="Room #, Room Name, Date"
