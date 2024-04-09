@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 function DarkModeButton({ darkMode, setDarkMode }) {
-  const [isChecked, setIsChecked] = useState();
+  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(
     () => setIsChecked(darkMode), // Set the initial state based on whether or not we're in dark mode.

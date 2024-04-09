@@ -174,7 +174,7 @@ function RoomCreate() {
             options={allRoomTypes}
             handler={handleChange}
           />
-          <p className="mt-5 text-left leading-relaxed">
+          <p className="mt-5 text-left leading-relaxed dark:text-white">
             <span className="text-md font-bold">Room Type Description:</span>{" "}
             <br />
             {roomData.room_type?.description?.slice(0, 120) +
@@ -209,7 +209,7 @@ function RoomCreate() {
               />
             </div>
           </div>
-          <div className="flex flex-col w-full my-5 pb-3 px-3 border-2 border-[rgba(10,10,10,0.2)] dark:border-gray-200 rounded-xl h-fit">
+          <div className="flex flex-col w-full my-5 pb-3 px-3 border-2 dark:text-white border-[rgba(10,10,10,0.2)] dark:border-gray-200 rounded-xl h-fit">
             <span className="font-bold">Services</span>
             <div className="grid gap-5 grid-cols-3  pb-3 relative mt-5 w-full">
               {Object.keys(roomData.services).map((item, i) => (
@@ -263,8 +263,8 @@ function RoomCreate() {
           </div>
         </div>
         <div>
-          <div className="w-full flex flex-col gap-5 mx-auto p-5 border-2 border-[rgba(10,10,10,0.2)] dark:border-gray-200 rounded-xl h-fit">
-            <div className="flex justify-between w-full">
+          <div className="w-full flex flex-col gap-5 mx-auto p-5 border-2 border-[rgba(10,10,10,0.2)] dark:border-gray-200 dark:text-white rounded-xl h-fit">
+            <div className="flex justify-between w-full dark:text-white">
               <span className="font-bold block mb-5">
                 Room {enabled ? "Active" : "Inactive"}
               </span>
@@ -283,6 +283,7 @@ function RoomCreate() {
                 />
               </Switch>
             </div>
+            <hr className="mb-5" />
             <div className="flex flex-col justify-between items-start text-left select-none">
               <RadioGroup value={status} onChange={setStatus}>
                 <RadioGroup.Label className="font-bold block mb-5">

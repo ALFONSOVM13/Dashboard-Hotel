@@ -1,34 +1,35 @@
 import {
-  GET_ALL_ROOMS,
-  DELETE_ROOM,
-  PUT_ROOM,
-  CREATE_ROOM,
+  GET_ALL_RESERVATIONS,
+  DELETE_RESERVATION,
+  PUT_RESERVATION,
+  CREATE_RESERVATION,
 } from "./actionsTypes";
 
 import axios from "axios";
+const { VITE_BACKEND_URL } = import.meta.env;
 
-export const getAllRooms = () => {
+export const getAllReservations = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get("http://localhost:3001/api/rooms");
+      const response = await axios.get(`${VITE_BACKEND_URL}/api/reservations`);
       dispatch({
-        type: GET_ALL_ROOMS,
+        type: GET_ALL_RESERVATIONS,
         payload: response.data,
       });
     } catch (error) {
-      throw new Error("Error de red al intentar obtener alimentos.");
+      throw new Error("Error de red al intentar obtener reservaciones.");
     }
   };
 };
 
-export const deleteRoom = (id) => {
+export const deleteReservation = (id) => {
   return async (dispatch) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3001/api/rooms/${id}`
+        `${VITE_BACKEND_URL}/api/reservations/${id}`
       );
       return dispatch({
-        type: DELETE_ROOM,
+        type: DELETE_RESERVATION,
         payload: response.data,
       });
     } catch (error) {
@@ -37,15 +38,15 @@ export const deleteRoom = (id) => {
   };
 };
 
-export const putRoom = (id, product) => {
+export const putReservation = (id, product) => {
   return async (dispatch) => {
     try {
       const response = await axios.put(
-        `http://localhost:3001/api/rooms/${id}`,
+        `${VITE_BACKEND_URL}/api/reservations/${id}`,
         product
       );
       return dispatch({
-        type: PUT_ROOM,
+        type: PUT_RESERVATION,
         payload: response.data,
       });
     } catch (error) {
@@ -54,15 +55,17 @@ export const putRoom = (id, product) => {
   };
 };
 
-export const createRoom = (product) => {
+export const createReservation = (product) => {
   return async (dispatch) => {
     try {
+      console.log(product);
+
       const response = await axios.post(
-        "http://localhost:3001/api/rooms",
+        `${VITE_BACKEND_URL}/api/reservations`,
         product
       );
       return dispatch({
-        type: CREATE_ROOM,
+        type: CREATE_RESERVATION,
         payload: response.data,
       });
     } catch (error) {
