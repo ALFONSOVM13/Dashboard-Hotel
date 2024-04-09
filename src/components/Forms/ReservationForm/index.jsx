@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import moment from "moment";
-import DateField from "../../DateField";
 import FieldContainer from "../../FieldsContainer";
 import Button from "../../Button";
 import SelectField from "../../SelectField";
@@ -9,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../../../redux/Users/Actions/actions";
 import { getAllRooms } from "../../../redux/Rooms/Actions/actions";
 import { createReservation } from "../../../redux/Reservations/Actions/actions";
+import DateField from "../../DateField";
 
 function ReservationForm({ roomNumber = null }) {
   const [reservation, setReservation] = useState({

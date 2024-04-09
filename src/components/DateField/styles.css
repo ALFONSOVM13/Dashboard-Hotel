@@ -1,0 +1,33 @@
+input[type="date"]::-webkit-clear-button {
+  font-size: 18px;
+  height: 30px;
+  position: relative;
+  right: 5px;
+  margin-right: 4px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  font-size: 20px;
+  background-color: rgba(10, 10, 10, 0.3);
+  border-radius: 5px;
+  padding: 3px;
+}
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  cursor: pointer;
+}
+input[type="date"]::-webkit-calendar-picker-indicator:active {
+  background-color: #000000;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  font-size: 20px;
+  background-color: rgba(10, 10, 10, 0.3);
+  border-radius: 5px;
+  padding: 3px;
+}
+input[type="time"]::-webkit-calendar-picker-indicator:hover {
+  cursor: pointer;
+}
+input[type="time"]::-webkit-calendar-picker-indicator:active {
+  background-color: #000000;
+}

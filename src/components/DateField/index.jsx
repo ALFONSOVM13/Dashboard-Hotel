@@ -1,4 +1,5 @@
-export default function HourField({ label, name, value, handler, error }) {
+import "./styles.css";
+export default function DateField({ label, name, value, handler, error }) {
   return (
     <>
       {" "}
@@ -7,7 +8,7 @@ export default function HourField({ label, name, value, handler, error }) {
         {label}{" "}
       </div>{" "}
       <input
-        type={"time"}
+        type={"date"}
         name={name}
         placeholder={`Enter ${label}`}
         value={value}
