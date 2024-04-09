@@ -6,7 +6,7 @@ const SelectInput = ({ label, name, options, labelAlign = "center" }) => {
     <Field
       as="select"
       name={name}
-      className="border mt-4 mr-4 ml-4 py-2 px-3 dark:text-white  text-gray-700 bg-white rounded-md"
+      className="border mt-4 mr-4 ml-4 py-2 px-3  text-gray-700 bg-white rounded-md"
     >
       {options.map((option) => (
         <option key={option + "Selector"} value={option}>

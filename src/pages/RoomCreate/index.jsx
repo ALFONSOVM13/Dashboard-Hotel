@@ -16,6 +16,8 @@ import InputField from "../../components/InputField";
 import { all } from "axios";
 import PhotoUrlSelector from "../../components/PhotoUrlSelector";
 import SaveDontSaveCancel from "../../components/SaveDontSaveCancel";
+import FieldContainer from "../../components/FieldsContainer";
+import MultiPhotoUrlSelector from "../../components/MultiPhotoUrlSelector";
 
 function RoomCreate() {
   const [errors, setErrors] = useState({});
@@ -28,6 +30,8 @@ function RoomCreate() {
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp_WXkZhcWSMu1pQzz7wusWgJHIM-n3Yh28_TiWb8j8Q&s",
     price_per_night: 0,
     room_number: "",
+    description: "",
+    photos: [],
     room_type: {
       description: "Not assigned to any room type",
       id: 1,
@@ -155,7 +159,7 @@ function RoomCreate() {
     <div className=" w-[95%] mx-auto py-5">
       <TabTitle title={`Rooms Creation`} />
       <div className="p-5 grid grid-cols-2 xl:grid-cols-3 gap-10 grid">
-        <div className="flex flex-col w-full px-3 pb-3 border-2 border-[rgba(10,10,10,0.2)] rounded-xl h-fit">
+        <div className="flex flex-col w-full px-3 pb-3 border-2 border-[rgba(10,10,10,0.2)] dark:border-gray-200 rounded-xl h-fit">
           <InputField
             type="text"
             name="room_number"
@@ -171,7 +175,8 @@ function RoomCreate() {
             handler={handleChange}
           />
           <p className="mt-5 text-left leading-relaxed">
-            <span className="text-md font-bold">Description:</span> <br />
+            <span className="text-md font-bold">Room Type Description:</span>{" "}
+            <br />
             {roomData.room_type?.description?.slice(0, 120) +
               (roomData.room_type?.description?.length > 117 ? "..." : "")}
           </p>
@@ -183,7 +188,7 @@ function RoomCreate() {
           />
         </div>
         <div>
-          <div className="flex w-full gap-2 lg:gap-5 pb-3 px-3 border-2 border-[rgba(10,10,10,0.2)] rounded-xl h-fit">
+          <div className="flex w-full gap-2 lg:gap-5 pb-3 px-3 border-2 border-[rgba(10,10,10,0.2)] dark:border-gray-200 rounded-xl h-fit">
             <div className="flex flex-col w-1/2 text-nowrap">
               <CapacityField
                 label={"Max Capacity"}
@@ -204,9 +209,9 @@ function RoomCreate() {
               />
             </div>
           </div>
-          <div className="flex flex-col w-full mt-5 pb-3 px-3 border-2 border-[rgba(10,10,10,0.2)] rounded-xl h-fit">
+          <div className="flex flex-col w-full my-5 pb-3 px-3 border-2 border-[rgba(10,10,10,0.2)] dark:border-gray-200 rounded-xl h-fit">
             <span className="font-bold">Services</span>
-            <div className="grid gap-5 grid-cols-3 relative mt-5 w-full">
+            <div className="grid gap-5 grid-cols-3  pb-3 relative mt-5 w-full">
               {Object.keys(roomData.services).map((item, i) => (
                 <div key={"HI" + item + i} className="mx-auto">
                   <label htmlFor={"services" + item}>
@@ -225,7 +230,7 @@ function RoomCreate() {
                       step="1"
                       min={1}
                       max={5}
-                      className="absolute top-[10px] ml-9 w-[50px] p-1 rounded-md border-2 border-slate-600"
+                      className="text-black absolute top-[10px] ml-9 w-[50px] p-1 rounded-md border-2 border-slate-600"
                       onChange={(e) => handleChange(e, item)}
                     />
                   )}
@@ -243,73 +248,95 @@ function RoomCreate() {
               ))}
             </div>
           </div>
-        </div>
-        <div className="w-full flex flex-col gap-5 mx-auto p-5 border-2 border-[rgba(10,10,10,0.2)] rounded-xl h-fit">
-          <div className="flex justify-between w-full">
-            <span className="font-bold block mb-5">
-              Room {enabled ? "Active" : "Inactive"}
-            </span>
-            <Switch
-              checked={enabled}
-              onChange={setEnabled}
-              name={"is_active"}
-              className={`${
-                enabled ? "bg-green-600" : "bg-red-600"
-              } relative inline-flex h-6 w-11 items-center rounded-full`}
-            >
-              <span
-                className={`${
-                  enabled ? "translate-x-6" : "translate-x-1"
-                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+          <div className="flex w-full gap-2 lg:gap-5 pb-3 px-3 border-2 border-[rgba(10,10,10,0.2)] dark:border-gray-200 rounded-xl h-fit">
+            <div className="flex flex-col w-full h-[10rem]">
+              <InputField
+                type={"textarea"}
+                label={"Room Description"}
+                name={"description"}
+                p
+                handler={handleChange}
+                value={roomData.description}
+                error={errors.description}
               />
-            </Switch>
+            </div>
           </div>
-          <div className="flex flex-col justify-between items-start text-left select-none">
-            <RadioGroup value={status} onChange={setStatus}>
-              <RadioGroup.Label className="font-bold block mb-5">
-                Room Status
-              </RadioGroup.Label>
-              <RadioGroup.Option value="available">
-                {({ checked }) => (
-                  <span
-                    className={`${
-                      checked
-                        ? "p-3 dark:text-black bg-green-200 hover:bg-green-300"
-                        : "p-3 hover:bg-[rgba(10,10,10,0.1) dark:hover:bg-[rgba(255,255,255,0.1)]"
-                    } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1) py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
-                  >
-                    Available
-                  </span>
-                )}
-              </RadioGroup.Option>
-              <RadioGroup.Option value="maintenance">
-                {({ checked }) => (
-                  <span
-                    className={`${
-                      checked
-                        ? "p-3 dark:text-black bg-yellow-200 hover:bg-yellow-300"
-                        : "p-3 hover:bg-[rgba(10,10,10,0.1) dark:hover:bg-[rgba(255,255,255,0.1)]"
-                    } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1)  py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
-                  >
-                    Maintenance
-                  </span>
-                )}
-              </RadioGroup.Option>
-              <RadioGroup.Option value="busy">
-                {({ checked }) => (
-                  <span
-                    className={`${
-                      checked
-                        ? "p-3 dark:text-black bg-red-200 hover:bg-red-300 dark:hover:bg-red-300"
-                        : "p-3 hover:bg-[rgba(10,10,10,0.1) dark:hover:bg-[rgba(255,255,255,0.1)]"
-                    } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1)  py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
-                  >
-                    Busy
-                  </span>
-                )}
-              </RadioGroup.Option>
-            </RadioGroup>
+        </div>
+        <div>
+          <div className="w-full flex flex-col gap-5 mx-auto p-5 border-2 border-[rgba(10,10,10,0.2)] dark:border-gray-200 rounded-xl h-fit">
+            <div className="flex justify-between w-full">
+              <span className="font-bold block mb-5">
+                Room {enabled ? "Active" : "Inactive"}
+              </span>
+              <Switch
+                checked={enabled}
+                onChange={setEnabled}
+                name={"is_active"}
+                className={`${
+                  enabled ? "bg-green-600" : "bg-red-600"
+                } relative inline-flex h-6 w-11 items-center rounded-full`}
+              >
+                <span
+                  className={`${
+                    enabled ? "translate-x-6" : "translate-x-1"
+                  } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                />
+              </Switch>
+            </div>
+            <div className="flex flex-col justify-between items-start text-left select-none">
+              <RadioGroup value={status} onChange={setStatus}>
+                <RadioGroup.Label className="font-bold block mb-5">
+                  Room Status
+                </RadioGroup.Label>
+                <RadioGroup.Option value="available">
+                  {({ checked }) => (
+                    <span
+                      className={`${
+                        checked
+                          ? "p-3 dark:text-black bg-green-200 hover:bg-green-300"
+                          : "p-3 hover:bg-[rgba(10,10,10,0.1) dark:hover:bg-[rgba(255,255,255,0.1)]"
+                      } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1) py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
+                    >
+                      Available
+                    </span>
+                  )}
+                </RadioGroup.Option>
+                <RadioGroup.Option value="maintenance">
+                  {({ checked }) => (
+                    <span
+                      className={`${
+                        checked
+                          ? "p-3 dark:text-black bg-yellow-200 hover:bg-yellow-300"
+                          : "p-3 hover:bg-[rgba(10,10,10,0.1) dark:hover:bg-[rgba(255,255,255,0.1)]"
+                      } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1)  py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
+                    >
+                      Maintenance
+                    </span>
+                  )}
+                </RadioGroup.Option>
+                <RadioGroup.Option value="busy">
+                  {({ checked }) => (
+                    <span
+                      className={`${
+                        checked
+                          ? "p-3 dark:text-black bg-red-200 hover:bg-red-300 dark:hover:bg-red-300"
+                          : "p-3 hover:bg-[rgba(10,10,10,0.1) dark:hover:bg-[rgba(255,255,255,0.1)]"
+                      } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1)  py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
+                    >
+                      Busy
+                    </span>
+                  )}
+                </RadioGroup.Option>
+              </RadioGroup>
+            </div>{" "}
           </div>
+          <FieldContainer>
+            <MultiPhotoUrlSelector
+              value={roomData.photos}
+              handler={handleChange}
+              name={"photos"}
+            />
+          </FieldContainer>
         </div>
       </div>
       {showSave && (

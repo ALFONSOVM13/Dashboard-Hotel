@@ -1,16 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useLocalStorage } from "react-use";
+import { Logout } from "../../services/AuthService";
 
-const LogoutButton = ({ setSession }) => {
-  const [user, setUser, clearValue] = useLocalStorage("user");
+const LogoutButton = () => {
   const navigate = useNavigate();
 
   const logout = (e) => {
     e.preventDefault();
-    clearValue();
+    Logout();
     navigate("/");
-    setSession(false);
   };
   return (
     <button className="Btn" onClick={logout}>

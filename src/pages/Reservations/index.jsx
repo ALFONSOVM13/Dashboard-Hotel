@@ -6,7 +6,7 @@ import ReservedButtons from "../../components/ReservedButtons/index.jsx";
 import SearchBar from "../../components/SearchBar/index.jsx";
 import useTableSearchPagination from "../../hooks/useTableSearchPagination.jsx";
 import { useEffect } from "react";
-import functions from "../../utils/index.js";
+import { convertirFechaAAmPm } from "../../utils/index.js";
 
 function Reservations() {
   const {
@@ -28,8 +28,8 @@ function Reservations() {
             ...data.map((reservation) => {
               return {
                 ...reservation,
-                checkIn: functions.convertirFechaAAmPm(reservation.checkIn),
-                checkOut: functions.convertirFechaAAmPm(reservation.checkOut),
+                checkIn: convertirFechaAAmPm(reservation.checkIn),
+                checkOut: convertirFechaAAmPm(reservation.checkOut),
               };
             }),
           ]);

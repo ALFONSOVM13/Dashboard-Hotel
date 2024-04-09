@@ -20,7 +20,7 @@ const PicSelector = ({ className, error, handler }) => {
   return (
     <div className="">
       <div className="text-left my-7 text-base font-medium tracking-normal dark:text-white  text-gray-700">
-        Room Picture
+        Main Room Picture
       </div>
       <input
         type="file"

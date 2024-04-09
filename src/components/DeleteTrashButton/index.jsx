@@ -8,7 +8,7 @@ export default function DeleteTrashButton({ data, control }) {
   const dispatch = useDispatch();
   const showConfirmation = async () => {
     try {
-      await confirmation.seeAlert(
+      await confirmation.showConfirmation(
         dispatch,
         data.id,
         {},

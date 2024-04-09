@@ -44,7 +44,7 @@ export const deleteFood = (id) => {
         payload: filteredData,
       });
     } catch (error) {
-      console.log(error);
+      throw new Error("Error de red al intentar eliminar el plato.");
     }
   };
 };

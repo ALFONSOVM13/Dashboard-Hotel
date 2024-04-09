@@ -8,11 +8,15 @@ import CheckBox from "../../components/LoginRegisterComponents/CheckBox";
 import Input from "../../components/LoginRegisterComponents/Input";
 import { Link } from "react-router-dom";
 import Loading from "../../components/Loading";
+import { useSelector } from "react-redux";
+import { isLogged } from "../../services/AuthService";
+import Cookies from "js-cookie";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState();
   const { VITE_BACKEND_URL } = import.meta.env;
   const [error, setError] = useState([]);
+  const { loggedUser } = useSelector((state) => state.sessionReducer);
   const [inputs, setInputs] = useState({
     username: "",
     password: "",
@@ -46,11 +50,14 @@ export default function LoginPage() {
         })
         .then((response) => {
           if (response.status === 200) console.log("logueo exitoso");
-          navigate("/dashboard");
+          if (!Cookies.get("token"))
+            Cookies.set("token", response.data.token, { expires: 1 / 48 });
+          navigate("/dashboard/home");
         })
         .catch((err) => {
           if (err.response.status === 401)
             errors.push("Usuario  o Contraseña incorrectos.");
+          else errors.push("No hay conexión con el servidor");
         })
         .finally(setLoading(false));
     }

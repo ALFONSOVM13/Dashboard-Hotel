@@ -14,13 +14,12 @@ export const getAllRoomTypes = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${VITE_BACKEND_URL}/api/roomstypes`);
-
       dispatch({
         type: GET_ALL_ROOMTYPES,
         payload: response.data,
       });
-    } catch (error) {
-      throw new Error("Can't get room types");
+    } catch (err) {
+      throw new Error(err);
     }
   };
 };

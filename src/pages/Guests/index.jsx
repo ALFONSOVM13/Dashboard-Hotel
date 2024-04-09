@@ -79,9 +79,7 @@ function Guests() {
           action={handleInputChange}
         />
       </div>
-      <div className="self-start pt-5 pl-5">
-        <Button text="New User" onClick={handleClick} />
-      </div>
+
       <div className="flex flex-col justify-between px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
         <div className="flex justify-between items-center">
           <PaginationControl pagination={pagination} control={setPagination} />

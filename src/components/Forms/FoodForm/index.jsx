@@ -44,13 +44,16 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
             transform: "translate(-50%, -50%)",
             width: "800px",
             height: "auto",
-            bgcolor: "background.paper",
+            bgcolor:
+              localStorage.getItem("theme") === "dark"
+                ? "#333333"
+                : "background.paper",
             border: "2px solid #000",
             boxShadow: 24,
             p: 4,
           }}
         >
-          <div className="flex flex-col items-center w-full h-full">
+          <div className="flex flex-col items-center w-full h-full dark:text-white">
             <div className="absolute top-0 right-0">
               <IconButton
                 edge="end"
@@ -86,7 +89,7 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
                   )
                   .min(10, "The description must have at least 10 characters.")
                   .max(
-                    400,
+                    100,
                     "The description cannot have more than 100 characters."
                   ),
                 imageUrl: Yup.string().required("The image is required."),

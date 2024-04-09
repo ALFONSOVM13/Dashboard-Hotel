@@ -22,8 +22,8 @@ const PhotoUrlSelector = ({
 
   return (
     <div className=" flex flex-col">
-      <div className="text-left mt-7 text-base font-medium tracking-normal dark:text-white  text-gray-700">
-        Room Picture
+      <div className="text-left mt-5 text-base font-medium tracking-normal dark:text-white  text-gray-700">
+        Main Room Picture
       </div>
       <input
         type="text"
