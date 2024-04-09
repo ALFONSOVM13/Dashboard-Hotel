@@ -28,6 +28,12 @@ const usersReducer = (state = initialState, { type, payload }) => {
         ...state,
         allUsers: payload,
       };
+
+    case DELETE_USER:
+      return {
+        ...state,
+        allUsers: payload,
+      };
     default:
       return {
         ...state,

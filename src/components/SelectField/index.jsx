@@ -21,6 +21,9 @@ function SelectField({ label, name, value, handler, error, options = [] }) {
           className="dark:text-black pl-3 shrink-0 mt-3.5 rounded-lg border border-solid bg-gray-100 bg-opacity-90 border-zinc-800 border-opacity-30 h-[41px]"
           onChange={handler}
         >
+          <option value="" disabled>
+            Select an option
+          </option>
           {options.length > 0 &&
             options.map((option) => (
               <option key={name + option.id} value={option.id}>
