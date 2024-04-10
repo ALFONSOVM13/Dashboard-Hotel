@@ -11,7 +11,6 @@ export const getAllUsers = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${VITE_BACKEND_URL}/auth/allUsers`);
-      console.log(response);
       dispatch({
         type: GET_ALL_USERS,
         payload: response.data.users,
@@ -22,10 +21,10 @@ export const getAllUsers = () => {
   };
 };
 
-export const putUser = (is, user) => {
+export const postUser = (is, user) => {
   return async (dispatch) => {
     try {
-      const response = await axios.put(`${VITE_BACKEND_URL}`, user);
+      const response = await axios.post(`${VITE_BACKEND_URL}`, user);
       return dispatch({
         type: PUT_USER,
         payload: response.data,
