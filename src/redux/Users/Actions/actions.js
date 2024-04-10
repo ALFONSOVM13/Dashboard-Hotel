@@ -21,27 +21,10 @@ export const getAllUsers = () => {
   };
 };
 
-export const postUsers = (user) => {
+export const postUser = (is, user) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(
-        `${VITE_BACKEND_URL}/auth/profile/:userId`,
-        user
-      );
-      return dispatch({
-        type: CREATE_USER,
-        payload: response.data,
-      });
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
-};
-
-export const putUser = (is, user) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.put(`${VITE_BACKEND_URL}`, user);
+      const response = await axios.post(`${VITE_BACKEND_URL}`, user);
       return dispatch({
         type: PUT_USER,
         payload: response.data,

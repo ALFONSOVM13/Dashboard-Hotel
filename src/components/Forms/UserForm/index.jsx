@@ -11,6 +11,8 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Swal from "sweetalert2";
 import { ErrorMessage } from "formik";
+import { Field } from "formik";
+import ImageInput from "../../ImageInput";
 
 function UserForm({ id }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,18 +34,19 @@ function UserForm({ id }) {
 
   return (
     <div>
-      <FormTitle title={id ? "EDIT AN USER" : "CREATE AN USER"} />
+      <FormTitle title="EDIT AN USER" />
       <Formik
         initialValues={{
           full_name: "",
-          email: "",
-          password: password,
           phone_number: "",
-          rol: "",
           document: "",
-          gender: "",
+          country: "",
           address: "",
           photo_url: photoUrl,
+          gender: "",
+          birth: "",
+          password: password,
+          rol: "",
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
@@ -76,10 +79,13 @@ function UserForm({ id }) {
           gender: Yup.string()
             .required("The gender is required.")
             .notOneOf(["---"], "Please select a valid gender."),
+          birthday: Yup.date()
+            .required("Birthday is required.")
+            .max(new Date(), "Birthday cannot be in the future."),
         })}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(false);
-          console.log("hiciste click en submit");
+
           Swal.fire({
             title: "Warning",
             text: id
@@ -93,6 +99,7 @@ function UserForm({ id }) {
           }).then((response) => {
             if (response.isConfirmed) {
               Swal.fire("User created successfully", "", "success");
+              console.log(values, id);
             } else if (response.isDismissed) {
               return;
             }
@@ -145,50 +152,12 @@ function UserForm({ id }) {
                       p: 4,
                     }}
                   >
-                    <div className="flex flex-col justify-center items-center">
-                      <div>
-                        <img
-                          loading="lazy"
-                          src={photoUrl}
-                          className="self-center max-w-full rounded-full border-2 border-solid aspect-square border-black border-opacity-30 w-[174px]"
-                        />
-                      </div>
-                      <div>
-                        <input
-                          type="text"
-                          placeholder="Enter image URL"
-                          onChange={(e) => setPhotoUrl(e.target.value)}
-                          className="border mt-4 mr-4 ml-4 py-2 px-3 dark:text-white  text-gray-700 bg-white rounded-md"
-                        />
-                      </div>
-                      <div>
-                        <button
-                          onClick={() => {
-                            setFieldValue("photo_url", photoUrl);
-                            Swal.fire({
-                              icon: "success",
-                              title: "Photo saved successfully",
-                            });
-                            handleCloseModal();
-                          }}
-                          className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                        >
-                          Acept
-                        </button>
-                        <button
-                          className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                          onClick={() => {
-                            Swal.fire({
-                              icon: "warning",
-                              title: "Photo not saved",
-                            });
-                            handleCloseModal();
-                          }}
-                        >
-                          Close
-                        </button>
-                      </div>
-                    </div>
+                    <ImageInput
+                      photoUrl={photoUrl}
+                      setPhotoUrl={setPhotoUrl}
+                      setFieldValue={setFieldValue}
+                      handleCloseModal={handleCloseModal}
+                    />
                   </Box>
                 </Modal>
               </div>
@@ -221,6 +190,19 @@ function UserForm({ id }) {
                   name="phone_number"
                   labelAlign="left"
                 />
+                <div className="flex flex-col w-full mt-4 text-left">
+                  <label className={`text-bold text-lg pl-5`}>BIRTHDAY</label>
+                  <Field name="birthday">
+                    {({ field }) => (
+                      <input
+                        {...field}
+                        id="birthday"
+                        type="date"
+                        className="border mt-4 mr-4 ml-4 py-2 px-3   text-gray-700 bg-white rounded-md"
+                      />
+                    )}
+                  </Field>
+                </div>
                 <TextInput label="COUNTRY" name="country" labelAlign="left" />
                 <TextInput label="DOCUMENT" name="document" labelAlign="left" />
                 <SelectInput

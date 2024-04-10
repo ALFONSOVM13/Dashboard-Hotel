@@ -9,13 +9,13 @@ import EditButton from "../../components/EditButton/index";
 import SearchBar from "../../components/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../../redux/Users/Actions/actions";
-import { all } from "axios";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 function Guests() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { allUsers } = useSelector((state) => state.usersReducer);
-  console.log(allUsers);
   const [pagination, setPagination] = useState({ page: 1, size: 10, items: 0 });
   const [inputValue, setInputValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -80,9 +80,7 @@ function Guests() {
           action={handleInputChange}
         />
       </div>
-      <div className="self-start pt-5 pl-5">
-        <Button text="New User" onClick={handleClick} />
-      </div>
+
       <div className="flex flex-col justify-between px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
         <div className="flex justify-between items-center">
           <PaginationControl pagination={pagination} control={setPagination} />

@@ -1,9 +1,27 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import TabTitle from "../../components/TabTitle";
-
 import Chart from "react-apexcharts";
-
+import { obtenerUsuarioPorMes } from "../../utils/UsersByMonth/usersByMonth";
+import { obtenerPorcetajeDeUsuarios } from "../../utils/UsersByMonth/obtenerPorcetajeDeUsuarios";
+import ChartCards from "../../components/ChartCards";
 function Dashboard() {
+  const [userByMonth, setUserByMonth] = useState({});
+  var urlImagenPositivo =
+    "https://cdn.builder.io/api/v1/image/assets/TEMP/9b71f14f82a020926d0cf8cc7208b853b4002ff858b2dbd2cedb17718f556d0b?apiKey=22cfe7d1cd2045f2bf1d80be45287514&";
+  var urlImagenNegativo =
+    "https://cdn.builder.io/api/v1/image/assets/TEMP/a7e1b530922ce7b950c6bd96aa46a66581cde32a212a39a55847a97c8f43e1da?apiKey=22cfe7d1cd2045f2bf1d80be45287514&";
+
+  useEffect(() => {
+    (async () => {
+      await fetch(
+        "https://backend-hotelesmeralda.onrender.com/api/charts/users"
+      )
+        .then((response) => response.json())
+        .then((response) => setUserByMonth(response.totalUsersByMonth))
+        .catch((error) => console.log(error));
+    })();
+  }, []);
+
   const options = {
     chart: {
       background: "#ede9f5",
@@ -44,90 +62,36 @@ function Dashboard() {
         <TabTitle title="Dashboard" />
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 px-5 w-full max-w-[1500px] mx-auto items-center justify-around pt-10">
-        <div className="flex flex-col px-3 pt-3 pb-6 bg-white rounded-2xl  max-h-[108px] min-w-[180px] leading-[150%] max-w-[400px] shadow-[1px_3px_9px_rgba(100,52,248,0.15)]">
-          <div className="flex gap-3.5 text-xs text-zinc-900">
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/08074da68c84a49fab0013ced3078ba88d66faa0618ca6987c5939925e2252de?apiKey=22cfe7d1cd2045f2bf1d80be45287514&"
-              className="shrink-0 aspect-square w-[27px]"
-            />
-            <div>Earnings</div>
-          </div>
-          <div className="flex flex-wrap gap-0 gap-y-2 justify-between content-center mt-3.5 whitespace-nowrap rounded-lg">
-            <div className="text-2xl font-semibold text-black">$12.000</div>
-            <div className="flex flex-wrap flex-1 gap-1 content-center pl-5 my-auto text-xs rounded-lg text-zinc-900">
-              <div>+15.03%</div>
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/9b71f14f82a020926d0cf8cc7208b853b4002ff858b2dbd2cedb17718f556d0b?apiKey=22cfe7d1cd2045f2bf1d80be45287514&"
-                className="shrink-0 self-start w-4 aspect-square"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col px-3.5 pt-3 pb-6 bg-white max-h-[108px] min-w-[180px] rounded-2xl leading-[150%] max-w-[400px] shadow-[1px_3px_9px_rgba(100,52,248,0.15)]">
-          <div className="flex gap-3.5 text-xs text-zinc-900">
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/ee8e6c9c0fa83a758561cefaa4eb8aa1e8de7648121f4bed99e0cbb977199bd9?apiKey=22cfe7d1cd2045f2bf1d80be45287514&"
-              className="shrink-0 aspect-square w-[27px]"
-            />
-            <div>Reserved Rooms</div>
-          </div>
-          <div className="flex flex-wrap gap-0 gap-y-2 justify-between content-center mt-3.5 whitespace-nowrap rounded-lg">
-            <div className="text-2xl font-semibold text-black">45</div>
-            <div className="flex flex-wrap flex-1 gap-1 content-center pl-11 my-auto text-xs rounded-lg text-zinc-900">
-              <div>+20.03%</div>
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/9b71f14f82a020926d0cf8cc7208b853b4002ff858b2dbd2cedb17718f556d0b?apiKey=22cfe7d1cd2045f2bf1d80be45287514&"
-                className="shrink-0 self-start w-4 aspect-square"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col px-3.5 pt-3 pb-6 bg-white max-h-[108px] min-w-[180px] rounded-2xl leading-[150%] max-w-[400px] shadow-[1px_3px_9px_rgba(100,52,248,0.15)]">
-          <div className="flex gap-3.5 text-xs text-zinc-900">
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/1242c51032388a9531d3eaee521f873b3f8e649b9081ccbe842d4b3ed5667bf5?apiKey=22cfe7d1cd2045f2bf1d80be45287514&"
-              className="shrink-0 aspect-square w-[27px]"
-            />
-            <div>New Users</div>
-          </div>
-          <div className="flex flex-wrap gap-0 gap-y-2 justify-between content-center mt-3.5 whitespace-nowrap rounded-lg">
-            <div className="text-2xl font-semibold text-black">235</div>
-            <div className="flex flex-wrap flex-1 gap-1 content-center pl-11 my-auto text-xs rounded-lg text-zinc-900">
-              <div>+15.03%</div>
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/9b71f14f82a020926d0cf8cc7208b853b4002ff858b2dbd2cedb17718f556d0b?apiKey=22cfe7d1cd2045f2bf1d80be45287514&"
-                className="shrink-0 self-start w-4 aspect-square"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col px-3.5 pt-3 pb-6 bg-white max-h-[108px] min-w-[180px] rounded-2xl leading-[150%] max-w-[400px] shadow-[1px_3px_9px_rgba(100,52,248,0.15)]">
-          <div className="flex gap-3.5 text-xs text-zinc-900">
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/f4fe2a6f072147a073273595ea9caa697d3ff60386cb9f632202bd44c4de5fa9?apiKey=22cfe7d1cd2045f2bf1d80be45287514&"
-              className="shrink-0 aspect-square w-[27px]"
-            />
-            <div>Sold Offers</div>
-          </div>
-          <div className="flex flex-wrap gap-0 gap-y-2 justify-between content-center mt-3.5 whitespace-nowrap rounded-lg">
-            <div className="text-2xl font-semibold text-black">23</div>
-            <div className="flex flex-wrap flex-1 gap-1 content-center pl-11 my-auto text-xs rounded-lg text-zinc-900">
-              <div>-5.03%</div>
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/a7e1b530922ce7b950c6bd96aa46a66581cde32a212a39a55847a97c8f43e1da?apiKey=22cfe7d1cd2045f2bf1d80be45287514&"
-                className="shrink-0 self-start w-4 aspect-square"
-              />
-            </div>
-          </div>
-        </div>
+        <ChartCards
+          title="Earnings"
+          total="$12.000"
+          percentage="+15.03%"
+          icon={urlImagenPositivo}
+        />
+        <ChartCards
+          title="Reserved Rooms"
+          total="45"
+          percentage="+20.03%"
+          icon={urlImagenPositivo}
+        />
+        <ChartCards
+          title={`New Users in ${new Date().toLocaleString("en-US", {
+            month: "long",
+          })}`}
+          total={obtenerUsuarioPorMes(userByMonth)}
+          percentage={obtenerPorcetajeDeUsuarios(userByMonth)}
+          icon={
+            obtenerPorcetajeDeUsuarios(userByMonth) > 0
+              ? urlImagenPositivo
+              : urlImagenNegativo
+          }
+        />
+        <ChartCards
+          title="Sold Offers"
+          total="23"
+          percentage="-5.03%"
+          icon={urlImagenNegativo}
+        />
       </div>
       {/* Graphics */}
       <div className="flex flex-col xl:flex-row justify-center items-center p-5">

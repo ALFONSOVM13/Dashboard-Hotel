@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -8,20 +8,16 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import TextInput from "../../TextInput";
-import SelectInput from "../../SelectInput";
-import FormButtons from "../../FormButtons";
 import FormTitle from "../../FormTittle";
-import { postFood, putFood } from "../../../redux/Foods/Actions/actions";
-import alertFunctions from "../../../utils/alerts";
 
-function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
+function OfferForm({ setShowForm, offerToEdit, setOfferToEdit }) {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
 
   const handleClose = () => {
     setOpen(false);
     setShowForm(false);
-    setFoodToEdit(null);
+    setOfferToEdit(null);
   };
 
   return (
@@ -64,14 +60,16 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
                 <CloseIcon className="m-4 text-white bg-red-500 rounded-full" />
               </IconButton>
             </div>
-            <FormTitle title={foodToEdit ? "EDIT A FOOD" : "CREATE A FOOD"} />
+            <FormTitle
+              title={offerToEdit ? "EDIT AN OFFER" : "CREATE AN OFFER"}
+            />
             <Formik
               initialValues={{
-                name: foodToEdit ? foodToEdit.name : "",
-                price: foodToEdit ? foodToEdit.price : "",
-                category: foodToEdit ? foodToEdit.category : "",
-                description: foodToEdit ? foodToEdit.description : "",
-                imageUrl: foodToEdit ? foodToEdit.imageUrl : "",
+                name: "",
+                price: "",
+                services: "",
+                description: "",
+                imageUrl: "",
               }}
               validationSchema={Yup.object().shape({
                 name: Yup.string()
@@ -93,9 +91,8 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
                     "The description cannot have more than 100 characters."
                   ),
                 imageUrl: Yup.string().required("The image is required."),
-                category: Yup.string()
-                  .required("The category is required.")
-                  .notOneOf(["---"], "Please select a valid gender."),
+                services: Yup.string().required("The service is required."),
+
                 price: Yup.string()
                   .required("The price is required.")
                   .matches(/^\d+(\.\d{1,2})?$/, {
@@ -105,23 +102,7 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
               })}
               onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(false);
-                const action = foodToEdit ? putFood : postFood;
-                const text = foodToEdit
-                  ? "Are you sure you want to edit this meal?"
-                  : "Are you sure you want to create this meal?";
-                const confirm = foodToEdit
-                  ? ["Edited successfully.", "", "success"]
-                  : ["Created successfully.", "", "success"];
-                alertFunctions.seeAlert(
-                  dispatch,
-                  foodToEdit ? foodToEdit.id : null,
-                  values,
-                  action,
-                  text,
-                  confirm
-                );
-                setInputValue("");
-                setFoodToEdit(null);
+                setOfferToEdit(null);
                 handleClose();
               }}
               validateOnChange={true}
@@ -132,27 +113,26 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
                   <TextInput label="NAME" name="name" />
                   <TextInput label="PRICE" name="price" />
                   <TextInput label="DESCRIPTION" name="description" rows="3" />
-                  <SelectInput
-                    label="CATEGORY"
-                    name="category"
-                    options={[
-                      "---",
-                      "Driks",
-                      "Burger",
-                      "Italian",
-                      "Japanese",
-                      "Dessert",
-                      "Mexican",
-                      "Snacks",
-                    ]}
-                  />
+                  <TextInput label="SERVICES" name="services" />
                   <TextInput label="IMAGE URL" name="imageUrl" />
-                  <FormButtons
-                    clearText={"CLEAR FIELDS"}
-                    foodToEdit={foodToEdit}
-                    isSubmitting={isSubmitting}
-                    resetForm={resetForm}
-                  />
+                  <div className="flex justify-center items-center">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                    >
+                      {offerToEdit ? "EDIT AN OFFER" : "CREATE AN OFFER"}
+                    </button>
+                    {offerToEdit ? null : (
+                      <button
+                        type="button"
+                        onClick={resetForm}
+                        className="px-4 m-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                      >
+                        CLEAR FIELDS
+                      </button>
+                    )}
+                  </div>
                 </Form>
               )}
             </Formik>
@@ -163,4 +143,4 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
   );
 }
 
-export default FoodForm;
+export default OfferForm;
