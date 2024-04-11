@@ -21,7 +21,7 @@ const TextInput = ({ label, name, rows, labelAlign = "center" }) => {
   return (
     <div className={`flex flex-col w-full mt-4`}>
       <label
-        className={`text-bold text-lg ${
+        className={`text-bold text-lg dark:text-white ${
           labelAlign === "center" ? "" : "text-left pl-5"
         }`}
       >

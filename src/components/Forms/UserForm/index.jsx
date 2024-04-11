@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import { ErrorMessage } from "formik";
 import { Field } from "formik";
 import ImageInput from "../../ImageInput";
+import DateInput from "../../DateInput";
 
 function UserForm({ id }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,14 +45,11 @@ function UserForm({ id }) {
           address: "",
           photo_url: photoUrl,
           gender: "",
-          birth: "",
+          birthday: "",
           password: password,
           rol: "",
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string()
-            .email("Invalid email.")
-            .required("The email is required."),
           full_name: Yup.string()
             .required("The name is required.")
             .matches(
@@ -115,7 +113,7 @@ function UserForm({ id }) {
                 <img
                   loading="lazy"
                   src={photoUrl}
-                  className="self-center max-w-full rounded-full border-2 border-solid aspect-square border-black border-opacity-30 w-[174px]"
+                  className="self-center max-w-full rounded-full border-2 border-solid aspect-square dark:border-white border-black border-opacity-30 w-[174px]"
                 />
                 <button
                   className="justify-center self-center px-4 py-5 mt-4 max-w-full font-semibold text-center text-white rounded shadow-sm bg-blue-950 w-[174px]"
@@ -167,7 +165,7 @@ function UserForm({ id }) {
                   name="full_name"
                   labelAlign="left"
                 />
-                <TextInput label="EMAIL" name="email" labelAlign="left" />
+
                 <TextInput
                   label="PASSWORD"
                   name="password"
@@ -190,19 +188,7 @@ function UserForm({ id }) {
                   name="phone_number"
                   labelAlign="left"
                 />
-                <div className="flex flex-col w-full mt-4 text-left">
-                  <label className={`text-bold text-lg pl-5`}>BIRTHDAY</label>
-                  <Field name="birthday">
-                    {({ field }) => (
-                      <input
-                        {...field}
-                        id="birthday"
-                        type="date"
-                        className="border mt-4 mr-4 ml-4 py-2 px-3   text-gray-700 bg-white rounded-md"
-                      />
-                    )}
-                  </Field>
-                </div>
+                <DateInput label="BIRTHDAY" name="birthday" />
                 <TextInput label="COUNTRY" name="country" labelAlign="left" />
                 <TextInput label="DOCUMENT" name="document" labelAlign="left" />
                 <SelectInput
