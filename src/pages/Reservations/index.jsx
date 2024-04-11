@@ -9,6 +9,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAllReservations } from "../../redux/Reservations/Actions/actions.js";
+import { convertirFechaAAmPm } from "../../utils/index.js";
+import { getAllUsers } from "../../redux/Users/Actions/actions.js";
+import { getAllRooms } from "../../redux/Rooms/Actions/actions.js";
 
 function Reservations() {
   const {
@@ -22,19 +25,43 @@ function Reservations() {
   } = useTableSearchPagination();
   const dispatch = useDispatch();
   const { allReservations } = useSelector((state) => state.reservationsReducer);
+  const { allUsers } = useSelector((state) => state.usersReducer);
+  const { allRooms } = useSelector((state) => state.roomsReducer);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getAllReservations());
+    dispatch(getAllUsers());
+    dispatch(getAllRooms());
   }, []);
 
   useEffect(() => {
-    if (allReservations !== undefined) {
-      setData(allReservations);
+    if (
+      allReservations !== undefined &&
+      allReservations.length > 0 &&
+      allRooms !== undefined &&
+      allRooms.length > 0 &&
+      allUsers !== undefined &&
+      allUsers.length > 0
+    ) {
+      setData(
+        allReservations.map((reservation) => ({
+          reservation_number: reservation.reservation_number,
+          user_name: allUsers.find((user) => user.id === reservation.user_id)
+            .username,
+          room_number: allRooms.find((room) => room.id === reservation.room_id)
+            .room_number,
+          check_in_date: convertirFechaAAmPm(reservation.check_in_date),
+          check_out_date: convertirFechaAAmPm(reservation.check_out_date),
+          status: reservation.status,
+          total_price: "$ " + reservation.total_price,
+        }))
+      );
       setPagination({ ...pagination, items: data.length });
+      console.log(allReservations);
     }
-  }, [allReservations]);
+  }, [allReservations, allUsers, allRooms]);
 
   return (
     <>
@@ -57,16 +84,18 @@ function Reservations() {
         ) : (
           <Table
             headers={[
+              "Reservation #",
+              "Guest username",
               "Room #",
-              "Room Name",
-              "Guest Username",
               "Check-In",
               "Check-Out",
+              "Status",
+              "Price",
               "Actions",
             ]}
             data={searchResults.length > 0 ? searchResults : data}
             Components={ReservedButtons}
-            idName="roomNumber"
+            idName="id"
             size={pagination.size}
             page={pagination.page}
           />
