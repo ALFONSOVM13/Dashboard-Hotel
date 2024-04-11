@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import { ErrorMessage } from "formik";
 import { Field } from "formik";
 import ImageInput from "../../ImageInput";
+import DateInput from "../../DateInput";
 
 function UserForm({ id }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,15 +45,12 @@ function UserForm({ id }) {
           address: "",
           photo_url: photoUrl,
           gender: "",
-          birth: "",
+          birthday: "",
           password: password,
           rol: "",
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string()
-            .email("Invalid email.")
-            .required("The email is required."),
-          name: Yup.string()
+          full_name: Yup.string()
             .required("The name is required.")
             .matches(
               /^[A-Za-z\u00C0-\u024F\s']*$/,
@@ -60,15 +58,16 @@ function UserForm({ id }) {
             )
             .max(50, "The name cannot have more than 50 characters."),
           password: Yup.string().required("The password is required."),
-
-          phoneNumber: Yup.string()
+          phone_number: Yup.string()
             .required("The phone number is required.")
             .matches(
               /^\+(?:[0-9] ?){6,14}[0-9]$/,
               "Invalid phone number format."
             )
             .max(20, "The phone number cannot have more than 20 characters."),
-          adress: Yup.string()
+          country: Yup.string().required("The country is required."),
+          document: Yup.string().required("The document is required."),
+          address: Yup.string()
             .required("The address is required.")
             .max(100, "The address cannot have more than 100 characters."),
           photo_url: Yup.string().required("The photo is required."),
@@ -114,7 +113,7 @@ function UserForm({ id }) {
                 <img
                   loading="lazy"
                   src={photoUrl}
-                  className="self-center max-w-full rounded-full border-2 border-solid aspect-square border-black border-opacity-30 w-[174px]"
+                  className="self-center max-w-full rounded-full border-2 border-solid aspect-square dark:border-white  border-black border-opacity-30 w-[174px]"
                 />
                 <button
                   className="justify-center self-center px-4 py-5 mt-4 max-w-full font-semibold text-center text-white rounded shadow-sm bg-blue-950 w-[174px]"
@@ -161,8 +160,11 @@ function UserForm({ id }) {
                 </Modal>
               </div>
               <div className="flex flex-col">
-                <TextInput label="FULLNAME" name="name" labelAlign="left" />
-                <TextInput label="EMAIL" name="email" labelAlign="left" />
+                <TextInput
+                  label="FULLNAME"
+                  name="full_name"
+                  labelAlign="left"
+                />
                 <TextInput
                   label="PASSWORD"
                   name="password"
@@ -179,25 +181,13 @@ function UserForm({ id }) {
                 >
                   Generate Password
                 </button>
-                <TextInput label="ADRESS" name="adress" labelAlign="left" />
+                <TextInput label="ADRESS" name="address" labelAlign="left" />
                 <TextInput
                   label="PHONE NUMBER"
-                  name="phoneNumber"
+                  name="phone_number"
                   labelAlign="left"
                 />
-                <div className="flex flex-col w-full mt-4 text-left">
-                  <label className={`text-bold text-lg pl-5`}>BIRTHDAY</label>
-                  <Field name="birthday">
-                    {({ field }) => (
-                      <input
-                        {...field}
-                        id="birthday"
-                        type="date"
-                        className="border mt-4 mr-4 ml-4 py-2 px-3   text-gray-700 bg-white rounded-md"
-                      />
-                    )}
-                  </Field>
-                </div>
+                <DateInput label="BIRTHDAY" name="birthday" />
                 <TextInput label="COUNTRY" name="country" labelAlign="left" />
                 <TextInput label="DOCUMENT" name="document" labelAlign="left" />
                 <SelectInput
