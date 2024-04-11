@@ -186,7 +186,7 @@ function RoomEdit() {
               handler={handleChange}
               error={errors.room_number}
             />
-            <p className="mt-5 text-left leading-relaxed">
+            <p className="mt-5 text-left leading-relaxed dark:text-white">
               <span className="text-md font-bold">Room Type Description:</span>{" "}
               <br />
               {roomData.room_type?.description?.slice(0, 120) +
@@ -223,7 +223,7 @@ function RoomEdit() {
               </div>
             </FieldContainer>
             <FieldContainer>
-              <span className="font-bold my-5">Services</span>
+              <span className="font-bold my-5 dark:text-white">Services</span>
               <div className="grid gap-5 grid-cols-3 relative w-full">
                 {Object.keys(roomData.services).map((item, i) => (
                   <div key={"HI" + item + i} className="mx-auto">
@@ -261,7 +261,7 @@ function RoomEdit() {
           </div>
           <div>
             <FieldContainer>
-              <div className="mt-5 flex justify-between w-full">
+              <div className="mt-5 flex justify-between w-full dark:text-white">
                 <span className="font-bold block mb-5">
                   Room {enabled ? "Active" : "Inactive"}
                 </span>
@@ -280,7 +280,8 @@ function RoomEdit() {
                   />
                 </Switch>
               </div>
-              <div className="flex flex-col justify-between items-start text-left select-none">
+              <hr className="mb-5" />
+              <div className="flex flex-col justify-between items-start text-left select-none dark:text-white">
                 <RadioGroup value={status} onChange={setStatus}>
                   <RadioGroup.Label className="font-bold block mb-5">
                     Room Status
@@ -290,7 +291,7 @@ function RoomEdit() {
                       <span
                         className={`${
                           checked
-                            ? "p-3 bg-green-200 hover:bg-green-300"
+                            ? "p-3 dark:text-black bg-green-200 hover:bg-green-300"
                             : "p-3 hover:bg-[rgba(10,10,10,0.1)]"
                         } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1)] py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
                       >
@@ -303,7 +304,7 @@ function RoomEdit() {
                       <span
                         className={`${
                           checked
-                            ? "p-3 bg-yellow-200 hover:bg-yellow-300"
+                            ? "p-3 dark:text-black bg-yellow-200 hover:bg-yellow-300"
                             : "p-3 hover:bg-[rgba(10,10,10,0.1)]"
                         } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1)] py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
                       >
@@ -316,7 +317,7 @@ function RoomEdit() {
                       <span
                         className={`${
                           checked
-                            ? "p-3 bg-red-200 hover:bg-red-300"
+                            ? "p-3 dark:text-black bg-red-200 hover:bg-red-300"
                             : "p-3 hover:bg-[rgba(10,10,10,0.1)]"
                         } w-[150px] rounded-md hover:bg-[rgba(10,10,10,0.1)] py-2 transition-all ease-in-out duration-200 cursor-pointer block`}
                       >

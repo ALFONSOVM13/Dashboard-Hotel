@@ -1,87 +1,166 @@
-import React from "react";
+import { useEffect, useState } from "react";
 
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import TextInput from "../../TextInput";
-import FormButtons from "../../FormButtons";
-import SelectInput from "../../SelectInput";
-import TextInputWithButton from "../../TextInputWithButton";
+import moment from "moment";
+import FieldContainer from "../../FieldsContainer";
+import Button from "../../Button";
+import SelectField from "../../SelectField";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsers } from "../../../redux/Users/Actions/actions";
+import { getAllRooms } from "../../../redux/Rooms/Actions/actions";
+import { createReservation } from "../../../redux/Reservations/Actions/actions";
+import DateField from "../../DateField";
 
-function ReservationForm({ roomNumber }) {
-  const obtenerGuestId = () => {
-    //Aqui se obtiene el GuestId a partir del roomNumber
-    return 5;
+function ReservationForm({ roomNumber = null }) {
+  const [reservation, setReservation] = useState({
+    room_id: "",
+    user_id: "",
+    check_in_date: moment().format("YYYY-MM-DD"),
+    check_out_date: moment().add(1, "days").format("YYYY-MM-DD"),
+  });
+  const [errors, setErrors] = useState({
+    room_id: "",
+    user_id: "",
+    check_in_date: "",
+    check_out_date: "",
+  });
+
+  const dispatch = useDispatch();
+  const { allRooms } = useSelector((state) => state.roomsReducer);
+  const { allUsers } = useSelector((state) => state.usersReducer);
+
+  const handleChange = (e) => {
+    setErrors({
+      room_id: "",
+      user_id: "",
+      check_in_date: "",
+      check_out_date: "",
+    });
+    const { name, value } = e.target;
+    setReservation({ ...reservation, [name]: value });
   };
 
-  const seeProfile = () => {
-    alert(`Perfil ${obtenerGuestId()}`);
+  const validation = () => {
+    let error = { ...errors };
+    if (reservation.room_id === "") error.room_id = "Please select a Room";
+    if (reservation.user_id === "") error.user_id = "Please select an User";
+    if (moment(reservation.check_in_date) < moment())
+      error.check_in_date = "Check in Date  can not be in the past.";
+    if (moment(reservation.check_out_date) < moment(reservation.check_in_date))
+      error.check_out_date =
+        "The Check out date must be greater than the Check in date";
+    setErrors(errors);
+    return Object.values(errors).every((value) => value === "");
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validation()) return;
+    try {
+      dispatch(createReservation(reservation));
+      console.log("Saving Reservation...");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log(reservation);
+  }, [reservation]);
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+    dispatch(getAllRooms());
+  }, []);
+
+  useEffect(() => {
+    console.log("All Users: ", allUsers);
+    console.log("All Rooms: ", allRooms);
+  }, [allUsers]);
+
   return (
-    <>
-      <Formik
-        initialValues={{
-          roomNumber: "",
-          guestName: "",
-          cel: "",
-          email: "",
-        }}
-        validationSchema={Yup.object().shape({
-          guestName: Yup.string().required("The guest name is required"),
-          roomNumber: Yup.string(),
-          cel: Yup.string()
-            .required("Cellphone required")
-            .min(8, "The cellphone number must be at least 10 digits"),
-          email: Yup.string()
-            .email("Fill with a valid email")
-            .required("The e-mail is required"),
-        })}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
-          setSubmitting(false);
-        }}
-        validateOnChange={false}
-        validateOnBlur={false}
-      >
-        {({ isSubmitting }) => (
-          <Form className="w-full">
-            <div className=" grid grid-cols-1 md:grid-cols-2">
-              <SelectInput
-                label="Change Reservated Room Number"
-                name="roomNumber"
-                options={[401, 402, 403]}
-                initialValue={roomNumber}
-                labelAlign="left"
-              />
-              <TextInputWithButton
-                label="Reservation Guest Name"
-                name="guestUsername"
-                labelAlign="left"
-                action={seeProfile}
-                buttonText={"See profile"}
-              />
-              <SelectInput
-                label="Room Type"
-                name="roomType"
-                options={[
-                  "Presidential Room",
-                  "Standard Room",
-                  "Championship Room",
-                ]}
-                initialValue={"Not assigned"}
-                labelAlign="left"
-              />
-              <TextInput label="Cell phone" name="cel" labelAlign="left" />
-              <TextInput label="E-mail" name="email" labelAlign="left" />
-            </div>
-            <FormButtons
-              isSubmitting={isSubmitting}
-              clearButton={false}
-              submitText="Save Reservation Info"
+    <form>
+      <div className="grid grid-cols-2 gap-2 px-5">
+        <FieldContainer>
+          <div className="flex flex-col">
+            <SelectField
+              name="room_id"
+              value={reservation.room_id}
+              handler={handleChange}
+              label="Room Number"
+              options={[
+                ...allRooms.map((room) => ({
+                  id: room.id,
+                  name: room.room_number,
+                })),
+              ]}
+              error={errors.room_id}
             />
-          </Form>
-        )}
-      </Formik>
-    </>
+          </div>
+        </FieldContainer>
+        <FieldContainer>
+          <div className="flex flex-col">
+            <SelectField
+              name="user_id"
+              value={reservation.user_id}
+              handler={handleChange}
+              label="User Name"
+              options={[
+                ...allUsers.map((user) => ({
+                  id: user.id,
+                  name: user.username,
+                })),
+              ]}
+              error={errors.user_id}
+            />
+          </div>
+        </FieldContainer>
+        <FieldContainer>
+          <div className="flex w-full justify-between gap-5">
+            <div className="flex flex-col w-full">
+              <DateField
+                name="checkInDay"
+                value={reservation.check_in_date}
+                handler={handleChange}
+                label="Check-in Date"
+              />
+              error={errors.check_in_date}
+            </div>
+            {/* <div className="flex flex-col w-1/2">
+              <HourField
+                name="checkInHour"
+                value={reservation.checkInHour}
+                handler={handleChange}
+                label="Check-in Hour"
+              />
+            </div> */}
+          </div>
+        </FieldContainer>
+        <FieldContainer>
+          <div className="flex w-full justify-between gap-5">
+            <div className="flex flex-col w-full">
+              <DateField
+                name="check_out_date"
+                value={reservation.check_out_date}
+                handler={handleChange}
+                label="Check-Out Date"
+              />
+              error={errors.check_out_date}
+            </div>
+            {/* <div className="flex flex-col w-1/2">
+              <HourField
+                name="checkOutHour"
+                value={reservation.checkOutHour}
+                handler={handleChange}
+                label="Check-Out Hour"
+              />
+            </div> */}
+          </div>
+        </FieldContainer>
+      </div>
+      <Button className={"text-white bg-blue-800 mt-5"} action={handleSubmit}>
+        Create Reservation
+      </Button>
+    </form>
   );
 }
 

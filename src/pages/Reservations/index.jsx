@@ -6,7 +6,9 @@ import ReservedButtons from "../../components/ReservedButtons/index.jsx";
 import SearchBar from "../../components/SearchBar/index.jsx";
 import useTableSearchPagination from "../../hooks/useTableSearchPagination.jsx";
 import { useEffect } from "react";
-import { convertirFechaAAmPm } from "../../utils/index.js";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getAllReservations } from "../../redux/Reservations/Actions/actions.js";
 
 function Reservations() {
   const {
@@ -18,33 +20,28 @@ function Reservations() {
     data,
     setData,
   } = useTableSearchPagination();
+  const dispatch = useDispatch();
+  const { allReservations } = useSelector((state) => state.reservationsReducer);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    (async () => {
-      fetch("/data/reservations.json")
-        .then((response) => response.json())
-        .then((data) => {
-          setData([
-            ...data.map((reservation) => {
-              return {
-                ...reservation,
-                checkIn: convertirFechaAAmPm(reservation.checkIn),
-                checkOut: convertirFechaAAmPm(reservation.checkOut),
-              };
-            }),
-          ]);
-          setPagination({ ...pagination, items: data.length });
-        })
-        .catch((error) => console.log("Error: ", error));
-    })();
+    dispatch(getAllReservations());
   }, []);
+
+  useEffect(() => {
+    if (allReservations !== undefined) {
+      setData(allReservations);
+      setPagination({ ...pagination, items: data.length });
+    }
+  }, [allReservations]);
 
   return (
     <>
       <div className="flex flex-col px-5 pr-10 pt-10 w-full">
         <div className="flex justify-between items-center">
           <TabTitle title="Reserved Rooms" />
-          <Button text="New Reservation" />
+          <Button text="New Reservation" onClick={() => navigate("create")} />
         </div>
         <SearchBar
           text="Room #, Room Name, Date"

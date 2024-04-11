@@ -12,8 +12,8 @@ export function convertirFechaAAmPm(fechaISO) {
 }
 
 export async function reconectar(callback, condicion = false, intentos = 0) {
+  if (intentos === 0) condicion = await callback();
   if (condicion || intentos > 100) return;
-
   condicion = await attemp(callback);
   console.log("Trying attemp: " + intentos, ". Reconnecting... ");
 
