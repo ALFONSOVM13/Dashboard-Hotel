@@ -118,7 +118,7 @@ function ReservationForm({ roomNumber = null }) {
           <div className="flex w-full justify-between gap-5">
             <div className="flex flex-col w-full">
               <DateField
-                name="checkInDay"
+                name="check_in_date"
                 value={reservation.check_in_date}
                 handler={handleChange}
                 label="Check-in Date"
