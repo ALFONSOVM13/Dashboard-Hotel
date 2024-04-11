@@ -12,11 +12,14 @@ export const getAllReservations = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${VITE_BACKEND_URL}/api/reservations`);
+
       dispatch({
         type: GET_ALL_RESERVATIONS,
         payload: response.data,
       });
     } catch (error) {
+      console.log(error);
+
       throw new Error("Error de red al intentar obtener reservaciones.");
     }
   };

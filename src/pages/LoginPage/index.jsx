@@ -45,7 +45,7 @@ export default function LoginPage() {
       setLoading(true);
       await axios
         .post(`${VITE_BACKEND_URL}/auth/login`, {
-          usernameOrEmail: inputs.username,
+          usernameOrEmail: inputs.username.toLocaleLowerCase(),
           password: inputs.password,
         })
         .then((response) => {
