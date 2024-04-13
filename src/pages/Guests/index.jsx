@@ -36,6 +36,7 @@ function Guests() {
         items: allUsers.length,
       });
     }
+    console.log(allUsers);
   }, [allUsers, dataLoaded]);
 
   useEffect(() => {
