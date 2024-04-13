@@ -1,18 +1,20 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import { Navigate } from "react-router";
+import { Link } from "react-router-dom";
 
 function EditButton({ id }) {
-  const goToPage = () => {
-    Navigate("/" + id);
-  };
+  const goToPage = () => {};
   return (
-    <button
-      onClick={goToPage}
-      className="flex gap-3 font-semibold text-white justify-center px-4 bg-green-600 rounded-md shadow-sm"
-    >
-      Edit{" "}
-    </button>
+    <>
+      <Link to={`${id}`} className="block w-full">
+        <button
+          onClick={goToPage}
+          className="w-full block gap-3 font-semibold text-white justify-center p-2 bg-green-600 rounded-md shadow-sm shadow-slate-800"
+        >
+          Edit{" "}
+        </button>
+      </Link>
+    </>
   );
 }
 

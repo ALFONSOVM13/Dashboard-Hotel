@@ -1,0 +1,4 @@
+export const GET_ALL_SERVICES = "GET_ALL_SERVICES";
+export const DELETE_SERVICE = "DELETE_SERVICE";
+export const POST_SERVICE = "POST_SERVICE";
+export const PUT_SERVICE = "PUT_SERVICE";

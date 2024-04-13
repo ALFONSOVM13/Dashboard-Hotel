@@ -4,7 +4,7 @@ import ReleaseButton from "../ReleaseButton";
 
 function ReservedButtons({ id }) {
   return (
-    <div className="flex gap-3 w-full h-full items-center p-2">
+    <div className="flex gap-3 my-5 ml-3">
       <EditButton id={id} />
       <ReleaseButton id={id} />
     </div>

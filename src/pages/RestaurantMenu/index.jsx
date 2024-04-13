@@ -1,90 +1,141 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { deleteFood, getAllFoods } from "../../redux/Foods/Actions/actions";
+
 import TabTitle from "../../components/TabTitle";
 import Button from "../../components/NewButton";
 import PaginationControl from "../../components/PaginationControl";
 import Table from "../../components/Table";
-import ActionsUsersButtons from "../../components/UsersButtons/ActionsUsersButtons/ActionsUsersButtons";
-import plates from "../../dataRestaurant";
+import EditDeleteButtons from "../../components/EditDeleteButtons/ActionsButtons";
 import FoodForm from "../../components/Forms/FoodForm";
+import SearchBar from "../../components/SearchBar";
+import alertFunctions from "../../utils/alerts";
 
 function RestaurantMenu() {
+  const dispatch = useDispatch();
+  const { allFoods } = useSelector((state) => state.foodsReducer);
   const [inputValue, setInputValue] = useState("");
-  const [data, setData] = useState([]);
   const [pagination, setPagination] = useState({ page: 1, size: 10, items: 0 });
   const [showForm, setShowForm] = useState(false);
-
-  const handleClick = () => {
-    setShowForm(true);
-  };
+  const [searchResults, setSearchResults] = useState([]);
+  const [foodToEdit, setFoodToEdit] = useState(null);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    const updateDataAndPagination = async () => {
-      setData([
-        ...plates.map((plate) => {
-          return {
-            name: plate.nombre,
-            image: plate.imagen,
-            description: plate.descripcion,
-            category: plate.categoria,
-            price: plate.precio,
-          };
-        }),
-      ]);
+    dispatch(getAllFoods())
+      .then(() => {
+        setDataLoaded(true);
+      })
+      .catch((error) => console.log(error));
+  }, [dispatch]);
 
+  useEffect(() => {
+    if (dataLoaded) {
       setPagination({
         ...pagination,
-        items: plates.length,
+        items: allFoods.length,
       });
-    };
-    updateDataAndPagination();
-  }, []);
+    }
+  }, [allFoods, dataLoaded]);
+
+  useEffect(() => {
+    if (!inputValue) {
+      setSearchResults([]);
+      setPagination({ ...pagination, items: allFoods.length });
+      return;
+    }
+    const filteredData = allFoods.filter((item) => {
+      return (
+        item.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+        item.category.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    });
+    setSearchResults(filteredData);
+    setPagination({ ...pagination, page: 1, items: filteredData.length });
+  }, [inputValue]);
 
   const handleInputChange = (event) => {
     const value = event.target.value;
     setInputValue(value);
   };
 
+  const handleClick = () => {
+    setShowForm(true);
+  };
+
+  const handleDelete = (id) => {
+    alertFunctions.seeAlert(
+      dispatch,
+      id,
+      null,
+      deleteFood,
+      "Are you sure you want to delete it?",
+      ["Deleted successfully.", "", "success"]
+    );
+    setInputValue("");
+  };
+
+  const handleEdit = (id) => {
+    const foodToEdit = allFoods.find((item) => item.id.toString() === id);
+    setFoodToEdit(foodToEdit);
+    setShowForm(true);
+  };
+
   return (
     <>
-      <div className="flex flex-col px-5 w-full max-md:max-w-full">
+      <div className="flex flex-col px-5 pt-10 w-full max-md:max-w-full">
         <TabTitle title="Restaurant Menu" />
-        <div className="flex gap-3 px-9 py-5 mt-14 text-xs tracking-normal bg-white text-slate-400 max-md:flex-wrap max-md:px-5 max-md:mt-10">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/7b49e8b3c1539f4661f5272c04b5763e602f8c805eae3399076c480b60b8e19d?"
-            className="shrink-0 w-5 aspect-square"
-          />
-          <input
-            type="text"
-            placeholder="Name, Category"
-            className="flex-grow my-auto max-md:max-w-full bg-white text-base"
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-        </div>
+        <SearchBar
+          text="Name, Category"
+          value={inputValue}
+          action={handleInputChange}
+        />
       </div>
       <div className="self-start pt-5 pl-5">
         {!showForm && <Button text="NEW PLATE" onClick={handleClick} />}
-        {showForm && <FoodForm setShowForm={setShowForm} />}
+        {showForm && (
+          <FoodForm
+            setShowForm={setShowForm}
+            foodToEdit={foodToEdit}
+            setFoodToEdit={setFoodToEdit}
+            setInputValue={setInputValue}
+          />
+        )}
       </div>
-      <div className="flex flex-col px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
-        <PaginationControl pagination={pagination} control={setPagination} />
-        <Table
-          headers={[
-            "Nombre",
-            "Imagen",
-            "Descripcion",
-            "Categoria",
-            "Precio",
-            "Actions",
-          ]}
-          data={data}
-          Components={ActionsUsersButtons}
-          idName="platesTable"
-          size={pagination.size}
-          page={pagination.page}
-        />
-      </div>
+      {allFoods.length > 0 ? (
+        <div className="flex flex-col px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
+          <PaginationControl pagination={pagination} control={setPagination} />
+          {inputValue !== "" && searchResults.length === 0 ? (
+            <h3>{`No results for "${inputValue}" search...`}</h3>
+          ) : (
+            <Table
+              headers={[
+                "Image",
+                "ID",
+                "Name",
+                "Category",
+                "Price",
+                "Description",
+                "Actions",
+              ]}
+              data={searchResults.length > 0 ? searchResults : allFoods}
+              Components={(props) => (
+                <EditDeleteButtons
+                  {...props}
+                  handleDelete={handleDelete}
+                  handleEdit={handleEdit}
+                />
+              )}
+              idName="id"
+              size={pagination.size}
+              page={pagination.page}
+            />
+          )}
+        </div>
+      ) : (
+        <h2 className="text-xl mt-5">No plates in BD. Please create one.</h2>
+      )}
     </>
   );
 }

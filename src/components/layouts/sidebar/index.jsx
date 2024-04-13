@@ -1,22 +1,29 @@
+import DarkModeButton from "../../DarkModeButton";
 import ListCategory from "../../ListCategory";
 import ListOption from "../../ListOption";
+import LogoutButton from "../../LogoutButton";
 import ProfileDock from "../../ProfileDock";
-import { useRef } from "react";
 
-function Sidebar({ controlador }) {
+function Sidebar({ controlador, darkMode, toogleDarkMode }) {
   return (
     <div
-      className="fixed transition-all duration-500 flex flex-col py-6 bg-white shadow-sm w-[30%] lg:w-[20%] self-start top-0 bottom-0 h-full z-100 md:text-2xl"
+      id="sidebar"
+      className="fixed transition-all duration-300 flex flex-col py-6 bg-white dark:bg-[rgba(15,15,15,0.8)] shadow-sm w-[300px]  self-start top-0 bottom-0 h-full z-100 md:text-2xl"
       ref={controlador}
     >
       <div className="flex flex-col items-left px-6 w-full">
+        <div className="flex gap-5 items-center justify-between">
+          <DarkModeButton darkMode={darkMode} setDarkMode={toogleDarkMode} />
+          <LogoutButton />
+        </div>
+        <hr className="my-5 border-gray-900 dark:border-gray-200" />
         <div className="self-stretch text-lg font-semibold text-sky-500 text-left pl-4">
           Hotel Esmeralda Resort & Spa
         </div>
 
-        <ProfileDock name="Luis Alberto" email="luiluego@gmail.com" />
-        <ListCategory text="Portal Customization" icon="mosaic" />
-        <ListCategory text="Manage" icon="hamburguer" />
+        <ProfileDock />
+        {/* <ListCategory text="Portal Customization" icon="mosaic" /> */}
+        <ListCategory text="Manage" />
         <ListOption text={"Guest"} link={"/dashboard/guests"} active={true} />
         <ListOption
           text={"Reserved Rooms"}
@@ -39,8 +46,14 @@ function Sidebar({ controlador }) {
           link={"/dashboard/restaurantMenu"}
           active={false}
         />
-
-        <ListCategory text="Messaging" icon="mail" />
+        <ListOption
+          text={"Services"}
+          link={"/dashboard/services"}
+          active={false}
+        />
+        <ListCategory text="Analitycs" />
+        <ListOption text="Dash Board" link={"/dashboard/home"} active={false} />
+        <ListCategory text="Messaging" />
         <ListOption
           text={"Offers Notifications"}
           link={"/dashboard/offerNotifications"}
