@@ -141,7 +141,7 @@ function App() {
               }
             />
             <Route
-              path="guests/createguest/newguest"
+              path="guests/new/register"
               element={
                 <ProtectedRoute>
                   <CreateGuest />

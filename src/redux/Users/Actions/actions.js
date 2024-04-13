@@ -29,7 +29,7 @@ export const postUser = (is, user) => {
     try {
       const response = await axios.post(`${VITE_BACKEND_URL}`, user);
       return dispatch({
-        type: PUT_USER,
+        type: CREATE_USER,
         payload: response.data,
       });
     } catch (error) {
