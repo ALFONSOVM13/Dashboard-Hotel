@@ -7,6 +7,7 @@ import roomTypesReducer from "./RoomTypes/Reducers/RoomsTypesReducer";
 import usersReducer from "./Users/Reducers/UsersReducer";
 import sessionReducer from "./Session/Reducers/SessionReducer";
 import offersReducer from "./Offers/Reducers/OffersReducer";
+import servicesReducer from "./Services/Reducers/serviceReducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   usersReducer,
   sessionReducer,
   offersReducer,
+  servicesReducer,
 });
 
 const store = createStore(
