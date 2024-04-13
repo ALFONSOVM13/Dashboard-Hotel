@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../../redux/Users/Actions/actions";
 import axios from "axios";
 import Cookies from "js-cookie";
+import CreateGuest from "./CreateGuest";
 
 function Guests() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ function Guests() {
   const [inputValue, setInputValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     dispatch(getAllUsers())
@@ -60,7 +62,7 @@ function Guests() {
   };
 
   const handleClick = () => {
-    navigate("createguest/newguest");
+    setShowForm(true);
   };
 
   const mapData = (dataArray) => {
@@ -73,7 +75,15 @@ function Guests() {
   return (
     <>
       <div className="flex flex-col px-5 pr-10 pt-10 w-full max-md:max-w-full">
-        <TabTitle title="Guest Management" />
+        <div className="flex flex-col justify-between items-center mb-3">
+          <TabTitle title="Guest Management" />
+          <Button
+            className="absolute right-10"
+            text={"Register a new user"}
+            onClick={handleClick}
+          />
+          {showForm && <CreateGuest setShowForm={setShowForm} />}
+        </div>
         <SearchBar
           text="Name, Email"
           value={inputValue}
