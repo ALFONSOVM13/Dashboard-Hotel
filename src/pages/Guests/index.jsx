@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import users from "../../data";
 import TabTitle from "../../components/TabTitle";
 import Button from "../../components/NewButton";
 import PaginationControl from "../../components/PaginationControl";
@@ -9,58 +8,52 @@ import EditButton from "../../components/EditButton/index";
 import SearchBar from "../../components/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../../redux/Users/Actions/actions";
-import axios from "axios";
-import Cookies from "js-cookie";
+import { reconectar } from "../../utils";
 import CreateGuest from "./CreateGuest";
+import useTableSearchPagination from "../../hooks/useTableSearchPagination";
+import Loading from "../../components/Loading";
 
 function Guests() {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { allUsers } = useSelector((state) => state.usersReducer);
-  const [pagination, setPagination] = useState({ page: 1, size: 10, items: 0 });
-  const [inputValue, setInputValue] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [dataLoaded, setDataLoaded] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const {
+    pagination,
+    setPagination,
+    searchResults,
+    inputValue,
+    handleInputChange,
+    data,
+    setData,
+  } = useTableSearchPagination();
 
   useEffect(() => {
-    dispatch(getAllUsers())
-      .then(() => {
-        setDataLoaded(true);
-      })
-      .catch((error) => console.log(error));
-  }, [dispatch]);
+    const obtenerData = async () => {
+      return await dispatch(getAllUsers())
+        .then(() => {
+          setLoading(false);
+          return true;
+        })
+        .catch(() => false);
+    };
+    const rec = async () => {
+      await reconectar(obtenerData);
+    };
+    rec();
+  }, []);
 
   useEffect(() => {
-    if (dataLoaded) {
+    if (allUsers.length > 0) {
+      setData([...allUsers]);
       setPagination({
         ...pagination,
         items: allUsers.length,
       });
     }
     console.log(allUsers);
-  }, [allUsers, dataLoaded]);
-
-  useEffect(() => {
-    if (!inputValue) {
-      setSearchResults([]);
-      setPagination({ ...pagination, items: allUsers.length });
-      return;
-    }
-    const filteredData = allUsers.filter((item) => {
-      return (
-        item.username.toLowerCase().includes(inputValue.toLowerCase()) ||
-        item.email.toLowerCase().includes(inputValue.toLowerCase())
-      );
-    });
-    setSearchResults(filteredData);
-    setPagination({ ...pagination, page: 1, items: filteredData.length });
-  }, [inputValue]);
-
-  const handleInputChange = (event) => {
-    const value = event.target.value;
-    setInputValue(value);
-  };
+  }, [allUsers]);
 
   const handleClick = () => {
     setShowForm(true);
@@ -68,13 +61,18 @@ function Guests() {
 
   const mapData = (dataArray) => {
     return dataArray.map((item) => {
-      const { id, username, email, role } = item;
-      return { id, username, email, role };
+      const { id, username, guest_profile, email } = item;
+      return {
+        id,
+        username,
+        full_name: guest_profile ? guest_profile.full_name : "Not specified",
+        email,
+      };
     });
   };
 
   return (
-    <>
+    <Loading state={loading}>
       <div className="flex flex-col px-5 pr-10 pt-10 w-full max-md:max-w-full">
         <div className="flex flex-col justify-between items-center mb-3">
           <TabTitle title="Guest Management" />
@@ -100,16 +98,17 @@ function Guests() {
           <h3>{`No results for "${inputValue}" search...`}</h3>
         ) : (
           <Table
-            headers={["ID", "Full Name", "Email", "Rol", "Edit"]}
+            headers={["Username", "Fullname", "Email", "Edit"]}
             data={mapData(searchResults.length > 0 ? searchResults : allUsers)}
             Components={EditButton}
             idName="id"
             size={pagination.size}
             page={pagination.page}
+            omitt="id"
           />
         )}
       </div>
-    </>
+    </Loading>
   );
 }
 
