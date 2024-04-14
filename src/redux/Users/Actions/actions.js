@@ -11,10 +11,12 @@ const { VITE_BACKEND_URL } = import.meta.env;
 export const getAllUsers = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${VITE_BACKEND_URL}/auth/allUsers`, {
-        headers: { authorization: `Bearer ${Cookies.get("token")}` },
-      });
-      console.log(response.data.users);
+      const response = await axios.get(
+        `${VITE_BACKEND_URL}/auth/allUsers?role=customer`,
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
+      );
       dispatch({
         type: GET_ALL_USERS,
         payload: response.data.users,
