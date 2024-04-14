@@ -23,6 +23,8 @@ import CreateReservation from "./pages/Reservations/CreateReservation";
 import Services from "./pages/Services";
 import ServiceEdit from "./pages/ServiceManage/ServiceEdit";
 import ServiceCreate from "./pages/ServiceManage/ServiceCreate";
+import CreateEmployee from "./pages/Employees/CreateEmployee";
+import EditEmployee from "./pages/Employees/EditEmployee";
 
 function App() {
   const [logged, setLogged] = useState(true);
@@ -169,14 +171,32 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="employees"
-              element={
-                <ProtectedRoute>
-                  <Employees />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="employees">
+              <Route
+                path=""
+                element={
+                  <ProtectedRoute>
+                    <Employees />
+                  </ProtectedRoute>
+                }
+              />{" "}
+              <Route
+                path="create"
+                element={
+                  <ProtectedRoute>
+                    <CreateEmployee />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="edit/:id"
+                element={
+                  <ProtectedRoute>
+                    <EditEmployee />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
             <Route path="roomsCustomization">
               <Route
                 path=""

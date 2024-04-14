@@ -1,38 +1,38 @@
 import {
-  GET_ALL_USERS,
-  DELETE_USER,
-  CREATE_USER,
-  PUT_USER,
+  GET_ALL_EMPLOYEES,
+  DELETE_EMPLOYEE,
+  CREATE_EMPLOYEE,
+  PUT_EMPLOYEE,
 } from "./actionsTypes";
 import axios from "axios";
 import Cookies from "js-cookie";
 const { VITE_BACKEND_URL } = import.meta.env;
 
-export const getAllUsers = () => {
+export const getAllEmployees = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        `${VITE_BACKEND_URL}/auth/allUsers?role=customer`,
+        `${VITE_BACKEND_URL}/auth/allUsers?role=employee`,
         {
           headers: { authorization: `Bearer ${Cookies.get("token")}` },
         }
       );
       dispatch({
-        type: GET_ALL_USERS,
+        type: GET_ALL_EMPLOYEES,
         payload: response.data.users,
       });
     } catch (error) {
-      throw new Error("Can not get all users");
+      throw new Error("Can not get all employees");
     }
   };
 };
 
-export const postUser = (id, user) => {
+export const postEmployee = (id, employee) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${VITE_BACKEND_URL}`, user);
+      const response = await axios.post(`${VITE_BACKEND_URL}`, employee);
       return dispatch({
-        type: CREATE_USER,
+        type: CREATE_EMPLOYEE,
         payload: response.data,
       });
     } catch (error) {
