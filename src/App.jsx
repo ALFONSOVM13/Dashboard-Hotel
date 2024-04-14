@@ -209,6 +209,18 @@ function App() {
               <Route path=":roomId" element={<RoomEdit />} />
               <Route path="create" element={<RoomCreate />} />
             </Route>
+            <Route path="services">
+              <Route
+                path=""
+                element={
+                  <ProtectedRoute>
+                    <Services />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path=":id" element={<ServiceEdit />} />
+              <Route path="newService" element={<ServiceCreate />} />
+            </Route>
             <Route
               path="offerNotifications"
               element={
@@ -233,6 +245,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
             {/* </Route> */}
           </Route>
         </Routes>
