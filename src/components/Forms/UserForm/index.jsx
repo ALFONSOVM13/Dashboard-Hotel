@@ -58,8 +58,6 @@ function UserForm({ id }) {
             )
             .max(50, "The name cannot have more than 50 characters."),
           password: Yup.string().required("The password is required."),
-          document: Yup.string().required("The ID is required."),
-          country: Yup.string().required("The country is required."),
           phone_number: Yup.string()
             .required("The phone number is required.")
             .matches(
@@ -67,6 +65,8 @@ function UserForm({ id }) {
               "Invalid phone number format."
             )
             .max(20, "The phone number cannot have more than 20 characters."),
+          country: Yup.string().required("The country is required."),
+          document: Yup.string().required("The document is required."),
           address: Yup.string()
             .required("The address is required.")
             .max(100, "The address cannot have more than 100 characters."),
@@ -113,7 +113,7 @@ function UserForm({ id }) {
                 <img
                   loading="lazy"
                   src={photoUrl}
-                  className="self-center max-w-full rounded-full border-2 border-solid aspect-square dark:border-white border-black border-opacity-30 w-[174px]"
+                  className="self-center max-w-full rounded-full border-2 border-solid aspect-square dark:border-white  border-black border-opacity-30 w-[174px]"
                 />
                 <button
                   className="justify-center self-center px-4 py-5 mt-4 max-w-full font-semibold text-center text-white rounded shadow-sm bg-blue-950 w-[174px]"
@@ -165,7 +165,6 @@ function UserForm({ id }) {
                   name="full_name"
                   labelAlign="left"
                 />
-
                 <TextInput
                   label="PASSWORD"
                   name="password"
@@ -182,7 +181,7 @@ function UserForm({ id }) {
                 >
                   Generate Password
                 </button>
-                <TextInput label="ADDRESS" name="address" labelAlign="left" />
+                <TextInput label="ADRESS" name="address" labelAlign="left" />
                 <TextInput
                   label="PHONE NUMBER"
                   name="phone_number"
@@ -194,7 +193,7 @@ function UserForm({ id }) {
                 <SelectInput
                   label="ROL"
                   name="rol"
-                  options={["---", "Admin", "Employee", "Customer"]}
+                  options={["---", "Active", "Inactive"]}
                   labelAlign="left"
                 />
                 <SelectInput

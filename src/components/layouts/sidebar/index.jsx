@@ -46,11 +46,7 @@ function Sidebar({ controlador, darkMode, toogleDarkMode }) {
           link={"/dashboard/restaurantMenu"}
           active={false}
         />
-        <ListOption
-          text={"Services"}
-          link={"/dashboard/services"}
-          active={false}
-        />
+
         <ListCategory text="Analitycs" />
         <ListOption text="Dash Board" link={"/dashboard/home"} active={false} />
         <ListCategory text="Messaging" />
