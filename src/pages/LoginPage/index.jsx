@@ -49,7 +49,6 @@ export default function LoginPage() {
           password: inputs.password,
         })
         .then((response) => {
-          if (response.status === 200) console.log("logueo exitoso");
           if (!Cookies.get("token"))
             Cookies.set("token", response.data.token, { expires: 1 / 24 });
           navigate("/dashboard/home");
@@ -110,12 +109,13 @@ export default function LoginPage() {
           Forgot Password
         </Link>
       </div>{" "}
-      <Loading state={loading}>asd</Loading>{" "}
-      {error.length > 0 && (
-        <p className="mt-1 text-sm font-bold text-red-600 white-space-nowrap text-ellipsis">
-          {error[0]}
-        </p>
-      )}
+      <Loading state={loading}>
+        {error.length > 0 && (
+          <p className="mt-1 text-sm font-bold text-red-600 white-space-nowrap text-ellipsis">
+            {error[0]}
+          </p>
+        )}
+      </Loading>{" "}
       <label className="flex gap-2 mt-3 text-sm text-zinc-900 text-center">
         <CheckBox
           value={inputs.keepSession}
