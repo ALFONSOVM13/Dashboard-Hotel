@@ -5,9 +5,12 @@ import useTableSearchPagination from "../../hooks/useTableSearchPagination";
 import SearchBar from "../../components/SearchBar";
 import PaginationControl from "../../components/PaginationControl";
 import Loading from "../../components/Loading";
+import { useDispatch, useSelector } from "react-redux";
 
 function Employees() {
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+  const { allUsers } = useSelector((state) => state.usersReducer);
   const {
     pagination,
     setPagination,
@@ -19,25 +22,30 @@ function Employees() {
   } = useTableSearchPagination();
 
   useEffect(() => {
-    // setLoading(true);
-    setData([
-      {
-        name: "Luis Ricardo Rodriguez Calimatias",
-        email: "wenk@gmail.com",
-        phone: "5555555555",
-      },
-      {
-        name: "Luis Ricardo Rodriguez Calimatias",
-        email: "wenk@gmail.com",
-        phone: "5555555555",
-      },
-    ]);
+    const obtenerData = async () => {
+      return await dispatch(getAllUsers())
+        .then(() => {
+          setLoading(false);
+          return true;
+        })
+        .catch(() => false);
+    };
+    const rec = async () => {
+      await reconectar(obtenerData);
+    };
+    rec();
   }, []);
 
   useEffect(() => {
-    console.log(data);
-    setPagination({ ...pagination, items: data.length });
-  }, [data]);
+    if (allUsers.length > 0) {
+      setData([...allUsers]);
+      setPagination({
+        ...pagination,
+        items: allUsers.length,
+      });
+    }
+    console.log(allUsers);
+  }, [allUsers]);
 
   return (
     <div className="flex flex-col px-5 pt-10 w-full max-md:max-w-full">
