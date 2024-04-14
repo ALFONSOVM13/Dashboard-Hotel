@@ -27,19 +27,20 @@ export const getAllUsers = () => {
   };
 };
 
-export const postUser = (id, user) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.put(
-        `${VITE_BACKEND_URL}/auth/profile/${id}`,
-        user
-      );
-      return dispatch({
-        type: PUT_USER,
-        payload: response.data,
-      });
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
+export const postUser = async (token, id, user) => {
+  try {
+    const response = await axios.put(
+      `${VITE_BACKEND_URL}/auth/profile/${id}`,
+      user,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(error);
+  }
 };

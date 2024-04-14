@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-
+import Cookies from "js-cookie";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import TextInput from "../../TextInput";
@@ -14,16 +14,13 @@ import { ErrorMessage } from "formik";
 import { Field } from "formik";
 import ImageInput from "../../ImageInput";
 import DateInput from "../../DateInput";
+import { postUser } from "../../../redux/Users/Actions/actions";
+import { useNavigate } from "react-router-dom";
 
-function UserForm({ id }) {
+function UserForm({ id, userToEdit }) {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [photoUrl, setPhotoUrl] = useState("");
-  const [password, setPassword] = useState("");
-
-  const generateRandomPassword = () => {
-    const randomPassword = Math.random().toString(36).slice(-8);
-    setPassword(randomPassword);
-  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -33,21 +30,48 @@ function UserForm({ id }) {
     setIsModalOpen(false);
   };
 
+  const handleSubmit = async (values) => {
+    try {
+      const token = Cookies.get("token");
+      if (!token) {
+        console.error("No se encontró el token en las cookies");
+        return;
+      }
+      const response = await postUser(token, userToEdit.id, values);
+      Swal.fire(`${response.message}`, "", "success");
+      navigate(-1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <FormTitle title="EDIT AN USER" />
       <Formik
         initialValues={{
-          full_name: "",
-          phone_number: "",
-          document: "",
-          country: "",
-          address: "",
-          photo_url: photoUrl,
-          gender: "",
-          birthday: "",
-          password: password,
-          rol: "",
+          full_name: userToEdit.guest_profile
+            ? userToEdit.guest_profile.full_name
+            : "",
+          phone_number: userToEdit.guest_profile
+            ? userToEdit.guest_profile.phone_number
+            : "",
+          document: userToEdit.guest_profile
+            ? userToEdit.guest_profile.document
+            : "",
+          country: userToEdit.guest_profile
+            ? userToEdit.guest_profile.country
+            : "",
+          address: userToEdit.guest_profile
+            ? userToEdit.guest_profile.address
+            : "",
+          photo_url: userToEdit.guest_profile
+            ? userToEdit.guest_profile.photo_url
+            : photoUrl,
+          gender: userToEdit.guest_profile
+            ? userToEdit.guest_profile.gender
+            : "",
+          birth: userToEdit.guest_profile ? userToEdit.guest_profile.birth : "",
         }}
         validationSchema={Yup.object().shape({
           full_name: Yup.string()
@@ -57,7 +81,7 @@ function UserForm({ id }) {
               "Invalid characters in the name."
             )
             .max(50, "The name cannot have more than 50 characters."),
-          password: Yup.string().required("The password is required."),
+
           document: Yup.string().required("The ID is required."),
           country: Yup.string().required("The country is required."),
           phone_number: Yup.string()
@@ -71,24 +95,18 @@ function UserForm({ id }) {
             .required("The address is required.")
             .max(100, "The address cannot have more than 100 characters."),
           photo_url: Yup.string().required("The photo is required."),
-          rol: Yup.string()
-            .required("The rol is required.")
-            .notOneOf(["---"], "Please select a valid rol."),
           gender: Yup.string()
             .required("The gender is required.")
             .notOneOf(["---"], "Please select a valid gender."),
-          birthday: Yup.date()
+          birth: Yup.date()
             .required("Birthday is required.")
             .max(new Date(), "Birthday cannot be in the future."),
         })}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(false);
-
           Swal.fire({
             title: "Warning",
-            text: id
-              ? "Are you sure you want to edit this guest?"
-              : "Are you sure you want to create this user?",
+            text: "Are you sure you want to create this user?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -96,8 +114,7 @@ function UserForm({ id }) {
             confirmButtonText: "Yes",
           }).then((response) => {
             if (response.isConfirmed) {
-              Swal.fire("User created successfully", "", "success");
-              console.log(values, id);
+              handleSubmit(values);
             } else if (response.isDismissed) {
               return;
             }
@@ -165,42 +182,19 @@ function UserForm({ id }) {
                   name="full_name"
                   labelAlign="left"
                 />
-
-                <TextInput
-                  label="PASSWORD"
-                  name="password"
-                  labelAlign="left"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <button
-                  type="button"
-                  onClick={() => {
-                    generateRandomPassword();
-                    setFieldValue("password", password);
-                  }}
-                  className="bg-blue-500 text-white rounded py-2 px-4 mt-2"
-                >
-                  Generate Password
-                </button>
                 <TextInput label="ADDRESS" name="address" labelAlign="left" />
                 <TextInput
                   label="PHONE NUMBER"
                   name="phone_number"
                   labelAlign="left"
                 />
-                <DateInput label="BIRTHDAY" name="birthday" />
+                <DateInput label="BIRTHDAY" name="birth" />
                 <TextInput label="COUNTRY" name="country" labelAlign="left" />
                 <TextInput label="DOCUMENT" name="document" labelAlign="left" />
                 <SelectInput
-                  label="ROL"
-                  name="rol"
-                  options={["---", "Admin", "Employee", "Customer"]}
-                  labelAlign="left"
-                />
-                <SelectInput
                   label="GENDER"
                   name="gender"
-                  options={["---", "Male", "Female", "Other"]}
+                  options={["---", "male", "female", "other"]}
                   labelAlign="left"
                 />
               </div>

@@ -1,0 +1,4 @@
+/* styles.css */
+.my-swal {
+  z-index: 9999 !important; /* Define un z-index alto */
+}

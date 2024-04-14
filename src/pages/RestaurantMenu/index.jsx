@@ -93,7 +93,7 @@ function RestaurantMenu() {
         />
       </div>
       <div className="self-start pt-5 pl-5">
-        {!showForm && <Button text="NEW PLATE" onClick={handleClick} />}
+        {!showForm && <Button text="Create a dish" onClick={handleClick} />}
         {showForm && (
           <FoodForm
             setShowForm={setShowForm}
