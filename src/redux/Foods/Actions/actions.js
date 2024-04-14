@@ -13,7 +13,6 @@ export const getAllFoods = () => {
     try {
       let filteredData = [];
       const response = await axios.get(`${VITE_BACKEND_URL}/api/dishes`);
-
       if (response.data.message !== "No hay platos disponibles.")
         filteredData = response.data.dishes.map(
           ({ createdAt, updatedAt, ...rest }) => rest

@@ -2,18 +2,26 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
 
-const TextInput = ({ label, name, rows, labelAlign = "center" }) => {
+const TextInput = ({
+  label,
+  name,
+  placeholder,
+  rows,
+  labelAlign = "center",
+}) => {
   const inputField = rows ? (
     <Field
       as="textarea"
       rows={rows}
       name={name}
+      placeholder={placeholder}
       className="border mt-4 mr-4 ml-4 py-2 px-3   text-gray-700 bg-white rounded-md"
     />
   ) : (
     <Field
       type="text"
       name={name}
+      placeholder={placeholder}
       className="border mt-4 mr-4 ml-4 py-2 px-3   text-gray-700 bg-white rounded-md"
     />
   );

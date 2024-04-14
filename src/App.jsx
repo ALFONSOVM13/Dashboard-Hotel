@@ -20,6 +20,9 @@ import RegisterPage from "./pages/RegisterPage";
 import Dashboard from "./pages/Dashboard";
 import RoomCreate from "./pages/RoomCreate";
 import CreateReservation from "./pages/Reservations/CreateReservation";
+import Services from "./pages/Services";
+import ServiceEdit from "./pages/ServiceManage/ServiceEdit";
+import ServiceCreate from "./pages/ServiceManage/ServiceCreate";
 
 function App() {
   const [logged, setLogged] = useState(true);
@@ -186,6 +189,18 @@ function App() {
               <Route path=":roomId" element={<RoomEdit />} />
               <Route path="create" element={<RoomCreate />} />
             </Route>
+            <Route path="services">
+              <Route
+                path=""
+                element={
+                  <ProtectedRoute>
+                    <Services />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path=":id" element={<ServiceEdit />} />
+              <Route path="newService" element={<ServiceCreate />} />
+            </Route>
             <Route
               path="offerNotifications"
               element={
@@ -210,6 +225,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
             {/* </Route> */}
           </Route>
         </Routes>
