@@ -43,7 +43,7 @@ function Offers() {
       }));
       setData(dataFiltered);
       setLoading(false);
-    }, 3000);
+    }, 300);
     return () => clearTimeout(timeout);
   }, []);
 

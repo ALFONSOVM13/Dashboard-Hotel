@@ -5,9 +5,14 @@ import useTableSearchPagination from "../../hooks/useTableSearchPagination";
 import SearchBar from "../../components/SearchBar";
 import PaginationControl from "../../components/PaginationControl";
 import Loading from "../../components/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllEmployees } from "../../redux/Employees/Actions/actions";
+import { reconectar } from "../../utils";
 
 function Employees() {
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+  const { allEmployees } = useSelector((state) => state.employeesReducer);
   const {
     pagination,
     setPagination,
@@ -19,25 +24,41 @@ function Employees() {
   } = useTableSearchPagination();
 
   useEffect(() => {
-    // setLoading(true);
-    setData([
-      {
-        name: "Luis Ricardo Rodriguez Calimatias",
-        email: "wenk@gmail.com",
-        phone: "5555555555",
-      },
-      {
-        name: "Luis Ricardo Rodriguez Calimatias",
-        email: "wenk@gmail.com",
-        phone: "5555555555",
-      },
-    ]);
+    const obtenerData = async () => {
+      return await dispatch(getAllEmployees())
+        .then(() => {
+          setLoading(false);
+          return true;
+        })
+        .catch(() => false);
+    };
+    const rec = async () => {
+      await reconectar(obtenerData);
+    };
+    rec();
   }, []);
 
   useEffect(() => {
-    console.log(data);
-    setPagination({ ...pagination, items: data.length });
-  }, [data]);
+    if (allEmployees.length > 0) {
+      setData([
+        ...allEmployees.map(
+          ({ id, email, guest_profile, is_active, username }) => ({
+            id,
+            full_name: guest_profile ? guest_profile.full_name : "Not defined",
+            username,
+            email,
+            phone: guest_profile ? guest_profile.phone : "Not defined",
+            is_active,
+          })
+        ),
+      ]);
+      setPagination({
+        ...pagination,
+        items: allEmployees.length,
+      });
+      console.log(allEmployees);
+    }
+  }, [allEmployees]);
 
   return (
     <div className="flex flex-col px-5 pt-10 w-full max-md:max-w-full">
@@ -54,10 +75,12 @@ function Employees() {
             <h3>{`No results for "${inputValue}" search...`}</h3>
           ) : (
             <Table
-              headers={["Name", "Email", "Phone"]}
-              data={data}
+              headers={["Full name", "User name", "Email", "Phone", "Status"]}
+              data={searchResults.length > 0 ? searchResults : data}
+              idName="id"
               size={pagination.size}
               page={pagination.page}
+              omitt="id"
             />
           )}
         </Loading>
