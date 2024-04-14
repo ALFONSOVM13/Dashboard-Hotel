@@ -18,8 +18,8 @@ function ImageInput({
       </div>
       <div>
         <input
-          type="text"
-          placeholder="Enter image URL"
+          type="file"
+          accept="image/*"
           onChange={(e) => setPhotoUrl(e.target.value)}
           className="border mt-4 mr-4 ml-4 py-2 px-3 text-gray-700 bg-white rounded-md"
         />

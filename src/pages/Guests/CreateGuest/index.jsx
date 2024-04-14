@@ -1,4 +1,5 @@
 import React from "react";
+import "./styles.css";
 
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -12,11 +13,14 @@ import * as Yup from "yup";
 import FormTitle from "../../../components/FormTittle";
 import TextInput from "../../../components/TextInput";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { getAllUsers } from "../../../redux/Users/Actions/actions";
 
 const { VITE_BACKEND_URL } = import.meta.env;
 
 function CreateGuest({ setShowForm }) {
   const [open, setOpen] = useState(true);
+  const dispatch = useDispatch();
 
   const handleClose = () => {
     setOpen(false);
@@ -25,10 +29,11 @@ function CreateGuest({ setShowForm }) {
 
   const handleRegister = async (values) => {
     try {
-      const response = await axios.post(`${VITE_BACKEND_URL}/auth/register`, {
-        values,
-      });
-      console.log(response.data);
+      const response = await axios.post(
+        `${VITE_BACKEND_URL}/auth/register`,
+        values
+      );
+      dispatch(getAllUsers());
     } catch (error) {
       console.log("Error:", error);
     }
@@ -82,10 +87,36 @@ function CreateGuest({ setShowForm }) {
                 password: "",
                 confirmPassword: "",
               }}
+              validationSchema={Yup.object().shape({
+                email: Yup.string().required("The email is required."),
+                username: Yup.string().required("The user name is required."),
+                password: Yup.string().required("The password is required."),
+                confirmPassword: Yup.string().required(
+                  "The confirm password is required."
+                ),
+              })}
               onSubmit={(values, { setSubmitting }) => {
-                console.log(values);
-                handleRegister(values);
                 setSubmitting(false);
+                Swal.fire({
+                  title: "Warning",
+                  text: "Are you sure you want to register this user?",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Yes",
+                  customClass: {
+                    container: "my-swal",
+                  },
+                }).then((response) => {
+                  if (response.isConfirmed) {
+                    handleRegister(values);
+                    Swal.fire("User successfully registered", "", "success");
+                    handleClose();
+                  } else if (response.isDismissed) {
+                    return;
+                  }
+                });
               }}
               validateOnChange={true}
               validateOnBlur={true}

@@ -12,6 +12,7 @@ import { reconectar } from "../../utils";
 import CreateGuest from "./CreateGuest";
 import useTableSearchPagination from "../../hooks/useTableSearchPagination";
 import Loading from "../../components/Loading";
+import UserEditButton from "../../components/Forms/UserForm/UserEditButton";
 
 function Guests() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ function Guests() {
   const navigate = useNavigate();
   const { allUsers } = useSelector((state) => state.usersReducer);
   const [showForm, setShowForm] = useState(false);
+
   const {
     pagination,
     setPagination,
@@ -52,11 +54,17 @@ function Guests() {
         items: allUsers.length,
       });
     }
-    console.log(allUsers);
   }, [allUsers]);
 
   const handleClick = () => {
     setShowForm(true);
+  };
+
+  const handleEdit = (id) => {
+    const userToEdit = allUsers.find((item) => item.id.toString() === id);
+    navigate(`${userToEdit.id}`, {
+      state: { userToEdit: userToEdit },
+    });
   };
 
   const mapData = (dataArray) => {
@@ -100,7 +108,9 @@ function Guests() {
           <Table
             headers={["Username", "Fullname", "Email", "Edit"]}
             data={mapData(searchResults.length > 0 ? searchResults : allUsers)}
-            Components={EditButton}
+            Components={(props) => (
+              <UserEditButton {...props} onClick={handleEdit} />
+            )}
             idName="id"
             size={pagination.size}
             page={pagination.page}
