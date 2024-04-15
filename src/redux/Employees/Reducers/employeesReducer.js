@@ -1,5 +1,6 @@
 import {
   GET_ALL_EMPLOYEES,
+  GET_EMPLOYEE,
   DELETE_EMPLOYEE,
   CREATE_EMPLOYEE,
   PUT_EMPLOYEE,
@@ -7,6 +8,7 @@ import {
 
 const initialState = {
   allEmployees: [],
+  selectedEmployee: {},
 };
 
 const employeesReducer = (state = initialState, { type, payload }) => {
@@ -15,6 +17,11 @@ const employeesReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         allEmployees: payload,
+      };
+    case GET_EMPLOYEE:
+      return {
+        ...state,
+        selectedEmployee: payload,
       };
 
     case CREATE_EMPLOYEE:

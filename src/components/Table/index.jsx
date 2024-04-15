@@ -70,7 +70,7 @@ function Table({
                         <div className="flex flex-col gap-3">
                           <div>{cell.email}</div>
                           <div
-                            className={`p-3 font-bold rounded-md w-fit mx-auto ${
+                            className={`p-3 font-bold rounded-md w-fit mx-auto text-white ${
                               cell.emailVerified ? "bg-green-700" : "bg-red-700"
                             }`}
                           >

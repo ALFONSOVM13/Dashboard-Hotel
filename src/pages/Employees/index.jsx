@@ -110,10 +110,13 @@ function Employees() {
   );
 }
 
-function BotonesAccion({ state = "active" }) {
+function BotonesAccion({ id, state = "active" }) {
+  const navigate = useNavigate();
   return (
-    <div className="flex gap-3">
-      <Button className={"bg-blue-700"}>Edit </Button>
+    <div className="flex gap-3 text-white font-bold">
+      <Button className={"bg-blue-700"} action={() => navigate(`edit/${id}`)}>
+        Edit{" "}
+      </Button>
       <Button className={state === "active" ? "bg-red-700" : "bg-green-700"}>
         {state === "active" ? "Deactivate" : "Activate"}
       </Button>

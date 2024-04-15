@@ -166,7 +166,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path=":reservationId" element={<EditReservation />} />
+              <Route path=":id" element={<EditReservation />} />
               <Route path="create" element={<CreateReservation />} />
             </Route>
             <Route path="guests/:id" element={<EditGuest />} />

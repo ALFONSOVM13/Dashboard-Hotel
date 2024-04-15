@@ -1,5 +1,6 @@
 import {
   GET_ALL_EMPLOYEES,
+  GET_EMPLOYEE,
   DELETE_EMPLOYEE,
   CREATE_EMPLOYEE,
   PUT_EMPLOYEE,
@@ -20,6 +21,24 @@ export const getAllEmployees = () => {
       dispatch({
         type: GET_ALL_EMPLOYEES,
         payload: response.data.users,
+      });
+    } catch (error) {
+      throw new Error("Can not get all employees");
+    }
+  };
+};
+export const getEmployee = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `${VITE_BACKEND_URL}/auth/allUsers/${id}?role=employee`,
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
+      );
+      dispatch({
+        type: GET_EMPLOYEE,
+        payload: response.data.users[0],
       });
     } catch (error) {
       throw new Error("Can not get all employees");

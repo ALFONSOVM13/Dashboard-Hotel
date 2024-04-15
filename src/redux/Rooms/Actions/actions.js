@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import {
   GET_ALL_ROOMS,
   DELETE_ROOM,
@@ -81,11 +82,16 @@ export const deleteRoom = (id) => {
   return async (dispatch) => {
     try {
       const response = await axios.delete(
-        `${VITE_BACKEND_URL}/api/rooms/${id}`
+        `${VITE_BACKEND_URL}/api/rooms/${id}`,
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
       );
+      console.log("");
+
       return dispatch({
         type: DELETE_ROOM,
-        payload: response.data,
+        payload: response.data.deletedRoom,
       });
     } catch (error) {
       throw new Error(error);
@@ -147,6 +153,9 @@ export const patchRoom = (id, product) => {
         {
           roomData,
           roomDetailsData,
+        },
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
         }
       );
       console.log(response.data);
@@ -166,7 +175,10 @@ export const createRoom = (product) => {
     try {
       const response = await axios.post(
         `${VITE_BACKEND_URL}/api/rooms`,
-        product
+        product,
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
       );
       console.log("Resultado: ", response.data);
 
