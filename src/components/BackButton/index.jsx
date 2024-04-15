@@ -5,8 +5,11 @@ export default function Item() {
   return (
     <>
       <button
-        onClick={() => navigate(-1)}
-        className="bg-[rgb(56,114,47)] py-3 px-5 uppercase font-bold text-white shadow-emerald-900 shadow-md"
+        onClick={(e) => {
+          e.preventDefault();
+          navigate(-1);
+        }}
+        className="self-end bg-[rgb(56,114,47)] py-3 px-5 uppercase font-bold text-white shadow-emerald-900 shadow-md"
       >
         Back
       </button>

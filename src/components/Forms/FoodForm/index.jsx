@@ -138,7 +138,7 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
                     options={[
                       "---",
                       "Driks",
-                      "Burger",
+                      "Burgers",
                       "Italian",
                       "Japanese",
                       "Dessert",

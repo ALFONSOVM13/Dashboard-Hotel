@@ -25,33 +25,21 @@ function Reservations() {
   } = useTableSearchPagination();
   const dispatch = useDispatch();
   const { allReservations } = useSelector((state) => state.reservationsReducer);
-  const { allUsers } = useSelector((state) => state.usersReducer);
-  const { allRooms } = useSelector((state) => state.roomsReducer);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getAllReservations());
-    dispatch(getAllUsers());
-    dispatch(getAllRooms());
   }, []);
 
   useEffect(() => {
-    if (
-      allReservations !== undefined &&
-      allReservations.length > 0 &&
-      allRooms !== undefined &&
-      allRooms.length > 0 &&
-      allUsers !== undefined &&
-      allUsers.length > 0
-    ) {
+    if (allReservations !== undefined && allReservations.length > 0) {
       setData(
         allReservations.map((reservation) => ({
           reservation_number: reservation.reservation_number,
-          user_name: allUsers.find((user) => user.id === reservation.user_id)
-            .username,
-          room_number: allRooms.find((room) => room.id === reservation.room_id)
-            .room_number,
+          full_name:
+            reservation.user?.guest_profile?.full_name ?? "Not defined",
+          room_number: reservation.room?.room_number ?? "Not assigned",
           check_in_date: convertirFechaAAmPm(reservation.check_in_date),
           check_out_date: convertirFechaAAmPm(reservation.check_out_date),
           status: reservation.status,
@@ -61,7 +49,8 @@ function Reservations() {
       setPagination({ ...pagination, items: data.length });
       console.log(allReservations);
     }
-  }, [allReservations, allUsers, allRooms]);
+    console.log(allReservations);
+  }, [allReservations]);
 
   return (
     <>
@@ -85,7 +74,7 @@ function Reservations() {
           <Table
             headers={[
               "Reservation #",
-              "Guest username",
+              "Guest Full Name",
               "Room #",
               "Check-In",
               "Check-Out",
@@ -95,7 +84,7 @@ function Reservations() {
             ]}
             data={searchResults.length > 0 ? searchResults : data}
             Components={ReservedButtons}
-            idName="id"
+            idName="room_number"
             size={pagination.size}
             page={pagination.page}
           />

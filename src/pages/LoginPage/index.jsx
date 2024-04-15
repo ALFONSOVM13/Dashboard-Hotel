@@ -11,11 +11,15 @@ import Loading from "../../components/Loading";
 import { useSelector } from "react-redux";
 import { isLogged } from "../../services/AuthService";
 import Cookies from "js-cookie";
+import { failAlert } from "../../utils/SuccesAlert";
 
 export default function LoginPage() {
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
   const { VITE_BACKEND_URL } = import.meta.env;
-  const [error, setError] = useState([]);
+  const [error, setError] = useState({
+    username: "",
+    password: "",
+  });
   const { loggedUser } = useSelector((state) => state.sessionReducer);
   const [inputs, setInputs] = useState({
     username: "",
@@ -25,21 +29,18 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    let errors = [];
+    let errors = {};
     e.preventDefault();
     //Validacion
     if (!inputs.username || !inputs.password) {
-      errors.push("All fields are required");
-    } else if (inputs.username !== "admin") {
-      errors.push("Invalid username or password.");
+      errors.username = "All fields are required";
     } else if (
       !/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,80}$/.test(
         inputs.password
       )
     ) {
-      errors.push(
-        "The password must contain at least one number and one special character, and six characters at least"
-      );
+      errors.password =
+        "The password must contain at least one number and one special character, and six characters at least";
     } else {
       //Comprobar usuario y contraseña en BD
       setLoading(true);
@@ -53,10 +54,10 @@ export default function LoginPage() {
             Cookies.set("token", response.data.token, { expires: 1 / 24 });
           navigate("/dashboard/home");
         })
-        .catch((err) => {
-          if (err.response.status === 401)
-            errors.push("Usuario  o Contraseña incorrectos.");
-          else errors.push("No hay conexión con el servidor");
+        .catch(async (err) => {
+          if (err.response?.status === 401)
+            await failAlert(undefined, err.response.data.message, undefined);
+          else await failAlert(undefined, "Internal Server Error!", undefined);
         })
         .finally(setLoading(false));
     }
@@ -73,7 +74,7 @@ export default function LoginPage() {
     } else {
       setInputs((prevValue) => ({ ...prevValue, [name]: value }));
     }
-    setError([]);
+    setError({ username: "", password: "" });
   };
   return (
     <form className="flex flex-col p-6 bg-white rounded max-w-[463px] m-auto">
@@ -92,6 +93,7 @@ export default function LoginPage() {
         name="username"
         handler={handleChange}
         type={"text"}
+        error={error.username}
       />
       <div className="flex w-full  relative flex-col ">
         <PasswordInput
@@ -99,6 +101,7 @@ export default function LoginPage() {
           text="Password"
           handler={handleChange}
           value={inputs.password}
+          error={error.password}
         />
       </div>
       <div className="flex gap-5 mt-6">

@@ -9,35 +9,22 @@ import {
 export async function isLogged() {
   return new Promise((resolve, reject) => {
     const token = Cookies.get("token");
-
-    console.log(token);
     if (!token) return resolve(false);
 
     try {
       const { username, email, role, exp } = jwtDecode(token);
 
       if (exp && exp < Math.floor(Date.now() / 1000)) {
-        console.log(
-          "Caducated => Expiration: ",
-          exp,
-          " Actual: ",
-          Math.floor(Date.now() / 1000)
-        );
+        Cookies.remove("token");
         store.dispatch({ type: UNSET_SESSION });
+        return resolve(false);
       } else if (username && username !== "") {
-        console.log(
-          "Valid => Expiration: ",
-          exp,
-          " Actual: ",
-          Math.floor(Date.now() / 1000)
-        );
         store.dispatch({
           type: SET_SESSION,
           payload: { username, email, role },
         });
         return resolve(true);
       }
-      return resolve(false);
     } catch (err) {
       console.log("Token is invalid", err);
       return reject();

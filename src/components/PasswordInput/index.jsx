@@ -3,17 +3,15 @@ import Eye from "./eye.svg";
 function PasswordInput({ text, name, value, handler, error }) {
   const [showPassword, setShowPassword] = useState(false);
   return (
-    <>
-      <div className="flex gap-5 mt-6">
-        <label
-          htmlFor="password"
-          className="flex-1 text-sm font-semibold text-ellipsis text-zinc-900"
-        >
-          {text}
-        </label>
-      </div>
+    <div className="flex flex-col">
+      <label
+        htmlFor="password"
+        className="mt-6 flex-1 text-sm font-semibold text-ellipsis text-zinc-900"
+      >
+        {text}
+      </label>
 
-      <div className="flex w-full  relative ">
+      <div className="flex w-full relative flex-col ">
         <input
           onChange={handler}
           value={value}
@@ -34,9 +32,9 @@ function PasswordInput({ text, name, value, handler, error }) {
           onMouseDown={() => setShowPassword(true)}
           onMouseUp={() => setShowPassword(false)}
         />
+        {error && <span className="text-red-700 font-bold p-1">{error}</span>}
       </div>
-      {error !== "" && <span className="text-red-700 font-bold">{error}</span>}
-    </>
+    </div>
   );
 }
 
