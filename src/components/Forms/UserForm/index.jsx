@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -19,9 +19,42 @@ import { useNavigate } from "react-router-dom";
 
 function UserForm({ id, userToEdit }) {
   const navigate = useNavigate();
+
   const [photoUrl, setPhotoUrl] = useState("");
   const [showImageInput, setShowImageInput] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    fetch("https://www.universal-tutorial.com/api/getaccesstoken", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "api-token":
+          "uLmMbkZBbbL5ExZ2xmGYWb-qORHjJ8fBy3RMmMfB3KEyCnLhMabei7gl53LhaxMmKm4",
+        "user-email": "tomy_ramos1991@yahoo.com.ar",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const authToken = data.auth_token;
+        fetch("https://www.universal-tutorial.com/api/countries", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            Accept: "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const countryNames = data.map((item) => item.country_name);
+            countryNames.unshift("---");
+            setCountries(countryNames);
+          })
+          .catch((error) => console.error("Error:", error));
+      })
+      .catch((error) => console.error("Error:", error));
+  }, []);
 
   const handleSubmit = async (values) => {
     try {
@@ -44,7 +77,7 @@ function UserForm({ id, userToEdit }) {
       if (selectedFile) {
         requestData.photo = selectedFile;
       }
-      console.log(requestData);
+
       const response = await postUser(token, userToEdit.id, requestData);
       Swal.fire(`${response.message}`, "", "success");
       navigate(-1);
@@ -185,7 +218,12 @@ function UserForm({ id, userToEdit }) {
                   labelAlign="left"
                 />
                 <DateInput label="BIRTHDAY" name="birth" />
-                <TextInput label="COUNTRY" name="country" labelAlign="left" />
+                <SelectInput
+                  label="COUNTRY"
+                  name="country"
+                  options={countries}
+                  labelAlign="left"
+                />
                 <TextInput label="DOCUMENT" name="document" labelAlign="left" />
                 <SelectInput
                   label="GENDER"
