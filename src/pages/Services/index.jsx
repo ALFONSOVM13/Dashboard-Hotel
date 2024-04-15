@@ -40,7 +40,7 @@ function Services() {
           <TabTitle title="Services" />
           <Button
             className="absolute right-10"
-            text={"Create service"}
+            text={"New Service"}
             onClick={() => navigate("newService")}
           />
         </div>
