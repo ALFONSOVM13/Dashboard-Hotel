@@ -19,16 +19,9 @@ import { useNavigate } from "react-router-dom";
 
 function UserForm({ id, userToEdit }) {
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [photoUrl, setPhotoUrl] = useState("");
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  const [showImageInput, setShowImageInput] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleSubmit = async (values) => {
     try {
@@ -37,12 +30,38 @@ function UserForm({ id, userToEdit }) {
         console.error("No se encontró el token en las cookies");
         return;
       }
-      const response = await postUser(token, userToEdit.id, values);
+      const requestData = {
+        userId: userToEdit.id,
+        full_name: values.full_name,
+        phone_number: values.phone_number,
+        gender: values.gender,
+        document: values.document,
+        country: values.country,
+        birth: values.birth,
+        address: values.address,
+      };
+
+      if (selectedFile) {
+        requestData.photo = selectedFile;
+      }
+      console.log(requestData);
+      const response = await postUser(token, userToEdit.id, requestData);
       Swal.fire(`${response.message}`, "", "success");
       navigate(-1);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPhotoUrl(reader.result);
+      setShowImageInput(false);
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -130,51 +149,28 @@ function UserForm({ id, userToEdit }) {
                 <img
                   loading="lazy"
                   src={photoUrl}
-                  className="self-center max-w-full rounded-full border-2 border-solid aspect-square dark:border-white border-black border-opacity-30 w-[174px]"
+                  className="self-center max-w-full object-cover rounded-full border-2 border-solid aspect-square dark:border-white border-black border-opacity-30 w-[174px]"
                 />
                 <button
+                  type="button"
                   className="justify-center self-center px-4 py-5 mt-4 max-w-full font-semibold text-center text-white rounded shadow-sm bg-blue-950 w-[174px]"
-                  onClick={handleOpenModal}
+                  onClick={() => setShowImageInput(true)}
                 >
                   Change Profile Pic
                 </button>
+                {showImageInput && (
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                    onChange={handleFileChange}
+                  />
+                )}
                 <ErrorMessage
                   name="photo_url"
                   component="div"
                   className="text-red-500 text-sm mt-2"
                 />
-                <Modal
-                  open={isModalOpen}
-                  onClose={handleCloseModal}
-                  aria-labelledby="modal-title"
-                  aria-describedby="modal-description"
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      width: "600px",
-                      height: "auto",
-                      bgcolor: "background.paper",
-                      border: "2px solid #b2a9a9",
-                      boxShadow: 24,
-                      p: 4,
-                    }}
-                  >
-                    <ImageInput
-                      photoUrl={photoUrl}
-                      setPhotoUrl={setPhotoUrl}
-                      setFieldValue={setFieldValue}
-                      handleCloseModal={handleCloseModal}
-                    />
-                  </Box>
-                </Modal>
               </div>
               <div className="flex flex-col">
                 <TextInput
