@@ -9,7 +9,6 @@ function EditGuest() {
   const { id } = useParams();
   const location = useLocation();
   const userToEdit = location.state.userToEdit;
-
   return (
     <>
       <div className="flex flex-col px-5 pr-10 pt-10 w-full max-md:max-w-full">
