@@ -91,9 +91,9 @@ function CreateGuest({ setShowForm }) {
                 email: Yup.string().required("The email is required."),
                 username: Yup.string().required("The user name is required."),
                 password: Yup.string().required("The password is required."),
-                confirmPassword: Yup.string().required(
-                  "The confirm password is required."
-                ),
+                confirmPassword: Yup.string()
+                  .required("The confirm password is required.")
+                  .oneOf([Yup.ref("password"), null], "Passwords must match"),
               })}
               onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(false);
