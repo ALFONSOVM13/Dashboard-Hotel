@@ -5,10 +5,13 @@ import { obtenerUsuarioPorMes } from "../../utils/UsersByMonth/usersByMonth";
 import { obtenerPorcetajeDeUsuarios } from "../../utils/UsersByMonth/obtenerPorcetajeDeUsuarios";
 import ChartCards from "../../components/ChartCards";
 const { VITE_BACKEND_URL } = import.meta.env;
+import Cookies from "js-cookie";
+import Loading from "../../components/Loading";
 
 function Dashboard() {
   const [userByMonth, setUserByMonth] = useState({});
   const [userByDay, setUserByDay] = useState({});
+  const [loading, setLoading] = useState(true);
   var urlImagenPositivo =
     "https://cdn.builder.io/api/v1/image/assets/TEMP/9b71f14f82a020926d0cf8cc7208b853b4002ff858b2dbd2cedb17718f556d0b?apiKey=22cfe7d1cd2045f2bf1d80be45287514&";
   var urlImagenNegativo =
@@ -16,23 +19,26 @@ function Dashboard() {
 
   useEffect(() => {
     (async () => {
-      await fetch(
-        "https://backend-hotelesmeralda.onrender.com/api/charts/users"
-      )
+      await fetch(`${VITE_BACKEND_URL}/api/charts/users`, {
+        headers: { authorization: `Bearer ${Cookies.get("token")}` },
+      })
         .then((response) => response.json())
         .then((response) => {
           setUserByMonth(response.totalUsersByMonth);
           setUserByDay(response.totalUsersByDay);
-          console.log(userByDay.days);
+          setLoading(false);
         })
         .catch((error) => console.log(error));
     })();
   }, []);
 
-  const userSeries = userByDay.days.map((day, index) => ({
-    name: day, // El nombre de la serie será el día
-    data: [userByDay.totalUsersByDay[index]], // Los datos de la serie serán el número de usuarios para ese día
-  }));
+  const userSeries =
+    userByDay && userByDay.days
+      ? userByDay.days.map((day, index) => ({
+          name: day,
+          data: [userByDay.totalUsersByDay[index]],
+        }))
+      : [];
 
   const options = {
     chart: {
@@ -69,7 +75,7 @@ function Dashboard() {
     },
   ];
   return (
-    <>
+    <Loading state={loading}>
       <div className="flex flex-col px-5 pr-10 pt-10 w-full max-md:max-w-full">
         <TabTitle title="Dashboard" />
       </div>
@@ -317,7 +323,7 @@ function Dashboard() {
           />
         </div>
       </div>
-    </>
+    </Loading>
   );
 }
 
