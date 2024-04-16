@@ -1,12 +1,67 @@
 import {
   GET_ALL_SERVICES,
-  DELETE_SERVICE,
-  PUT_SERVICE,
-  POST_SERVICE,
+  DELETE_CAR,
+  PUT_CAR,
+  POST_CAR,
+  GET_ALL_CARS,
+  GET_ALL_SPA,
 } from "./actionsTypes";
 
 import axios from "axios";
 const { VITE_BACKEND_URL } = import.meta.env;
+
+export const getCarServices = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${VITE_BACKEND_URL}/api/cars`);
+      const nuevoArray = response.data.map((objeto) => {
+        const { createdAt, updatedAt, ...resto } = objeto;
+        return resto;
+      });
+      dispatch({
+        type: GET_ALL_CARS,
+        payload: nuevoArray,
+      });
+    } catch (error) {
+      throw new Error("Error de red al intentar obtener los servicios.");
+    }
+  };
+};
+
+export const getSpaServices = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${VITE_BACKEND_URL}/api/spa`);
+      const nuevoArray = response.data.map((objeto) => {
+        const { createdAt, updatedAt, ...resto } = objeto;
+        return resto;
+      });
+      dispatch({
+        type: GET_ALL_SPA,
+        payload: nuevoArray,
+      });
+    } catch (error) {
+      throw new Error("Error de red al intentar obtener los servicios.");
+    }
+  };
+};
+
+export const patchCar = (id, product) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.patch(
+        `${VITE_BACKEND_URL}/api/cars/${id}`,
+        product
+      );
+      return dispatch({
+        type: PUT_CAR,
+        payload: response.data.allCars,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+};
 
 export const getAllServices = () => {
   return async (dispatch) => {
@@ -22,49 +77,30 @@ export const getAllServices = () => {
   };
 };
 
-export const deleteService = (id) => {
+export const deleteCar = (id) => {
   return async (dispatch) => {
     try {
-      const response = await axios.delete(
-        `${VITE_BACKEND_URL}/api/services/${id}`
-      );
-      return dispatch({
-        type: DELETE_SERVICE,
-        payload: response.data,
+      const response = await axios.delete(`${VITE_BACKEND_URL}/api/cars/${id}`);
+      dispatch({
+        type: DELETE_CAR,
+        payload: response.data.car_details,
       });
     } catch (error) {
-      throw new Error("Error de red al intentar eliminar el plato.");
+      throw new Error("Error de red al intentar eliminar el auto.");
     }
   };
 };
 
-export const putService = (id, product) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.patch(
-        `${VITE_BACKEND_URL}/api/services/${id}`,
-        product
-      );
-      return dispatch({
-        type: PUT_SERVICE,
-        payload: response.data,
-      });
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
-};
-
-export const postService = (product) => {
+export const postCar = (product) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        `${VITE_BACKEND_URL}/api/services`,
+        `${VITE_BACKEND_URL}/api/cars`,
         product
       );
 
       return dispatch({
-        type: POST_SERVICE,
+        type: POST_CAR,
         payload: response.data,
       });
     } catch (error) {
