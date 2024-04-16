@@ -21,10 +21,12 @@ import Dashboard from "./pages/Dashboard";
 import RoomCreate from "./pages/RoomCreate";
 import CreateReservation from "./pages/Reservations/CreateReservation";
 import Services from "./pages/Services";
-import ServiceEdit from "./pages/ServiceManage/ServiceEdit";
-import ServiceCreate from "./pages/ServiceManage/ServiceCreate";
+import CarEdit from "./pages/ServiceManage/ServiceEdit/CarEdit";
+import SpaEdit from "./pages/ServiceManage/ServiceEdit/SpaEdit";
+import CarCreate from "./pages/ServiceManage/ServiceCreate/CarCreate";
 import CreateEmployee from "./pages/Employees/CreateEmployee";
 import EditEmployee from "./pages/Employees/EditEmployee";
+import SpaCreate from "./pages/ServiceManage/ServiceCreate/SpaCreate";
 
 function App() {
   const [logged, setLogged] = useState(true);
@@ -225,8 +227,10 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path=":id" element={<ServiceEdit />} />
-              <Route path="newService" element={<ServiceCreate />} />
+              <Route path="car/:id" element={<CarEdit />} />
+              <Route path="spa/:id" element={<SpaEdit />} />
+              <Route path="newCar" element={<CarCreate />} />
+              <Route path="newSpa" element={<SpaCreate />} />
             </Route>
             <Route
               path="offerNotifications"
