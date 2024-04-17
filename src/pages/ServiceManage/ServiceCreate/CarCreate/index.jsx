@@ -60,16 +60,21 @@ function CarCreate() {
           type_car: "",
           price_per_day: "",
           description: "",
+          status: "",
         }}
         validationSchema={Yup.object().shape({
           brands: Yup.string().required("The brands is required"),
-          type_car: Yup.string().required("The type car is required"),
+          type_car: Yup.string()
+            .required("The type car is required")
+            .notOneOf(["---"], "Please select a type of car."),
           photos: Yup.array()
             .of(Yup.string().required("Each photo must be a string."))
             .min(1, "At least one photo is required.")
             .required("The photos are required."),
           description: Yup.string().required("The description is required."),
-          transmision: Yup.string().required("The transmision is required."),
+          transmision: Yup.string()
+            .required("The transmision is required.")
+            .notOneOf(["---"], "Please select a transmision."),
           passenger: Yup.string().required("The passenger is required."),
           price_per_day: Yup.string()
             .required("The price is required.")
@@ -77,6 +82,9 @@ function CarCreate() {
               message: "The price must be a valid positive number.",
               excludeEmptyString: true,
             }),
+          status: Yup.string()
+            .required("Select an status.")
+            .notOneOf(["---"], "Please select a status."),
         })}
         onSubmit={(values, { setSubmitting }) => {
           Swal.fire({
@@ -115,17 +123,19 @@ function CarCreate() {
                 <button
                   type="button"
                   onClick={(e) => handleAddPhoto(e, setFieldValue)}
-                  className="justify-center px-5 py-3.5 rounded shadow-sm text-white bg-blue-800 mt-5"
+                  className="px-5 py-3.5 rounded shadow-sm text-white bg-blue-800 mt-5"
                 >
                   ADD
                 </button>
                 {values.photos.map((photo, index) => (
                   <div key={index} className="flex items-center">
-                    <span className="text-white m-2 mt-4">{photo}</span>
+                    <span className="text-white m-2 mt-4 truncate">
+                      {photo}
+                    </span>
                     <button
                       type="button"
                       onClick={() => handleRemovePhoto(index, setFieldValue)}
-                      className="ml-2 text-white bg-blue-800"
+                      className="ml-2 p-2 mt-4 text-white bg-blue-800"
                     >
                       Remove
                     </button>
@@ -153,6 +163,12 @@ function CarCreate() {
                 />
                 <TextInput label="PRICE PER DAY" name="price_per_day" />
                 <TextInput label="DESCRIPTION" name="description" />
+                <SelectInput
+                  label="STATUS"
+                  name="status"
+                  options={["---", "available", "busy", "maintenance"]}
+                  labelAlign="left"
+                />
               </div>
             </div>
             <div className="flex flex-col md:flex-row justify-center gap-5">
