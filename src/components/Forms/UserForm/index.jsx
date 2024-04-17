@@ -86,13 +86,14 @@ function UserForm({ id, userToEdit }) {
     }
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e, setFieldValue) => {
     const file = e.target.files[0];
     setSelectedFile(file);
     const reader = new FileReader();
     reader.onloadend = () => {
       setPhotoUrl(reader.result);
       setShowImageInput(false);
+      setFieldValue("photo_url", reader.result);
     };
     reader.readAsDataURL(file);
   };
@@ -175,13 +176,13 @@ function UserForm({ id, userToEdit }) {
         validateOnChange={true}
         validateOnBlur={true}
       >
-        {({ isSubmitting, setFieldValue }) => (
+        {({ isSubmitting, setFieldValue, values }) => (
           <Form className="w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex flex-col items-center">
                 <img
                   loading="lazy"
-                  src={photoUrl}
+                  src={values.photo_url}
                   className="self-center max-w-full object-cover rounded-full border-2 border-solid aspect-square dark:border-white border-black border-opacity-30 w-[174px]"
                 />
                 <button
@@ -196,7 +197,7 @@ function UserForm({ id, userToEdit }) {
                     type="file"
                     accept="image/*"
                     className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                    onChange={handleFileChange}
+                    onChange={(e) => handleFileChange(e, setFieldValue)}
                   />
                 )}
                 <ErrorMessage
