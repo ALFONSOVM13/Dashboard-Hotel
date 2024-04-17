@@ -28,6 +28,7 @@ function Services() {
   const [loading, setLoading] = useState(true);
   const [carsState, setCarsState] = useState(false);
   const [spaState, setSpaState] = useState(false);
+  const [selectedButton, setSelectedButton] = useState("");
 
   const {
     pagination,
@@ -91,13 +92,15 @@ function Services() {
 
   const mapCar = (dataArray) => {
     return dataArray.map((item) => {
-      const { id, brands, passenger, price_per_day, transmision } = item;
+      const { id, brands, passenger, price_per_day, transmision, status } =
+        item;
       return {
         id,
         brands,
         passenger,
         price_per_day,
         transmision,
+        status,
       };
     });
   };
@@ -199,32 +202,47 @@ function Services() {
       </div>
       <div className="flex flex-col px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
         <PaginationControl pagination={pagination} control={setPagination} />
-        <div>
+        <div className="">
           <button
             type="button"
-            className=" text-white"
-            onClick={handleCarsList}
+            className={`text-black mr-4 px-4 py-2 text-lg rounded-md ${
+              selectedButton === "cars" ? "bg-amber-500" : "bg-amber-300"
+            } hover:bg-amber-500 transition-colors`}
+            onClick={() => {
+              setSelectedButton("cars");
+              handleCarsList();
+            }}
           >
             CARS
           </button>
-        </div>
-        <div>
-          <button type="button" className=" text-white" onClick={handleSpaList}>
+
+          <button
+            type="button"
+            className={`text-black ml-4 px-4 py-2 text-lg rounded-md ${
+              selectedButton === "spa" ? "bg-amber-500" : "bg-amber-300"
+            } hover:bg-amber-500 transition-colors mb-11`}
+            onClick={() => {
+              setSelectedButton("spa");
+              handleSpaList();
+            }}
+          >
             MASSAGE Y SPA
           </button>
         </div>
-        <Loading state={loading}>
-          {inputValue !== "" && searchResults.length === 0 ? (
-            <h3>{`No results for "${inputValue}" search...`}</h3>
-          ) : (
-            <>
-              {carsState ? (
+
+        {inputValue !== "" && searchResults.length === 0 ? (
+          <h3>{`No results for "${inputValue}" search...`}</h3>
+        ) : (
+          <>
+            {carsState ? (
+              <Loading state={loading}>
                 <Table
                   headers={[
                     "Brands",
                     "Passenger",
                     "Price",
                     "Transmision",
+                    "Status",
                     "Actions",
                   ]}
                   data={mapCar(searchResults.length > 0 ? searchResults : data)}
@@ -240,8 +258,10 @@ function Services() {
                   page={pagination.page}
                   omitt="id"
                 />
-              ) : null}
-              {spaState ? (
+              </Loading>
+            ) : null}
+            {spaState ? (
+              <Loading state={loading}>
                 <Table
                   headers={[
                     "Name",
@@ -263,10 +283,10 @@ function Services() {
                   page={pagination.page}
                   omitt="id"
                 />
-              ) : null}
-            </>
-          )}
-        </Loading>
+              </Loading>
+            ) : null}
+          </>
+        )}
       </div>
     </>
   );

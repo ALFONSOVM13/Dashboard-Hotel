@@ -98,7 +98,9 @@ function SpaEdit() {
             .min(1, "At least one photo is required.")
             .required("The photos are required."),
           max_capacity: Yup.string().required("The max capacity is required"),
-          room_status: Yup.string().required("The room status is required"),
+          room_status: Yup.string()
+            .required("The room status is required")
+            .notOneOf(["---"], "Please select a room status."),
         })}
         onSubmit={(values, { setSubmitting }) => {
           Swal.fire({
@@ -147,11 +149,13 @@ function SpaEdit() {
                 </button>
                 {values.photos.map((photo, index) => (
                   <div key={index} className="flex items-center">
-                    <span className="text-white m-2 mt-4">{photo}</span>
+                    <span className="text-white m-2 mt-4 truncate">
+                      {photo}
+                    </span>
                     <button
                       type="button"
                       onClick={() => handleRemovePhoto(index, setFieldValue)}
-                      className="ml-2 text-white bg-blue-800"
+                      className="ml-2 p-2 mt-4 text-white bg-blue-800"
                     >
                       Remove
                     </button>

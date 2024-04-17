@@ -139,10 +139,6 @@ function UserForm({ id, userToEdit }) {
           country: Yup.string().required("The country is required."),
           phone_number: Yup.string()
             .required("The phone number is required.")
-            .matches(
-              /^\+(?:[0-9] ?){6,14}[0-9]$/,
-              "Invalid phone number format."
-            )
             .max(20, "The phone number cannot have more than 20 characters."),
           address: Yup.string()
             .required("The address is required.")

@@ -62,6 +62,7 @@ function CarEdit() {
           type_car: serviceToEdit.type_car,
           price_per_day: serviceToEdit.price_per_day,
           description: serviceToEdit.description,
+          status: serviceToEdit.status,
         }}
         validationSchema={Yup.object().shape({
           brands: Yup.string().required("The brands is required."),
@@ -69,11 +70,18 @@ function CarEdit() {
             .of(Yup.string().required("Each photo must be a string."))
             .min(1, "At least one photo is required.")
             .required("The photos are required."),
-          transmision: Yup.string().required("The transmision is required."),
+          transmision: Yup.string()
+            .required("The transmision is required.")
+            .notOneOf(["---"], "Please select a transmision."),
           passenger: Yup.string().required("The passenger is required."),
-          type_car: Yup.string().required("The type car is required."),
+          type_car: Yup.string()
+            .required("The type car is required")
+            .notOneOf(["---"], "Please select a type of car."),
           price_per_day: Yup.string().required("The price is required."),
           description: Yup.string().required("The description is required."),
+          status: Yup.string()
+            .required("Select an status.")
+            .notOneOf(["---"], "Please select a status."),
         })}
         onSubmit={(values, { setSubmitting }) => {
           Swal.fire({
@@ -117,12 +125,14 @@ function CarEdit() {
                   ADD
                 </button>
                 {photos.map((photo, index) => (
-                  <div key={index} className="flex items-center">
-                    <span className="text-white m-2 mt-4">{photo}</span>
+                  <div key={index} className="flex items-center ">
+                    <span className=" dark:text-white m-2 mt-4 truncate">
+                      {photo}
+                    </span>
                     <button
                       type="button"
                       onClick={() => handleRemovePhoto(index, setFieldValue)}
-                      className="ml-2 text-white bg-blue-800"
+                      className="ml-2 p-2 mt-4 text-white bg-blue-800"
                     >
                       Remove
                     </button>
@@ -150,6 +160,12 @@ function CarEdit() {
                 />
                 <TextInput label="PRICE PER DAY" name="price_per_day" />
                 <TextInput label="DESCRIPTION" name="description" />
+                <SelectInput
+                  label="STATUS"
+                  name="status"
+                  options={["---", "available", "busy", "maintenance"]}
+                  labelAlign="left"
+                />
               </div>
             </div>
             <div className="flex flex-col md:flex-row justify-center gap-5">
