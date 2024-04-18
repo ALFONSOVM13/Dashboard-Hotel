@@ -36,7 +36,6 @@ function EditReservation() {
 
   useEffect(() => {
     if (selectedReservation && Object.keys(selectedReservation).length > 0) {
-      console.log(selectedReservation);
       setData(selectedReservation);
     }
   }, [selectedReservation]);
