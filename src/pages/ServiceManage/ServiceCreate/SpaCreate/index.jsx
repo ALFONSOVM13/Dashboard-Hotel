@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import TextInput from "../../../../components/TextInput";
 import SelectInput from "../../../../components/SelectInput";
 import Swal from "sweetalert2";
+import { patchSpa } from "../../../../redux/Services/Actions/actions";
 
 function SpaCreate() {
   const navigate = useNavigate();
@@ -92,6 +93,7 @@ function SpaCreate() {
             confirmButtonText: "Yes",
           }).then((response) => {
             if (response.isConfirmed) {
+              //dispatch(patchSpa(values))
               console.log(values);
               Swal.fire(`Spa edited successfully`, "", "success");
               navigate(-1);

@@ -15,12 +15,14 @@ import TextInput from "../../../components/TextInput";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { getAllUsers } from "../../../redux/Users/Actions/actions";
+import { Field, ErrorMessage } from "formik";
 
 const { VITE_BACKEND_URL } = import.meta.env;
 
 function CreateGuest({ setShowForm }) {
   const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
+  const [pass, setPass] = useState("");
 
   const handleClose = () => {
     setOpen(false);
@@ -37,6 +39,27 @@ function CreateGuest({ setShowForm }) {
     } catch (error) {
       console.log("Error:", error);
     }
+  };
+  /*const handleRegister = (values) => {
+    console.log(values);
+  };*/
+
+  const generarContraseña = (setFieldValue, values) => {
+    const letrasMayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numeros = "0123456789";
+    const letraMayuscula = letrasMayusculas.charAt(
+      Math.floor(Math.random() * letrasMayusculas.length)
+    );
+    const numero = numeros.charAt(Math.floor(Math.random() * numeros.length));
+    const caracteresAleatorios = "abcdefghijklmnopqrstuvwxyz";
+    let otrosCaracteres = "";
+    for (let i = 0; i < 4; i++) {
+      otrosCaracteres += caracteresAleatorios.charAt(
+        Math.floor(Math.random() * caracteresAleatorios.length)
+      );
+    }
+    const contraseña = letraMayuscula + numero + otrosCaracteres;
+    setFieldValue("password", contraseña);
   };
 
   return (
@@ -85,15 +108,12 @@ function CreateGuest({ setShowForm }) {
                 email: "",
                 username: "",
                 password: "",
-                confirmPassword: "",
               }}
+              enableReinitialize={true}
               validationSchema={Yup.object().shape({
                 email: Yup.string().required("The email is required."),
                 username: Yup.string().required("The user name is required."),
-                password: Yup.string().required("The password is required."),
-                confirmPassword: Yup.string()
-                  .required("The confirm password is required.")
-                  .oneOf([Yup.ref("password"), null], "Passwords must match"),
+                password: Yup.string().required("Click on generate password."),
               })}
               onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(false);
@@ -121,12 +141,31 @@ function CreateGuest({ setShowForm }) {
               validateOnChange={true}
               validateOnBlur={true}
             >
-              {({ isSubmitting }) => (
+              {({ isSubmitting, values, setFieldValue }) => (
                 <Form className="w-full">
                   <TextInput label="EMAIL" name="email" />
                   <TextInput label="USERNAME" name="username" />
-                  <TextInput label="PASSWORD" name="password" />
-                  <TextInput label="CONFIRM PASSWORD" name="confirmPassword" />
+                  {values.password && (
+                    <div className="flex justify-center items-center">
+                      <span className=" mt-4">GENERATED PASSWORD</span>
+                    </div>
+                  )}
+                  <div className="flex justify-center items-center">
+                    <button
+                      type="button"
+                      className=" btn btn-primary mt-4 w-full md:w-fit bg-green-700 text-white p-3 "
+                      onClick={() => {
+                        generarContraseña(setFieldValue, values);
+                      }}
+                    >
+                      Generate Password
+                    </button>
+                  </div>
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="text-red-500 mb-2 text-sm"
+                  />
                   <div className="flex flex-col md:flex-row justify-center gap-5 mt-7">
                     <button
                       type="submit"
