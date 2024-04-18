@@ -9,12 +9,13 @@ import * as Yup from "yup";
 import TextInput from "../../../../components/TextInput";
 import SelectInput from "../../../../components/SelectInput";
 import Swal from "sweetalert2";
-import { patchSpa } from "../../../../redux/Services/Actions/actions";
+import { postSpa } from "../../../../redux/Services/Actions/actions";
 
 function SpaCreate() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [photos, setPhotos] = useState([]);
+  const [type, setType] = useState([]);
 
   const handleAddPhoto = (e, setFieldValue) => {
     const newPhoto = e.target.previousElementSibling.value;
@@ -27,6 +28,19 @@ function SpaCreate() {
     const newPhotos = photos.filter((_, i) => i !== index);
     setPhotos(newPhotos);
     setFieldValue("photos", newPhotos);
+  };
+
+  const handleAddType = (e, setFieldValue) => {
+    const newType = e.target.previousElementSibling.value;
+    setType([...type, newType]);
+    setFieldValue("service_type", [...type, newType]);
+    e.target.previousElementSibling.value = "";
+  };
+
+  const handleRemoveType = (index, setFieldValue) => {
+    const newTypes = type.filter((_, i) => i !== index);
+    setType(newTypes);
+    setFieldValue("service_type", newTypes);
   };
 
   const handleCancel = (e) => {
@@ -64,9 +78,15 @@ function SpaCreate() {
         }}
         validationSchema={Yup.object().shape({
           name: Yup.string().required("The name is required"),
-          description: Yup.string().required("The description is required."),
+          description: Yup.string()
+            .required("The description is required.")
+            .min(10, "The description must have at least 10 characters.")
+            .max(100, "The description cannot have more than 100 characters."),
           spa_room: Yup.string().required("The spa room is required."),
-          service_type: Yup.string().required("The service type is required."),
+          service_type: Yup.array()
+            .of(Yup.string().required("Each service type must be a string."))
+            .min(1, "At least one service type is required.")
+            .required("The service type are required."),
           price: Yup.string()
             .required("The price is required.")
             .matches(/^\d+(\.\d{1,2})?$/, {
@@ -77,7 +97,12 @@ function SpaCreate() {
             .of(Yup.string().required("Each photo must be a string."))
             .min(1, "At least one photo is required.")
             .required("The photos are required."),
-          max_capacity: Yup.string().required("The max capacity is required"),
+          max_capacity: Yup.string()
+            .required("The max capacity is required")
+            .matches(/^\d+(\.\d{1,2})?$/, {
+              message: "The capacity must be a valid positive number.",
+              excludeEmptyString: true,
+            }),
           room_status: Yup.string()
             .required("The room status is required")
             .notOneOf(["---"], "Please select a room status."),
@@ -93,8 +118,7 @@ function SpaCreate() {
             confirmButtonText: "Yes",
           }).then((response) => {
             if (response.isConfirmed) {
-              //dispatch(patchSpa(values))
-              console.log(values);
+              dispatch(postSpa(values));
               Swal.fire(`Spa edited successfully`, "", "success");
               navigate(-1);
             } else if (response.isDismissed) {
@@ -171,10 +195,37 @@ function SpaCreate() {
                   label="PRICE"
                   placeholder="Enter the price of the service"
                 />
-                <TextInput
+                <label className=" text-white mt-4">SERVICE TYPE</label>
+                <input
+                  type="text"
+                  placeholder="Add service type"
+                  className="border mt-4 mr-4 ml-4 py-2 px-3   text-gray-700 bg-white rounded-md"
+                />
+                <button
+                  type="button"
+                  onClick={(e) => handleAddType(e, setFieldValue)}
+                  className="justify-center px-5 py-3.5 rounded shadow-sm text-white bg-blue-800 mt-5"
+                >
+                  ADD
+                </button>
+                {values.service_type.map((photo, index) => (
+                  <div key={index} className="flex items-center">
+                    <span className="text-white m-2 mt-4 truncate">
+                      {photo}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveType(index, setFieldValue)}
+                      className="ml-2 p-2 mt-4 text-white bg-blue-800"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                <ErrorMessage
                   name="service_type"
-                  label="SERVICE TYPE"
-                  placeholder="Enter the price of the service"
+                  component="div"
+                  className="text-red-500 mb-2 text-sm"
                 />
                 <TextInput
                   name="max_capacity"

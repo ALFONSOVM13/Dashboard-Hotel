@@ -112,7 +112,7 @@ export const postCar = (product) => {
   };
 };
 
-export const patchSpa = (product) => {
+export const postSpa = (product) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${VITE_BACKEND_URL}/api/spa`, product);

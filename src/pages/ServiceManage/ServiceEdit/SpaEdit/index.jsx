@@ -8,7 +8,7 @@ import TextInput from "../../../../components/TextInput";
 import { useNavigate } from "react-router-dom";
 import { Field, ErrorMessage } from "formik";
 import Swal from "sweetalert2";
-import { patchCar } from "../../../../redux/Services/Actions/actions";
+import { postSpa } from "../../../../redux/Services/Actions/actions";
 import SelectInput from "../../../../components/SelectInput";
 
 function SpaEdit() {
@@ -46,6 +46,11 @@ function SpaEdit() {
     const newServiceType = serviceType.filter((_, i) => i !== index);
     setServiceType(newServiceType);
     setFieldValue("service_type", newServiceType);
+  };
+
+  const agregarId = (objeto) => {
+    objeto.id = serviceToEdit.id;
+    return objeto;
   };
 
   const handleCancel = () => {
@@ -113,7 +118,8 @@ function SpaEdit() {
             confirmButtonText: "Yes",
           }).then((response) => {
             if (response.isConfirmed) {
-              console.log(values);
+              const spaForm = agregarId(values);
+              dispatch(postSpa(spaForm));
               Swal.fire(`Car edited successfully`, "", "success");
               navigate(-1);
             } else if (response.isDismissed) {
