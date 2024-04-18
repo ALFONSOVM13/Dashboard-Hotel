@@ -1,7 +1,7 @@
 import "./styles.css";
 export default function DateField({ label, name, value, handler, error }) {
   return (
-    <>
+    <div className="flex flex-col">
       {" "}
       <div className="text-left mt-5 text-base font-medium tracking-normal dark:text-white  text-gray-700">
         {" "}
@@ -18,6 +18,6 @@ export default function DateField({ label, name, value, handler, error }) {
       {error !== "" && (
         <span className="text-red-700 font-bold text-wrap">{error}</span>
       )}
-    </>
+    </div>
   );
 }

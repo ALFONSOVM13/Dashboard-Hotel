@@ -1,6 +1,8 @@
+import Cookies from "js-cookie";
 import {
   GET_ALL_RESERVATIONS,
   DELETE_RESERVATION,
+  GET_RESERVATION,
   PUT_RESERVATION,
   CREATE_RESERVATION,
 } from "./actionsTypes";
@@ -11,7 +13,9 @@ const { VITE_BACKEND_URL } = import.meta.env;
 export const getAllReservations = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${VITE_BACKEND_URL}/api/reservations`);
+      const response = await axios.get(`${VITE_BACKEND_URL}/api/reservations`, {
+        headers: { authorization: `Bearer ${Cookies.get("token")}` },
+      });
 
       dispatch({
         type: GET_ALL_RESERVATIONS,
@@ -25,11 +29,36 @@ export const getAllReservations = () => {
   };
 };
 
+export const getReservation = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `${VITE_BACKEND_URL}/api/reservations/${id}`,
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
+      );
+
+      dispatch({
+        type: GET_RESERVATION,
+        payload: response.data[0],
+      });
+    } catch (error) {
+      console.log(error);
+
+      throw new Error("Error de red al intentar obtener la reservacion.");
+    }
+  };
+};
+
 export const deleteReservation = (id) => {
   return async (dispatch) => {
     try {
       const response = await axios.delete(
-        `${VITE_BACKEND_URL}/api/reservations/${id}`
+        `${VITE_BACKEND_URL}/api/reservations/${id}`,
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
       );
       return dispatch({
         type: DELETE_RESERVATION,
@@ -46,7 +75,10 @@ export const putReservation = (id, product) => {
     try {
       const response = await axios.put(
         `${VITE_BACKEND_URL}/api/reservations/${id}`,
-        product
+        product,
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
       );
       return dispatch({
         type: PUT_RESERVATION,
@@ -65,7 +97,10 @@ export const createReservation = (product) => {
 
       const response = await axios.post(
         `${VITE_BACKEND_URL}/api/reservations`,
-        product
+        product,
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
       );
       return dispatch({
         type: CREATE_RESERVATION,

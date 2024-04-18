@@ -51,11 +51,7 @@ function RoomsCustomization() {
     const rec = async () => {
       await reconectar(obtenerData);
     };
-    if (allRooms.length === 0) {
-      rec();
-    } else {
-      setLoading(false);
-    }
+    rec();
   }, []);
 
   useEffect(() => {

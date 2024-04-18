@@ -95,7 +95,7 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
                 imageUrl: Yup.string().required("The image is required."),
                 category: Yup.string()
                   .required("The category is required.")
-                  .notOneOf(["---"], "Please select a valid gender."),
+                  .notOneOf(["---"], "Please select a valid category."),
                 price: Yup.string()
                   .required("The price is required.")
                   .matches(/^\d+(\.\d{1,2})?$/, {
@@ -138,7 +138,7 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
                     options={[
                       "---",
                       "Driks",
-                      "Burger",
+                      "Burgers",
                       "Italian",
                       "Japanese",
                       "Dessert",

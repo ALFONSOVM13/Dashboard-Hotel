@@ -31,6 +31,22 @@ const dataServices = [
     description:
       "Un masaje terapéutico diseñado para aliviar dolores musculares y mejorar la circulación sanguínea.",
   },
+  {
+    type: "alojamiento",
+    imageUrl: "imagen_alojamiento1.jpg",
+    name: "Habitación Estándar",
+    price: "$100 por noche",
+    description:
+      "Habitación estándar con todas las comodidades necesarias para una estancia confortable.",
+  },
+  {
+    type: "alojamiento",
+    imageUrl: "imagen_alojamiento2.jpg",
+    name: "Suite de Lujo",
+    price: "$250 por noche",
+    description:
+      "Suite de lujo con amplio espacio, vistas panorámicas y servicios exclusivos para una experiencia inolvidable.",
+  },
 ];
 
 export default dataServices;
