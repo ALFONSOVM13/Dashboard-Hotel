@@ -37,6 +37,16 @@ const employeesReducer = (state = initialState, { type, payload }) => {
         allEmployees: payload,
       };
 
+    case CHANGE_EMPLOYEE_STATUS:
+      return {
+        ...state,
+        allEmployees: status.allEmployees.map((employee) =>
+          employee.id === payload.id
+            ? { ...employee, status: !employee.status }
+            : employee
+        ),
+      };
+
     case DELETE_EMPLOYEE:
       return {
         ...state,

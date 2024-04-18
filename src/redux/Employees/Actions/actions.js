@@ -4,6 +4,7 @@ import {
   DELETE_EMPLOYEE,
   CHANGE_EMPLOYEE_STATE,
   CREATE_EMPLOYEE,
+  CHANGE_EMPLOYEE_STATUS,
   PUT_EMPLOYEE,
 } from "./actionsTypes";
 import axios from "axios";

@@ -141,8 +141,8 @@ function ReservationForm({ data }) {
                   value={reservation.check_in_date}
                   handler={handleChange}
                   label="Check-in Date"
+                  error={errors.check_in_date}
                 />
-                error={errors.check_in_date}
               </div>
               {/* <div className="flex flex-col w-1/2">
               <HourField
@@ -162,8 +162,8 @@ function ReservationForm({ data }) {
                   value={reservation.check_out_date}
                   handler={handleChange}
                   label="Check-Out Date"
+                  error={errors.check_out_date}
                 />
-                error={errors.check_out_date}
               </div>
               {/* <div className="flex flex-col w-1/2">
               <HourField
