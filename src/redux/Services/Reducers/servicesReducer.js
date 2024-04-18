@@ -5,6 +5,7 @@ import {
   POST_CAR,
   GET_ALL_CARS,
   GET_ALL_SPA,
+  POST_SPA,
 } from "../Actions/actionsTypes";
 
 const initialState = {
@@ -45,6 +46,12 @@ const servicesReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         carServices: [...state.carServices, payload],
+      };
+
+    case POST_SPA:
+      return {
+        ...state,
+        allServices: [...payload],
       };
 
     default:
