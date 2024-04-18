@@ -99,7 +99,7 @@ function Dashboard() {
           total={obtenerUsuarioPorMes(userByMonth)}
           percentage={obtenerPorcetajeDeUsuarios(userByMonth)}
           icon={
-            obtenerPorcetajeDeUsuarios(userByMonth) > 0
+            parseFloat(obtenerPorcetajeDeUsuarios(userByMonth)) > 0
               ? urlImagenPositivo
               : urlImagenNegativo
           }
