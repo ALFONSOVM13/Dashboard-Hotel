@@ -8,7 +8,7 @@ function Sidebar({ controlador, darkMode, toogleDarkMode }) {
   return (
     <div
       id="sidebar"
-      className="fixed transition-all duration-300 flex flex-col py-6 bg-white dark:bg-[rgba(15,15,15,0.8)] shadow-sm w-[300px]  self-start top-0 bottom-0 h-full z-100 md:text-2xl"
+      className="fixed transition-all duration-300 flex flex-col py-6 bg-white dark:bg-[rgba(15,15,15,0.8)] shadow-sm w-[300px]  self-start top-0 bottom-0 h-full z-100 md:text-2xl overflow-y-auto"
       ref={controlador}
     >
       <div className="flex flex-col items-left px-6 w-full">

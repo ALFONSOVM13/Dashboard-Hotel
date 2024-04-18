@@ -3,6 +3,7 @@ import {
   GET_EMPLOYEE,
   DELETE_EMPLOYEE,
   CREATE_EMPLOYEE,
+  CHANGE_EMPLOYEE_STATUS,
   PUT_EMPLOYEE,
 } from "./actionsTypes";
 import axios from "axios";
@@ -52,6 +53,26 @@ export const postEmployee = (id, employee) => {
       const response = await axios.post(`${VITE_BACKEND_URL}`, employee);
       return dispatch({
         type: CREATE_EMPLOYEE,
+        payload: response.data,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+};
+
+export const changeEmployeeStatus = (id, state) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.patch(
+        `${VITE_BACKEND_URL}/auth/set-state/${id}`,
+        { state },
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
+      );
+      return dispatch({
+        type: CHANGE_EMPLOYEE_STATUS,
         payload: response.data,
       });
     } catch (error) {
