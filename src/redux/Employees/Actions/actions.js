@@ -2,6 +2,7 @@ import {
   GET_ALL_EMPLOYEES,
   GET_EMPLOYEE,
   DELETE_EMPLOYEE,
+  CHANGE_EMPLOYEE_STATE,
   CREATE_EMPLOYEE,
   PUT_EMPLOYEE,
 } from "./actionsTypes";
@@ -27,6 +28,7 @@ export const getAllEmployees = () => {
     }
   };
 };
+
 export const getEmployee = (id) => {
   return async (dispatch) => {
     try {
@@ -53,6 +55,27 @@ export const postEmployee = (id, employee) => {
       return dispatch({
         type: CREATE_EMPLOYEE,
         payload: response.data,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+};
+export const changeEmployeeStatus = (id, state) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.patch(
+        `${VITE_BACKEND_URL}/auth/set-state/${id}`,
+        {
+          state: state,
+        },
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
+      );
+      return dispatch({
+        type: CHANGE_EMPLOYEE_STATE,
+        payload: response.data.user,
       });
     } catch (error) {
       throw new Error(error);

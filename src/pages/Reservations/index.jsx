@@ -48,6 +48,7 @@ function Reservations() {
 
   useEffect(() => {
     if (allReservations !== undefined && allReservations.length > 0) {
+      console.log(allReservations);
       setData(
         allReservations.map((reservation) => ({
           id: reservation.id,

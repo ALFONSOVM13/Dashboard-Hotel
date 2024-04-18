@@ -29,12 +29,17 @@ export const getAllUsers = () => {
 
 export const postUser = async (token, id, user) => {
   try {
+    const formData = new FormData();
+    for (const key in user) {
+      formData.append(key, user[key]);
+    }
     const response = await axios.put(
       `${VITE_BACKEND_URL}/auth/profile/${id}`,
-      user,
+      formData,
       {
         headers: {
           authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
         },
       }
     );

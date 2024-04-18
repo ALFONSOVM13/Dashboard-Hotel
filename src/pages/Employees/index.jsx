@@ -6,7 +6,10 @@ import SearchBar from "../../components/SearchBar";
 import PaginationControl from "../../components/PaginationControl";
 import Loading from "../../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllEmployees } from "../../redux/Employees/Actions/actions";
+import {
+  changeEmployeeStatus,
+  getAllEmployees,
+} from "../../redux/Employees/Actions/actions";
 import { reconectar } from "../../utils";
 import NewButton from "../../components/NewButton";
 import { useNavigate } from "react-router-dom";
@@ -110,15 +113,33 @@ function Employees() {
   );
 }
 
-function BotonesAccion({ id, state = "active" }) {
+function BotonesAccion({ id, data }) {
+  const [state, setState] = useState(true);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(data.is_active);
+    setState(data.is_active);
+  }, [data]);
+
+  const handleChangeState = (e) => {
+    console.log(state);
+    dispatch(changeEmployeeStatus(id, !state))
+      .then(() => console.log("Hecho"))
+      .catch((error) => console.log(error));
+  };
   return (
     <div className="flex gap-3 text-white font-bold">
       <Button className={"bg-blue-700"} action={() => navigate(`edit/${id}`)}>
         Edit{" "}
       </Button>
-      <Button className={state === "active" ? "bg-red-700" : "bg-green-700"}>
-        {state === "active" ? "Deactivate" : "Activate"}
+      <Button
+        action={handleChangeState}
+        className={state ? "bg-red-700" : "bg-green-700"}
+      >
+        {state ? "Deactivate" : "Activate"}
       </Button>
     </div>
   );

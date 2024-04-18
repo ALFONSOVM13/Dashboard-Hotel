@@ -13,7 +13,11 @@ function EditGuest() {
     <>
       <div className="flex flex-col px-5 pr-10 pt-10 w-full max-md:max-w-full">
         <div className="flex justify-between items-center">
-          <TabTitle title={`Edit guest: ${id}`} />
+          <TabTitle
+            title={`Edit guest: ${
+              userToEdit.guest_profile?.full_name ?? "Not specified"
+            }`}
+          />
           <BackButton />
         </div>
       </div>

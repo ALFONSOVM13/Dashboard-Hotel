@@ -4,6 +4,7 @@ import {
   DELETE_EMPLOYEE,
   CREATE_EMPLOYEE,
   PUT_EMPLOYEE,
+  CHANGE_EMPLOYEE_STATE,
 } from "../Actions/actionsTypes";
 
 const initialState = {
@@ -40,6 +41,14 @@ const employeesReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         allEmployees: payload,
+      };
+
+    case CHANGE_EMPLOYEE_STATE:
+      return {
+        ...state,
+        allEmployees: state.allEmployees.map((employee) =>
+          employee.id === payload.id ? payload : employee
+        ),
       };
     default:
       return {
