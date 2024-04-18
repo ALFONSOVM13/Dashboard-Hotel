@@ -5,13 +5,14 @@ import Table from "../../components/Table";
 import ReservedButtons from "../../components/ReservedButtons/index.jsx";
 import SearchBar from "../../components/SearchBar/index.jsx";
 import useTableSearchPagination from "../../hooks/useTableSearchPagination.jsx";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAllReservations } from "../../redux/Reservations/Actions/actions.js";
-import { convertirFechaAAmPm } from "../../utils/index.js";
+import { convertirFechaAAmPm, reconectar } from "../../utils/index.js";
 import { getAllUsers } from "../../redux/Users/Actions/actions.js";
 import { getAllRooms } from "../../redux/Rooms/Actions/actions.js";
+import Loading from "../../components/Loading/index.jsx";
 
 function Reservations() {
   const {
@@ -24,34 +25,36 @@ function Reservations() {
     setData,
   } = useTableSearchPagination();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(null);
   const { allReservations } = useSelector((state) => state.reservationsReducer);
-  const { allUsers } = useSelector((state) => state.usersReducer);
-  const { allRooms } = useSelector((state) => state.roomsReducer);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getAllReservations());
-    dispatch(getAllUsers());
-    dispatch(getAllRooms());
+    const obtenerData = async () => {
+      setLoading(true);
+      return await dispatch(getAllReservations())
+        .then(() => {
+          setLoading(false);
+          return true;
+        })
+        .catch(() => false);
+    };
+    const rec = async () => {
+      await reconectar(obtenerData);
+    };
+    rec();
   }, []);
 
   useEffect(() => {
-    if (
-      allReservations !== undefined &&
-      allReservations.length > 0 &&
-      allRooms !== undefined &&
-      allRooms.length > 0 &&
-      allUsers !== undefined &&
-      allUsers.length > 0
-    ) {
+    if (allReservations !== undefined && allReservations.length > 0) {
       setData(
         allReservations.map((reservation) => ({
+          id: reservation.id,
           reservation_number: reservation.reservation_number,
-          user_name: allUsers.find((user) => user.id === reservation.user_id)
-            .username,
-          room_number: allRooms.find((room) => room.id === reservation.room_id)
-            .room_number,
+          full_name:
+            reservation.user?.guest_profile?.full_name ?? "Not defined",
+          room_number: reservation.room?.room_number ?? "Not assigned",
           check_in_date: convertirFechaAAmPm(reservation.check_in_date),
           check_out_date: convertirFechaAAmPm(reservation.check_out_date),
           status: reservation.status,
@@ -59,9 +62,11 @@ function Reservations() {
         }))
       );
       setPagination({ ...pagination, items: data.length });
+      setLoading(false);
       console.log(allReservations);
     }
-  }, [allReservations, allUsers, allRooms]);
+    console.log(allReservations);
+  }, [allReservations]);
 
   return (
     <>
@@ -82,23 +87,26 @@ function Reservations() {
         {inputValue !== "" && searchResults.length === 0 ? (
           <h3>{`No results for "${inputValue}" search...`}</h3>
         ) : (
-          <Table
-            headers={[
-              "Reservation #",
-              "Guest username",
-              "Room #",
-              "Check-In",
-              "Check-Out",
-              "Status",
-              "Price",
-              "Actions",
-            ]}
-            data={searchResults.length > 0 ? searchResults : data}
-            Components={ReservedButtons}
-            idName="id"
-            size={pagination.size}
-            page={pagination.page}
-          />
+          <Loading state={loading}>
+            <Table
+              headers={[
+                "Reservation #",
+                "Guest Full Name",
+                "Room #",
+                "Check-In",
+                "Check-Out",
+                "Status",
+                "Price",
+                "Actions",
+              ]}
+              data={searchResults.length > 0 ? searchResults : data}
+              Components={ReservedButtons}
+              idName="id"
+              size={pagination.size}
+              page={pagination.page}
+              omitt="id"
+            />
+          </Loading>
         )}
       </div>
     </>

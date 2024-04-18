@@ -3,10 +3,12 @@ import {
   DELETE_RESERVATION,
   PUT_RESERVATION,
   CREATE_RESERVATION,
+  GET_RESERVATION,
 } from "../Actions/actionsTypes";
 
 const initialState = {
   allReservations: [],
+  selectedReservation: {},
 };
 
 const reservationsReducer = (state = initialState, { type, payload }) => {
@@ -15,6 +17,11 @@ const reservationsReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         allReservations: payload,
+      };
+    case GET_RESERVATION:
+      return {
+        ...state,
+        selectedReservation: payload,
       };
 
     case DELETE_RESERVATION:

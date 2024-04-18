@@ -7,7 +7,7 @@ export default function InputField({
   type,
 }) {
   return (
-    <>
+    <div className="flex flex-col">
       {" "}
       <div className="text-left mt-5 text-base font-medium tracking-normal dark:text-white  text-gray-700">
         {" "}
@@ -34,6 +34,6 @@ export default function InputField({
       {error !== "" && (
         <span className="text-red-700 font-bold text-wrap">{error}</span>
       )}
-    </>
+    </div>
   );
 }

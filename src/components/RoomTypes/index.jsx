@@ -21,11 +21,7 @@ export default function RoomTypes({ action, control }) {
     const rec = async () => {
       await reconectar(obtenerData);
     };
-    if (allRoomTypes.length === 0) {
-      rec();
-    } else {
-      setLoading(false);
-    }
+    rec();
   }, []);
 
   useEffect(() => {

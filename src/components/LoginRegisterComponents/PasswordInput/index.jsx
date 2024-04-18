@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Eye from "./eye.svg";
-function PasswordInput({ text, name, value, handler }) {
+function PasswordInput({ text, name, value, handler, error }) {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <>
@@ -18,10 +18,11 @@ function PasswordInput({ text, name, value, handler }) {
           onChange={handler}
           value={value}
           type={showPassword ? "text" : "password"}
-          id="password"
           name={name}
           placeholder={text}
-          className={`justify-center px-3 py-2 mt-1 text-sm whitespace-nowrap rounded border-2 border-solid border-slate-500 text-ellipsis text-zinc-900 bg-slate-100 w-full ${
+          className={`justify-center px-3 py-2 mt-1 text-sm whitespace-nowrap rounded border-2 border-solid ${
+            error !== "" ? "border-red-700" : "border-slate-500"
+          } text-ellipsis text-zinc-900 bg-slate-100 w-full ${
             showPassword ? "tracking-normal" : "tracking-widest"
           }`}
         />
@@ -34,6 +35,7 @@ function PasswordInput({ text, name, value, handler }) {
           onMouseUp={() => setShowPassword(false)}
         />
       </div>
+      {error !== "" && <span className="text-red-700 font-bold">{error}</span>}
     </>
   );
 }

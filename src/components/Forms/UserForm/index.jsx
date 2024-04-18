@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import TextInput from "../../TextInput";
@@ -14,23 +14,87 @@ import { ErrorMessage } from "formik";
 import { Field } from "formik";
 import ImageInput from "../../ImageInput";
 import DateInput from "../../DateInput";
+import { postUser } from "../../../redux/Users/Actions/actions";
+import { useNavigate } from "react-router-dom";
 
-function UserForm({ id }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+function UserForm({ id, userToEdit }) {
+  const navigate = useNavigate();
+
   const [photoUrl, setPhotoUrl] = useState("");
-  const [password, setPassword] = useState("");
+  const [showImageInput, setShowImageInput] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [countries, setCountries] = useState([]);
 
-  const generateRandomPassword = () => {
-    const randomPassword = Math.random().toString(36).slice(-8);
-    setPassword(randomPassword);
+  useEffect(() => {
+    fetch("https://www.universal-tutorial.com/api/getaccesstoken", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "api-token":
+          "uLmMbkZBbbL5ExZ2xmGYWb-qORHjJ8fBy3RMmMfB3KEyCnLhMabei7gl53LhaxMmKm4",
+        "user-email": "tomy_ramos1991@yahoo.com.ar",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const authToken = data.auth_token;
+        fetch("https://www.universal-tutorial.com/api/countries", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            Accept: "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const countryNames = data.map((item) => item.country_name);
+            countryNames.unshift("---");
+            setCountries(countryNames);
+          })
+          .catch((error) => console.error("Error:", error));
+      })
+      .catch((error) => console.error("Error:", error));
+  }, []);
+
+  const handleSubmit = async (values) => {
+    try {
+      const token = Cookies.get("token");
+      if (!token) {
+        console.error("No se encontró el token en las cookies");
+        return;
+      }
+      const requestData = {
+        userId: userToEdit.id,
+        full_name: values.full_name,
+        phone_number: values.phone_number,
+        gender: values.gender,
+        document: values.document,
+        country: values.country,
+        birth: values.birth,
+        address: values.address,
+      };
+
+      if (selectedFile) {
+        requestData.photo = selectedFile;
+      }
+
+      const response = await postUser(token, userToEdit.id, requestData);
+      Swal.fire(`${response.message}`, "", "success");
+      navigate(-1);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPhotoUrl(reader.result);
+      setShowImageInput(false);
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -38,16 +102,28 @@ function UserForm({ id }) {
       <FormTitle title="EDIT AN USER" />
       <Formik
         initialValues={{
-          full_name: "",
-          phone_number: "",
-          document: "",
-          country: "",
-          address: "",
-          photo_url: photoUrl,
-          gender: "",
-          birthday: "",
-          password: password,
-          rol: "",
+          full_name: userToEdit.guest_profile
+            ? userToEdit.guest_profile.full_name
+            : "",
+          phone_number: userToEdit.guest_profile
+            ? userToEdit.guest_profile.phone_number
+            : "",
+          document: userToEdit.guest_profile
+            ? userToEdit.guest_profile.document
+            : "",
+          country: userToEdit.guest_profile
+            ? userToEdit.guest_profile.country
+            : "",
+          address: userToEdit.guest_profile
+            ? userToEdit.guest_profile.address
+            : "",
+          photo_url: userToEdit.guest_profile
+            ? userToEdit.guest_profile.photo_url
+            : photoUrl,
+          gender: userToEdit.guest_profile
+            ? userToEdit.guest_profile.gender
+            : "",
+          birth: userToEdit.guest_profile ? userToEdit.guest_profile.birth : "",
         }}
         validationSchema={Yup.object().shape({
           full_name: Yup.string()
@@ -57,7 +133,7 @@ function UserForm({ id }) {
               "Invalid characters in the name."
             )
             .max(50, "The name cannot have more than 50 characters."),
-          password: Yup.string().required("The password is required."),
+
           document: Yup.string().required("The ID is required."),
           country: Yup.string().required("The country is required."),
           phone_number: Yup.string()
@@ -71,24 +147,18 @@ function UserForm({ id }) {
             .required("The address is required.")
             .max(100, "The address cannot have more than 100 characters."),
           photo_url: Yup.string().required("The photo is required."),
-          rol: Yup.string()
-            .required("The rol is required.")
-            .notOneOf(["---"], "Please select a valid rol."),
           gender: Yup.string()
             .required("The gender is required.")
             .notOneOf(["---"], "Please select a valid gender."),
-          birthday: Yup.date()
+          birth: Yup.date()
             .required("Birthday is required.")
             .max(new Date(), "Birthday cannot be in the future."),
         })}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(false);
-
           Swal.fire({
             title: "Warning",
-            text: id
-              ? "Are you sure you want to edit this guest?"
-              : "Are you sure you want to create this user?",
+            text: "Are you sure you want to create this user?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -96,8 +166,7 @@ function UserForm({ id }) {
             confirmButtonText: "Yes",
           }).then((response) => {
             if (response.isConfirmed) {
-              Swal.fire("User created successfully", "", "success");
-              console.log(values, id);
+              handleSubmit(values);
             } else if (response.isDismissed) {
               return;
             }
@@ -113,51 +182,28 @@ function UserForm({ id }) {
                 <img
                   loading="lazy"
                   src={photoUrl}
-                  className="self-center max-w-full rounded-full border-2 border-solid aspect-square dark:border-white border-black border-opacity-30 w-[174px]"
+                  className="self-center max-w-full object-cover rounded-full border-2 border-solid aspect-square dark:border-white border-black border-opacity-30 w-[174px]"
                 />
                 <button
+                  type="button"
                   className="justify-center self-center px-4 py-5 mt-4 max-w-full font-semibold text-center text-white rounded shadow-sm bg-blue-950 w-[174px]"
-                  onClick={handleOpenModal}
+                  onClick={() => setShowImageInput(true)}
                 >
                   Change Profile Pic
                 </button>
+                {showImageInput && (
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                    onChange={handleFileChange}
+                  />
+                )}
                 <ErrorMessage
                   name="photo_url"
                   component="div"
                   className="text-red-500 text-sm mt-2"
                 />
-                <Modal
-                  open={isModalOpen}
-                  onClose={handleCloseModal}
-                  aria-labelledby="modal-title"
-                  aria-describedby="modal-description"
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      width: "600px",
-                      height: "auto",
-                      bgcolor: "background.paper",
-                      border: "2px solid #b2a9a9",
-                      boxShadow: 24,
-                      p: 4,
-                    }}
-                  >
-                    <ImageInput
-                      photoUrl={photoUrl}
-                      setPhotoUrl={setPhotoUrl}
-                      setFieldValue={setFieldValue}
-                      handleCloseModal={handleCloseModal}
-                    />
-                  </Box>
-                </Modal>
               </div>
               <div className="flex flex-col">
                 <TextInput
@@ -165,42 +211,24 @@ function UserForm({ id }) {
                   name="full_name"
                   labelAlign="left"
                 />
-
-                <TextInput
-                  label="PASSWORD"
-                  name="password"
-                  labelAlign="left"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <button
-                  type="button"
-                  onClick={() => {
-                    generateRandomPassword();
-                    setFieldValue("password", password);
-                  }}
-                  className="bg-blue-500 text-white rounded py-2 px-4 mt-2"
-                >
-                  Generate Password
-                </button>
                 <TextInput label="ADDRESS" name="address" labelAlign="left" />
                 <TextInput
                   label="PHONE NUMBER"
                   name="phone_number"
                   labelAlign="left"
                 />
-                <DateInput label="BIRTHDAY" name="birthday" />
-                <TextInput label="COUNTRY" name="country" labelAlign="left" />
-                <TextInput label="DOCUMENT" name="document" labelAlign="left" />
+                <DateInput label="BIRTHDAY" name="birth" />
                 <SelectInput
-                  label="ROL"
-                  name="rol"
-                  options={["---", "Admin", "Employee", "Customer"]}
+                  label="COUNTRY"
+                  name="country"
+                  options={countries}
                   labelAlign="left"
                 />
+                <TextInput label="DOCUMENT" name="document" labelAlign="left" />
                 <SelectInput
                   label="GENDER"
                   name="gender"
-                  options={["---", "Male", "Female", "Other"]}
+                  options={["---", "male", "female", "other"]}
                   labelAlign="left"
                 />
               </div>

@@ -17,12 +17,6 @@ const usersReducer = (state = initialState, { type, payload }) => {
         allUsers: payload,
       };
 
-    case CREATE_USER:
-      return {
-        ...state,
-        allUsers: payload,
-      };
-
     case PUT_USER:
       return {
         ...state,
@@ -34,6 +28,7 @@ const usersReducer = (state = initialState, { type, payload }) => {
         ...state,
         allUsers: payload,
       };
+
     default:
       return {
         ...state,
