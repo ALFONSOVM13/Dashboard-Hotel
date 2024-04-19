@@ -217,7 +217,7 @@ function SpaEdit() {
                       onClick={() =>
                         handleRemoveServiceType(index, setFieldValue)
                       }
-                      className="ml-2 text-white bg-blue-800"
+                      className="ml-2 p-2 mt-4 text-white bg-blue-800"
                     >
                       Remove
                     </button>
