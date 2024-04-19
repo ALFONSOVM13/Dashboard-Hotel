@@ -120,7 +120,7 @@ function Offers() {
             <Table
               headers={[
                 "Image",
-                "ID",
+
                 "Name",
                 "Description",
                 "Price",
@@ -138,6 +138,7 @@ function Offers() {
               idName="id"
               size={pagination.size}
               page={pagination.page}
+              omitt="id"
             />
           )}
         </Loading>

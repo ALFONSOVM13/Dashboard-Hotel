@@ -5,6 +5,9 @@ import {
   POST_CAR,
   GET_ALL_CARS,
   GET_ALL_SPA,
+  DELETE_SPA,
+  PUT_SPA,
+  POST_SPA,
 } from "./actionsTypes";
 
 import axios from "axios";
@@ -105,6 +108,34 @@ export const postCar = (product) => {
       });
     } catch (error) {
       throw new Error(error);
+    }
+  };
+};
+
+export const postSpa = (product) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${VITE_BACKEND_URL}/api/spa`, product);
+      return dispatch({
+        type: POST_SPA,
+        payload: response.data.allRoomSpa,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+};
+
+export const deleteSpa = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(`${VITE_BACKEND_URL}/api/spa/${id}`);
+      dispatch({
+        type: DELETE_SPA,
+        payload: response.data.car_details,
+      });
+    } catch (error) {
+      throw new Error("Error de red al intentar eliminar el auto.");
     }
   };
 };
