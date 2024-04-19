@@ -4,6 +4,8 @@ import {
   PUT_RESERVATION,
   CREATE_RESERVATION,
   GET_RESERVATION,
+  CHECKIN_RESERVATION,
+  CHECKOUT_RESERVATION,
 } from "../Actions/actionsTypes";
 
 const initialState = {
@@ -27,7 +29,11 @@ const reservationsReducer = (state = initialState, { type, payload }) => {
     case DELETE_RESERVATION:
       return {
         ...state,
-        allReservations: payload,
+        allReservations: [
+          ...state.allReservations.filter(
+            (res) => Number(res.id) !== Number(payload)
+          ),
+        ],
       };
 
     case PUT_RESERVATION:
@@ -40,6 +46,29 @@ const reservationsReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         allReservations: payload,
+      };
+
+    case CHECKIN_RESERVATION:
+      return {
+        ...state,
+        allReservations: [
+          ...state.allReservations.map((res) =>
+            res.reservation_number === payload.reservation_number
+              ? payload
+              : res
+          ),
+        ],
+      };
+    case CHECKOUT_RESERVATION:
+      return {
+        ...state,
+        allReservations: [
+          ...state.allReservations.map((res) =>
+            res.reservation_number === payload.reservation_number
+              ? payload
+              : res
+          ),
+        ],
       };
 
     default:

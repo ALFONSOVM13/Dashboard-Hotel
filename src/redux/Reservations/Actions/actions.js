@@ -5,6 +5,8 @@ import {
   GET_RESERVATION,
   PUT_RESERVATION,
   CREATE_RESERVATION,
+  CHECKIN_RESERVATION,
+  CHECKOUT_RESERVATION,
 } from "./actionsTypes";
 
 import axios from "axios";
@@ -60,9 +62,10 @@ export const deleteReservation = (id) => {
           headers: { authorization: `Bearer ${Cookies.get("token")}` },
         }
       );
+      console.log(response.data.reservation);
       return dispatch({
         type: DELETE_RESERVATION,
-        payload: response.data,
+        payload: response.data.reservation,
       });
     } catch (error) {
       throw new Error(error);
@@ -82,6 +85,46 @@ export const putReservation = (id, product) => {
       );
       return dispatch({
         type: PUT_RESERVATION,
+        payload: response.data,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+};
+
+export const checkInReservation = (reservation_number) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(
+        `${VITE_BACKEND_URL}/api/reservations/checkin`,
+        { reservation_number },
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
+      );
+      return dispatch({
+        type: CHECKIN_RESERVATION,
+        payload: response.data,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+};
+
+export const checkOutReservation = (reservation_number) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(
+        `${VITE_BACKEND_URL}/api/reservations/checkout`,
+        { reservation_number },
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
+      );
+      return dispatch({
+        type: CHECKOUT_RESERVATION,
         payload: response.data,
       });
     } catch (error) {

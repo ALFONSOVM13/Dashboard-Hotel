@@ -9,7 +9,7 @@ function EditButton({ id }) {
       <Link to={`${id}`} className="block w-full">
         <button
           onClick={goToPage}
-          className="w-full block gap-3 font-semibold text-white justify-center p-2 bg-green-600 rounded-md shadow-sm shadow-slate-800"
+          className="w-full block gap-3 font-semibold text-white justify-center p-2 bg-blue-700 rounded-md shadow-sm shadow-slate-800"
         >
           Edit{" "}
         </button>

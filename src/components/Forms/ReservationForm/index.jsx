@@ -11,8 +11,11 @@ import { getAllRooms } from "../../../redux/Rooms/Actions/actions";
 import { getAllUsers } from "../../../redux/Users/Actions/actions";
 import { reconectar } from "../../../utils";
 import Loading from "../../Loading";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 function ReservationForm({ data }) {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const structure = {
@@ -55,19 +58,27 @@ function ReservationForm({ data }) {
     return Object.values(errors).every((value) => value === "");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validation()) return;
     try {
       if (!data) {
         dispatch(createReservation(reservation));
-        console.log("Saving Reservation...");
+        await Swal.fire(
+          "Reservation Updated",
+          "Operation Successfully!",
+          "success"
+        ).then(() => navigate(-1));
       } else {
         //update reservation
-        console.log("Updating Reservation...");
+        await Swal.fire(
+          "Reservation Created",
+          "Operation Successfully!",
+          "success"
+        ).then(() => navigate(-1));
       }
     } catch (error) {
-      console.log(error);
+      await Swal.fire("Error", "An error occurs!", "error");
     }
   };
 
