@@ -105,6 +105,7 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
               })}
               onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(false);
+                console.log(values);
                 const action = foodToEdit ? putFood : postFood;
                 const text = foodToEdit
                   ? "Are you sure you want to edit this meal?"

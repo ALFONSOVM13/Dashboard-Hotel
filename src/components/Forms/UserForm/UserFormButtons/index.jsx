@@ -8,7 +8,7 @@ function UserFormButtons({ isSubmitting, id }) {
 
   const handleCancel = () => {
     Swal.fire({
-      title: "Are you sure?",
+      title: "Are you sure you want to cancel this action?",
       text: "",
       icon: "warning",
       showDenyButton: true,
@@ -23,7 +23,7 @@ function UserFormButtons({ isSubmitting, id }) {
 
   const handleDelete = () => {
     Swal.fire({
-      title: "Are you sure?",
+      title: "Are you sure you want to delete this user?",
       text: "",
       icon: "warning",
       showDenyButton: true,

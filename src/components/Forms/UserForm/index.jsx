@@ -155,7 +155,7 @@ function UserForm({ id, userToEdit }) {
           setSubmitting(false);
           Swal.fire({
             title: "Warning",
-            text: "Are you sure you want to create this user?",
+            text: "Are you sure you want to edit this user?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",

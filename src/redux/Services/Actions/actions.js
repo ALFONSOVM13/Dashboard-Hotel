@@ -116,6 +116,7 @@ export const postSpa = (product) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${VITE_BACKEND_URL}/api/spa`, product);
+      console.log(response.data.allRoomSpa);
       return dispatch({
         type: POST_SPA,
         payload: response.data.allRoomSpa,

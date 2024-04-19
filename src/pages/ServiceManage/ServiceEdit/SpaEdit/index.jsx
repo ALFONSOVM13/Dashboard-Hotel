@@ -110,7 +110,7 @@ function SpaEdit() {
         onSubmit={(values, { setSubmitting }) => {
           Swal.fire({
             title: "Warning",
-            text: "Are you sure you want to edit this car?",
+            text: "Are you sure you want to edit this spa service?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -120,7 +120,7 @@ function SpaEdit() {
             if (response.isConfirmed) {
               const spaForm = agregarId(values);
               dispatch(postSpa(spaForm));
-              Swal.fire(`Car edited successfully`, "", "success");
+              Swal.fire(`Spa service edited successfully`, "", "success");
               navigate(-1);
             } else if (response.isDismissed) {
               return;
@@ -217,7 +217,7 @@ function SpaEdit() {
                       onClick={() =>
                         handleRemoveServiceType(index, setFieldValue)
                       }
-                      className="ml-2 text-white bg-blue-800"
+                      className="ml-2 p-2 mt-4 text-white bg-blue-800"
                     >
                       Remove
                     </button>
