@@ -91,7 +91,11 @@ function Guests() {
           />
           {showForm && <CreateGuest setShowForm={setShowForm} />}
         </div>
-        <SearchBar text="Email" value={inputValue} action={handleInputChange} />
+        <SearchBar
+          text="Email, User Name"
+          value={inputValue}
+          action={handleInputChange}
+        />
       </div>
 
       <div className="flex flex-col justify-between px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">

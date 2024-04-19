@@ -142,7 +142,7 @@ function Services() {
   const handleDelete = (id) => {
     Swal.fire({
       title: "Warning",
-      text: "Are you sure you want to delete this car?",
+      text: "Are you sure you want to delete this spa serice?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -151,7 +151,7 @@ function Services() {
     }).then((response) => {
       if (response.isConfirmed) {
         dispatch(deleteCar(id));
-        Swal.fire(`Car deleted successfully`, "", "success");
+        Swal.fire(`Spa service deleted successfully`, "", "success");
       } else if (response.isDismissed) {
         return;
       }
