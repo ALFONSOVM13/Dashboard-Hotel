@@ -6,7 +6,7 @@ function SelectField({ label, name, value, handler, error, options = [] }) {
   }, [value]);
   return (
     options.length && (
-      <>
+      <div className="flex flex-col">
         {" "}
         <label
           htmlFor={name}
@@ -36,7 +36,7 @@ function SelectField({ label, name, value, handler, error, options = [] }) {
             {error}
           </span>
         )}
-      </>
+      </div>
     )
   );
 }
