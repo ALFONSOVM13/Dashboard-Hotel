@@ -3,7 +3,7 @@ import {
   GET_EMPLOYEE,
   DELETE_EMPLOYEE,
   CREATE_EMPLOYEE,
-  PUT_EMPLOYEE,
+  PATCH_EMPLOYEE,
   CHANGE_EMPLOYEE_STATE,
 } from "../Actions/actionsTypes";
 
@@ -31,12 +31,6 @@ const employeesReducer = (state = initialState, { type, payload }) => {
         allEmployees: payload,
       };
 
-    case PUT_EMPLOYEE:
-      return {
-        ...state,
-        allEmployees: payload,
-      };
-
     case DELETE_EMPLOYEE:
       return {
         ...state,
@@ -44,6 +38,14 @@ const employeesReducer = (state = initialState, { type, payload }) => {
       };
 
     case CHANGE_EMPLOYEE_STATE:
+      return {
+        ...state,
+        allEmployees: state.allEmployees.map((employee) =>
+          employee.id === payload.id ? payload : employee
+        ),
+      };
+
+    case PATCH_EMPLOYEE:
       return {
         ...state,
         allEmployees: state.allEmployees.map((employee) =>

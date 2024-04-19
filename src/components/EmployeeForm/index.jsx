@@ -4,18 +4,48 @@ import DateField from "../DateField";
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
 import SelectField from "../SelectField";
+import * as yup from "yup";
+import { schema } from "./validation";
+import { updateEmployee } from "../../redux/Employees/Actions/actions";
+import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
+import Cookies from "js-cookie";
+import moment from "moment";
 
 const EmployeeForm = ({ data }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const structure = { full_name: "", phone: "" };
+  const genders = [
+    { id: 1, name: "Male" },
+    { id: 2, name: "Female" },
+    { id: 3, name: "Helicopter" },
+  ];
+
+  const guestProfileStructure = {
+    full_name: "",
+    phone_number: "",
+    email: "",
+    address: "",
+    document: "",
+    birth: "",
+    country: "",
+    gender: "",
+  };
   const [employeeData, setEmployeeData] = useState({
-    ...structure,
+    ...guestProfileStructure,
   });
-  const [errors, setErrors] = useState({ ...structure });
+  const [errors, setErrors] = useState({ ...guestProfileStructure });
   const [countries, setCountries] = useState([]);
 
   const handleChange = (e) => {
     let { name, value } = e.target;
+    if (name === "birth") {
+      value = moment(value).format("YYYY-MM-DD");
+    }
+    if (name === "gender") {
+      value = parseInt(value);
+      console.log(genders.find((gender) => gender.id === value));
+    }
 
     setEmployeeData({ ...employeeData, [name]: value });
     setErrors({ ...errors, [name]: null });
@@ -45,7 +75,12 @@ const EmployeeForm = ({ data }) => {
           .then((data) => {
             const countryNames = data.map((item) => item.country_name);
             countryNames.unshift("---");
-            setCountries(countryNames);
+            setCountries(
+              countryNames.map((country, index) => ({
+                id: index,
+                name: country,
+              }))
+            );
           })
           .catch((error) => console.error("Error:", error));
       })
@@ -53,21 +88,82 @@ const EmployeeForm = ({ data }) => {
   }, []);
 
   useEffect(() => {
-    console.log("data", data);
-    if (data) {
+    if (data && countries.length > 0) {
       const { guest_profile } = data;
       delete data.guest_profile;
-      data = { ...data, ...guest_profile };
+      data = {
+        ...data,
+        ...guest_profile,
+        gender: genders.find(
+          (g) => g.name.toLowerCase() === guest_profile.gender
+        )
+          ? genders.find((g) => g.name.toLowerCase() === guest_profile.gender)
+              .id
+          : null,
+        country: countries.find((c) => c.name === guest_profile.country)
+          ? countries.find((c) => c.name === guest_profile.country).id
+          : null,
+      };
       setEmployeeData(data);
     }
-  }, [data]);
+  }, [data, countries]);
 
   useEffect(() => {
     console.log("employeeData", employeeData);
   }, [employeeData]);
 
+  const saveChanges = async () => {
+    try {
+      await schema.validate(employeeData, {
+        abortEarly: false,
+      });
+
+      const requestData = {
+        full_name: employeeData.full_name,
+        phone_number: employeeData.phone_number,
+        gender: genders
+          .find((g) => g.id === employeeData.gender)
+          .name.toLowerCase(),
+        document: employeeData.document,
+        country: countries.find((c) => {
+          return c.id === Number(employeeData.country);
+        }).name,
+        birth: employeeData.birth,
+        address: employeeData.address,
+      };
+
+      const token = Cookies.get("token");
+      if (!token) {
+        console.error("No se encontró el token en las cookies");
+        return;
+      }
+
+      const response = await dispatch(
+        updateEmployee(employeeData.user_id, requestData)
+      ).then(() => console.log("Se ejecuta"));
+      await Swal.fire(
+        data ? `Profile updated` : "Profile Created",
+        "",
+        "success"
+      );
+      navigate(-1);
+    } catch (error) {
+      const errors = error.inner?.reduce((acc, err) => {
+        acc[err.path] = err.message;
+        return acc;
+      }, {});
+      console.log(error);
+      setErrors(errors);
+    }
+  };
+
+  useEffect(() => {
+    console.log("errors", errors);
+  }, [errors]);
+
   return (
     <div>
+      {!data && <NewUserForm />}
       <form className="p-4 grid grid-cols-1 md:grid-cols-2 gap-5">
         <InputField
           label="Full Name"
@@ -80,23 +176,26 @@ const EmployeeForm = ({ data }) => {
           name={"phone_number"}
           value={employeeData.phone_number}
           handler={handleChange}
+          error={errors?.phone_number}
         />{" "}
         <InputField
           label="Email"
           name={"email"}
           value={employeeData.email}
           handler={handleChange}
+          error={errors?.email}
         />{" "}
         <InputField
           label="Address"
           name={"address"}
+          type={"textarea"}
           value={employeeData.address}
           handler={handleChange}
         />{" "}
         <InputField
           label="DNI"
           name={"document"}
-          value={employeeData.address}
+          value={employeeData.document}
           handler={handleChange}
         />{" "}
         <DateField
@@ -110,25 +209,22 @@ const EmployeeForm = ({ data }) => {
           name={"country"}
           value={employeeData.country}
           handler={handleChange}
-          options={countries.map((country, index) => ({
-            id: index,
-            name: country,
-          }))}
+          options={countries}
+          error={errors?.country}
         />{" "}
         <SelectField
           label="Gender"
           name={"gender"}
           value={employeeData.gender}
           handler={handleChange}
-          options={[
-            { id: 1, name: "Male" },
-            { id: 2, name: "Female" },
-            { id: 1, name: "Helicopter" },
-          ]}
+          options={genders}
+          error={errors?.gender}
         />{" "}
       </form>
       <div className="flex gap-5 justify-center my-5">
-        <Button className={"bg-green-700 text-white"}>Save Changes</Button>
+        <Button className={"bg-green-700 text-white"} action={saveChanges}>
+          Save Changes
+        </Button>
         <Button className={"bg-red-700 text-white"} action={() => navigate(-1)}>
           Cancel
         </Button>
@@ -136,5 +232,4 @@ const EmployeeForm = ({ data }) => {
     </div>
   );
 };
-
 export default EmployeeForm;

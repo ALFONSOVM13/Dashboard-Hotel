@@ -138,7 +138,7 @@ function ReservationForm({ data }) {
               <div className="flex flex-col w-full">
                 <DateField
                   name="check_in_date"
-                  value={reservation.check_in_date.substring(0, 10)}
+                  value={reservation.check_in_date?.substring(0, 10)}
                   handler={handleChange}
                   label="Check-in Date"
                   error={errors.check_in_date}
@@ -159,7 +159,7 @@ function ReservationForm({ data }) {
               <div className="flex flex-col w-full">
                 <DateField
                   name="check_out_date"
-                  value={reservation.check_out_date.substring(0, 10)}
+                  value={reservation.check_out_date?.substring(0, 10)}
                   handler={handleChange}
                   label="Check-Out Date"
                   error={errors.check_out_date}

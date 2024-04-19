@@ -66,7 +66,7 @@ function Table({
                     className="justify-between p-5 items-center font-normal dark:text-[rgba(240,240,240,0.9)]  text-black max-md:flex-wrap max-md:max-w-full"
                   >
                     {typeof cell === "object" ? (
-                      cell.hasOwnProperty("email") ? (
+                      cell?.hasOwnProperty("email") ? (
                         <div className="flex flex-col gap-3">
                           <div>{cell.email}</div>
                           <div
@@ -79,14 +79,15 @@ function Table({
                         </div>
                       ) : (
                         <div className="grid gap-3 grid-cols-3">
-                          {Object.keys(cell).map((item, i) => (
-                            <HotelImages
-                              key={"HI" + j + i}
-                              image={item}
-                              size={"sm"}
-                              value={cell[item]}
-                            />
-                          ))}
+                          {cell &&
+                            Object.keys(cell).map((item, i) => (
+                              <HotelImages
+                                key={"HI" + j + i}
+                                image={item}
+                                size={"sm"}
+                                value={cell[item]}
+                              />
+                            ))}
                         </div>
                       )
                     ) : typeof cell === "string" ? (

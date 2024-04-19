@@ -78,7 +78,7 @@ function Employees() {
   return (
     <div className="flex flex-col px-5 pt-10 w-full max-md:max-w-full">
       <TabTitle title="Employees" />
-      <NewButton text={"New Employee"} onClick={() => navigate("create")} />
+      {/* <NewButton text={"New Employee"} onClick={() => navigate("create")} /> */}
       <SearchBar
         text="User name, Full name, Email"
         value={inputValue}
