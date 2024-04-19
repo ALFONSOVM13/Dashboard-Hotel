@@ -4,8 +4,7 @@ import {
   DELETE_EMPLOYEE,
   CHANGE_EMPLOYEE_STATE,
   CREATE_EMPLOYEE,
-  CHANGE_EMPLOYEE_STATUS,
-  PUT_EMPLOYEE,
+  PATCH_EMPLOYEE,
 } from "./actionsTypes";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -76,6 +75,26 @@ export const changeEmployeeStatus = (id, state) => {
       );
       return dispatch({
         type: CHANGE_EMPLOYEE_STATE,
+        payload: response.data.user,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+};
+
+export const updateEmployee = (id, data) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(
+        `${VITE_BACKEND_URL}/auth/profile/${id}?role=employee`,
+        data,
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
+      );
+      return dispatch({
+        type: PATCH_EMPLOYEE,
         payload: response.data.user,
       });
     } catch (error) {
