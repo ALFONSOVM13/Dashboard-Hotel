@@ -54,13 +54,13 @@ function Sidebar({ controlador, darkMode, toogleDarkMode }) {
         <ListCategory text="Analitycs" />
         <ListOption text="Dash Board" link={"/dashboard/home"} active={false} />
         <ListCategory text="Messaging" />
-        <ListOption
+        {/* <ListOption
           text={"Offers Notifications"}
           link={"/dashboard/offerNotifications"}
           active={false}
-        />
+        /> */}
         <ListOption
-          text={"Notifications"}
+          text={"Chats"}
           link={"/dashboard/notifications"}
           active={false}
         />
