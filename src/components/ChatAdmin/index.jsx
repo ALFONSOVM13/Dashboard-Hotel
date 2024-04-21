@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { FaBell } from "react-icons/fa";
 
-const ChatAdmin = ({ socket }) => {
+const AdministradorChat = ({ socket }) => {
   const [mensaje, setMensaje] = useState("");
   const [mensajes, setMensajes] = useState({});
   const [salasClientes, setSalasClientes] = useState({});
@@ -45,10 +44,12 @@ const ChatAdmin = ({ socket }) => {
         console.log(
           `Mensaje del administrador para el cliente ${data.clienteId}: ${data.mensaje}`
         );
-        socket.to(data.clienteId).emit("mensaje_cliente", {
-          clienteId: data.clienteId,
-          mensaje: data.mensaje,
-        });
+        socket
+          .to(data.clienteId)
+          .emit("mensaje_cliente", {
+            clienteId: data.clienteId,
+            mensaje: data.mensaje,
+          });
       });
 
       socket.emit("joinAdminToClientRooms");
@@ -156,14 +157,12 @@ const ChatAdmin = ({ socket }) => {
   };
 
   return (
-    <div className="w-full mx-auto p-4  h-full bg-gray-100 dark:bg-gray-700/20 dark:text-stone-200 rounded shadow">
+    <div className="max-w-md mx-auto p-4 bg-gray-100 rounded shadow">
       <h1 className="text-2xl font-bold mb-4 text-center">
         Administrator Chat Rooms
       </h1>
-      <div className="w-full">
-        <h2 className="text-lg font-bold mb-2 w-full text-center">
-          Client Chat Rooms
-        </h2>
+      <div>
+        <h2 className="text-lg font-bold mb-2">Client Chat Rooms</h2>
         <ul>
           {Object.keys(salasClientes).map((sala, index) => (
             <li key={index} className="flex items-center justify-between">
@@ -200,7 +199,7 @@ const ChatAdmin = ({ socket }) => {
           ))}
         </ul>
       </div>
-      <div className="chat-container max-w-md">
+      <div className="chat-container">
         {selectedRoom &&
           mensajes[selectedRoom] &&
           mensajes[selectedRoom].map((mensaje, index) => (
@@ -219,40 +218,35 @@ const ChatAdmin = ({ socket }) => {
             </div>
           ))}
       </div>
-      <form
-        onSubmit={enviarMensaje}
-        className="flex flex-col items-center absolute bottom-3 left-[20px] md:left-[320px] right-[20px] transition-all duration-300"
-      >
-        <div className="flex gap-3 py-5 w-full md:flex-col ">
-          <input
-            type="text"
-            value={mensaje}
-            onChange={(e) => setMensaje(e.target.value)}
-            placeholder="Escribe tu mensaje aquí..."
-            className="flex-1 mr-2 p-2 rounded border text-black border-gray-300 focus:outline-none focus:border-green-500 w-full"
-          />
+      <form onSubmit={enviarMensaje} className="flex items-center">
+        <input
+          type="text"
+          value={mensaje}
+          onChange={(e) => setMensaje(e.target.value)}
+          placeholder="Escribe tu mensaje aquí..."
+          className="flex-1 mr-2 p-2 rounded border border-gray-300 focus:outline-none focus:border-green-500"
+        />
 
-          <button
-            type="submit"
-            className="bg-amber-300 text-black hover:bg-amber-400 transition-colors px-4 py-2 rounded focus:outline-none"
-          >
-            Send
-          </button>
-        </div>
-        <div className="flex justify-center">
-          <button
-            onClick={refrescarChat}
-            className="w-40 bg-amber-300 text-black hover:bg-amber-400 transition-colors  font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline"
-          >
-            REFRESH CHAT
-          </button>
-        </div>
+        <button
+          type="submit"
+          className="bg-amber-300 hover:bg-amber-400 transition-colors px-4 py-2 rounded focus:outline-none"
+        >
+          Send
+        </button>
       </form>
+      <div className="flex justify-center">
+        <button
+          onClick={refrescarChat}
+          className="w-40 bg-amber-300 hover:bg-amber-400 transition-colors text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline"
+        >
+          REFRESH CHAT
+        </button>
+      </div>
     </div>
   );
 };
 
-export default ChatAdmin;
+export default AdministradorChat;
 
 // import React, { useState, useEffect } from 'react';
 
