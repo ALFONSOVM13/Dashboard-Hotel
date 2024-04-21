@@ -2,7 +2,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-function ProfileDock({ image = "/img/noImage.png" }) {
+function ProfileDock({
+  image = "https://cdn.builder.io/api/v1/image/assets/TEMP/663eae8fd7be6df68f6e25af7f35976248e4a857012e381fb6faa82ea9ca17d3?apiKey=9fe8dc76776646f4a6bc648caa0a3bac&",
+}) {
   const { loggedUser } = useSelector((state) => state.sessionReducer);
   return (
     <div className="flex gap-4 self-stretch my-5 font-medium w-[200px] mx-auto">
