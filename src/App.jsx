@@ -27,8 +27,20 @@ import CarCreate from "./pages/ServiceManage/ServiceCreate/CarCreate";
 import CreateEmployee from "./pages/Employees/CreateEmployee";
 import EditEmployee from "./pages/Employees/EditEmployee";
 import SpaCreate from "./pages/ServiceManage/ServiceCreate/SpaCreate";
+import { io } from "socket.io-client";
+import ChatAdmin from "./components/ChatAdmin";
+import BookNotify from "./components/BookNotify";
 
 function App() {
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const { VITE_SOCKET_URL } = import.meta.env;
+    const newSocket = io(VITE_SOCKET_URL);
+    setSocket(newSocket);
+
+    return () => newSocket.close();
+  }, []);
+
   const [logged, setLogged] = useState(true);
   const location = useLocation();
   const sideBar = useRef();
@@ -79,7 +91,7 @@ function App() {
     let sidebar = sideBar.current;
     let tabContent = tabcontent.current;
 
-    if (screenWidth < 700) {
+    if (screenWidth < 768) {
       sidebar?.classList?.remove("left-0");
       sidebar?.classList?.add("left-[-300px]");
       tabContent.classList?.remove("pl-[300px]");
@@ -232,19 +244,19 @@ function App() {
               <Route path="newCar" element={<CarCreate />} />
               <Route path="newSpa" element={<SpaCreate />} />
             </Route>
-            <Route
+            {/* <Route
               path="offerNotifications"
               element={
                 <ProtectedRoute>
-                  <OfferNotifications />
+                  <BookNotify socket={socket} />
                 </ProtectedRoute>
               }
-            />
+            /> */}
             <Route
               path="notifications"
               element={
                 <ProtectedRoute>
-                  <Notifications />
+                  <ChatAdmin socket={socket} />
                 </ProtectedRoute>
               }
             />
