@@ -222,7 +222,7 @@ const AdministradorChat = ({ socket }) => {
 
             <button
               type="submit"
-              className="bg-amber-300 hover:bg-amber-400 transition-colors px-4 py-2 rounded focus:outline-none"
+              className="bg-amber-300 hover:bg-amber-400 text-black/70 transition-colors px-4 py-2 rounded focus:outline-none"
             >
               Send
             </button>
@@ -237,7 +237,7 @@ const AdministradorChat = ({ socket }) => {
                 refrescarChat();
               }
             }}
-            className="w-40 bg-amber-300 hover:bg-amber-400 transition-colors text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline"
+            className="w-40 bg-amber-300 hover:bg-amber-400 transition-colors text-black/70 font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline"
           >
             CLEAR CHAT
           </button>
