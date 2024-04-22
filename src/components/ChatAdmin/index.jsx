@@ -173,11 +173,17 @@ const AdministradorChat = ({ socket }) => {
       </h1>
       <div>
         <h2 className="text-lg font-bold mb-2">Client Chat Rooms</h2>
-        <ul className="grid gap-2 grid-cols-3 h-[17rem] overflow-y-scroll mb-5 border border-slate-400 p-3 rounded-md shadow-md shadow-slate-400">
+        <ul
+          className={`grid grid-rows-${
+            Object.keys(salasClientes).length < 16
+              ? "4"
+              : Math.ceil(salasClientes.length / 4).toString()
+          } gap-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  h-[17rem] overflow-y-scroll mb-5 border border-slate-400 p-3 rounded-md shadow-md shadow-slate-400`}
+        >
           {Object.keys(salasClientes).map((sala, index) => (
             <li
               key={index}
-              className="flex self-start justify-between text-left"
+              className="flex self-center justify-center text-left"
             >
               <ChatButton
                 onClick={() => handleClickRoom(salasClientes[sala])}
