@@ -217,7 +217,7 @@ const AdministradorChat = ({ socket }) => {
               value={mensaje}
               onChange={(e) => setMensaje(e.target.value)}
               placeholder="Escribe tu mensaje aquí..."
-              className="flex-1 mr-2 p-2 rounded border border-gray-300 focus:outline-none focus:border-green-500"
+              className="flex-1 mr-2 p-2 rounded border text-black border-gray-300 focus:outline-none focus:border-green-500"
             />
 
             <button
