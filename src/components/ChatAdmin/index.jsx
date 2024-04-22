@@ -167,7 +167,7 @@ const AdministradorChat = ({ socket }) => {
   };
 
   return (
-    <div className="mx-auto p-4 bg-gray-100 rounded shadow w-[95%] h-screen overflow-y-scroll">
+    <div className="mx-auto p-4 dark:bg-black/90 dark:text-white bg-gray-100 rounded shadow w-[95%] h-screen overflow-y-scroll">
       <h1 className="text-2xl font-bold mb-4 text-center">
         Administrator Chat Rooms
       </h1>
@@ -190,21 +190,21 @@ const AdministradorChat = ({ socket }) => {
           ))}
         </ul>
       </div>
-      <div className="chat-container h-[30%] overflow-y-scroll bg-gray-200">
+      <div className="chat-container flex flex-col h-[30%] overflow-y-scroll dark:bg-zinc-800 bg-gray-200 p-3">
         {selectedRoom &&
           mensajes[selectedRoom] &&
           mensajes[selectedRoom].map((mensaje, index) => (
             <div
               key={index}
-              className={`mensaje ${
+              className={`mensaje w-fit ${
                 mensaje.tipo === "cliente"
-                  ? "bg-d text-black"
-                  : "bg-gray-300 text-gray-800"
-              } p-2 rounded mb-2`}
+                  ? "bg-gray-200 self-start text-black shadow-gray-700"
+                  : "bg-green-300 self-end text-gray-800 shadow-emerald-700"
+              } py-2 px-5 rounded-full mb-2 shadow-sm`}
             >
-              <span className="font-bold">
+              {/* <span className="font-bold">
                 {mensaje.tipo === "cliente" ? "Client" : "admin"}:
-              </span>{" "}
+              </span>{" "} */}
               {mensaje.mensaje}
             </div>
           ))}
@@ -228,10 +228,18 @@ const AdministradorChat = ({ socket }) => {
             </button>
           </form>
           <button
-            onClick={refrescarChat}
+            onClick={() => {
+              if (
+                window.confirm(
+                  "Are you sure of delete Chat?! This action can't be undone."
+                )
+              ) {
+                refrescarChat();
+              }
+            }}
             className="w-40 bg-amber-300 hover:bg-amber-400 transition-colors text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline"
           >
-            REFRESH CHAT
+            CLEAR CHAT
           </button>
         </div>
       )}
