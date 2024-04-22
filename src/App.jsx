@@ -34,8 +34,8 @@ import BookNotify from "./components/BookNotify";
 function App() {
   const [socket, setSocket] = useState(null);
   useEffect(() => {
-    const { VITE_SOCKET_URL } = import.meta.env;
-    const newSocket = io(VITE_SOCKET_URL);
+    const { VITE_BACKEND_URL } = import.meta.env;
+    const newSocket = io(VITE_BACKEND_URL);
     setSocket(newSocket);
 
     return () => newSocket.close();
