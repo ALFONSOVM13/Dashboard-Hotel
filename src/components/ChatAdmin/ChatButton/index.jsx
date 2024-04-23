@@ -13,7 +13,7 @@ const ChatButton = ({
   return (
     <div
       id="btn-message"
-      className="button-message"
+      className="button-message w-full  flex justify-between"
       //   className={`button-message transition-all duration-300 text-black w-full h-[3rem] rounded-xl border-slate-400 p-3 rounded-md shadow-md shadow-slate-400 cursor-pointer text-xl ${
       //     selectedRoom === name ? "bg-green-400" : "bg-green-300"
       //   } hover:bg-green-400/70 justify-between`}
@@ -48,7 +48,7 @@ const ChatButton = ({
             </>
           )}
         </div>
-        <div className="lable-message">
+        <div className="lable-message flex justify-between">
           {name}
           <span className="number-message">
             {unreadMessagesCount > 0 && (
