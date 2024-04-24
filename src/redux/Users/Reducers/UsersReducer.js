@@ -3,6 +3,7 @@ import {
   DELETE_USER,
   CREATE_USER,
   PUT_USER,
+  EDIT_GUEST_STATE,
 } from "../Actions/actionsTypes";
 
 const initialState = {
@@ -27,6 +28,14 @@ const usersReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         allUsers: payload,
+      };
+
+    case EDIT_GUEST_STATE:
+      return {
+        ...state,
+        allUsers: state.allUsers.map((user) =>
+          user.id === payload.id ? payload : user
+        ),
       };
 
     default:

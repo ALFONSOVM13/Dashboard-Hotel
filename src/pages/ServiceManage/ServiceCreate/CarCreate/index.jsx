@@ -89,7 +89,7 @@ function CarCreate() {
         onSubmit={(values, { setSubmitting }) => {
           Swal.fire({
             title: "Warning",
-            text: "Are you sure you want to edit this car?",
+            text: "Are you sure you want to create this car?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -98,7 +98,7 @@ function CarCreate() {
           }).then((response) => {
             if (response.isConfirmed) {
               dispatch(postCar(values));
-              Swal.fire(`Car edited successfully`, "", "success");
+              Swal.fire(`Car created successfully`, "", "success");
               navigate(-1);
             } else if (response.isDismissed) {
               return;

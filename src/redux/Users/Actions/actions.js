@@ -3,6 +3,7 @@ import {
   DELETE_USER,
   CREATE_USER,
   PUT_USER,
+  EDIT_GUEST_STATE,
 } from "./actionsTypes";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -47,4 +48,22 @@ export const postUser = async (token, id, user) => {
   } catch (error) {
     throw new Error(error);
   }
+};
+
+export const editGuestState = (id, state) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.patch(
+        `${VITE_BACKEND_URL}/auth/set-state/${id}`,
+        { state: state },
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
+      );
+      return dispatch({
+        type: EDIT_GUEST_STATE,
+        payload: response.data.user,
+      });
+    } catch (error) {}
+  };
 };

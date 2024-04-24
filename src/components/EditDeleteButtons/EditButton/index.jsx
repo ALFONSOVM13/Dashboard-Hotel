@@ -5,7 +5,7 @@ function EditUserButton({ id, handleEdit }) {
   return (
     <button
       onClick={() => handleEdit(id)}
-      className="flex gap-3 font-semibold text-white justify-center px-4 bg-green-600 rounded-md shadow-sm"
+      className="flex gap-3 font-semibold text-white justify-center p-3 bg-green-600 rounded-md shadow-sm"
     >
       Edit
     </button>
