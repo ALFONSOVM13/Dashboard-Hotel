@@ -48,9 +48,13 @@ function Reservations() {
 
   useEffect(() => {
     if (allReservations !== undefined && allReservations.length > 0) {
-      console.log(allReservations);
+      const orderReservations = allReservations.sort((a, b) => {
+        const dateA = new Date(a.check_in_date);
+        const dateB = new Date(b.check_in_date);
+        return dateB - dateA;
+      });
       setData(
-        allReservations.map((reservation) => ({
+        orderReservations.map((reservation) => ({
           id: reservation.id,
           reservation_number: reservation.reservation_number,
           full_name:
@@ -62,7 +66,7 @@ function Reservations() {
           total_price: "$ " + reservation.total_price,
         }))
       );
-      setPagination({ ...pagination, items: data.length });
+      setPagination({ ...pagination, items: allReservations.length });
       setLoading(false);
       console.log(allReservations);
     }

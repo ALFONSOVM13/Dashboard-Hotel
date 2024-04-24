@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 function ReservationForm({ data }) {
+  console.log(data);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
