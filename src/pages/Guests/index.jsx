@@ -104,7 +104,7 @@ function Guests() {
           <PaginationControl pagination={pagination} control={setPagination} />
         </div>
         {inputValue !== "" && searchResults.length === 0 ? (
-          <h3>{`No results for "${inputValue}" search...`}</h3>
+          <h3 className="dark:text-white">{`No results for "${inputValue}" search...`}</h3>
         ) : (
           <Table
             headers={["Username", "Fullname", "Email", "Status", "Edit"]}

@@ -107,7 +107,7 @@ function RestaurantMenu() {
         <div className="flex flex-col px-5 mt-8 w-full font-semibold max-md:px-5 max-md:max-w-full">
           <PaginationControl pagination={pagination} control={setPagination} />
           {inputValue !== "" && searchResults.length === 0 ? (
-            <h3>{`No results for "${inputValue}" search...`}</h3>
+            <h3 className="dark:text-white">{`No results for "${inputValue}" search...`}</h3>
           ) : (
             <Table
               headers={[
