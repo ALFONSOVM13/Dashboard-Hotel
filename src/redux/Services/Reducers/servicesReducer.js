@@ -51,7 +51,7 @@ const servicesReducer = (state = initialState, { type, payload }) => {
     case POST_SPA:
       return {
         ...state,
-        allServices: [...payload],
+        spaServices: [...payload],
       };
 
     default:

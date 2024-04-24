@@ -26,9 +26,9 @@ function Services() {
   const { carServices } = useSelector((state) => state.servicesReducer);
   const { spaServices } = useSelector((state) => state.servicesReducer);
   const [loading, setLoading] = useState(true);
-  const [carsState, setCarsState] = useState(false);
+  const [carsState, setCarsState] = useState(true);
   const [spaState, setSpaState] = useState(false);
-  const [selectedButton, setSelectedButton] = useState("");
+  const [selectedButton, setSelectedButton] = useState("cars");
 
   const {
     pagination,
@@ -142,7 +142,7 @@ function Services() {
   const handleDelete = (id) => {
     Swal.fire({
       title: "Warning",
-      text: "Are you sure you want to delete this spa serice?",
+      text: "Are you sure you want to delete this service?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -151,7 +151,7 @@ function Services() {
     }).then((response) => {
       if (response.isConfirmed) {
         dispatch(deleteCar(id));
-        Swal.fire(`Spa service deleted successfully`, "", "success");
+        Swal.fire(`Service deleted successfully`, "", "success");
       } else if (response.isDismissed) {
         return;
       }

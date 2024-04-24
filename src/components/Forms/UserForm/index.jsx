@@ -135,11 +135,17 @@ function UserForm({ id, userToEdit }) {
             )
             .max(50, "The name cannot have more than 50 characters."),
 
-          document: Yup.string().required("The ID is required."),
+          document: Yup.string()
+            .required("The ID is required.")
+            .matches(/^[0-9]+$/, "The ID must contain only numbers."),
           country: Yup.string().required("The country is required."),
           phone_number: Yup.string()
             .required("The phone number is required.")
-            .max(20, "The phone number cannot have more than 20 characters."),
+            .max(20, "The phone number cannot have more than 20 characters.")
+            .matches(
+              /^\+?[0-9]+$/,
+              "The phone number must contain only numbers and an optional leading '+'."
+            ),
           address: Yup.string()
             .required("The address is required.")
             .max(100, "The address cannot have more than 100 characters."),

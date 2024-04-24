@@ -93,14 +93,15 @@ function Table({
                     ) : typeof cell === "string" ? (
                       cell === "available" ||
                       cell === "maintenance" ||
-                      cell === "busy" ? (
+                      cell === "busy" ||
+                      cell === "unavailable" ? (
                         <span
                           className={`p-2 ${
                             cell === "available"
                               ? "bg-green-200"
                               : cell === "maintenance"
                               ? "bg-yellow-200"
-                              : cell === "busy"
+                              : cell === "busy" || cell === "unavailable"
                               ? "bg-red-200"
                               : ""
                           } rounded-xl font-bold text-black w-[120px] block mx-auto`}

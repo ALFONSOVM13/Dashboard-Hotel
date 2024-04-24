@@ -120,6 +120,7 @@ function SpaEdit() {
             if (response.isConfirmed) {
               const spaForm = agregarId(values);
               dispatch(postSpa(spaForm));
+
               Swal.fire(`Spa service edited successfully`, "", "success");
               navigate(-1);
             } else if (response.isDismissed) {

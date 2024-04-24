@@ -84,6 +84,7 @@ function CarEdit() {
             .notOneOf(["---"], "Please select a status."),
         })}
         onSubmit={(values, { setSubmitting }) => {
+          console.log(values);
           Swal.fire({
             title: "Warning",
             text: "Are you sure you want to edit this car?",
@@ -159,7 +160,7 @@ function CarEdit() {
                   labelAlign="left"
                 />
                 <TextInput label="PRICE PER DAY" name="price_per_day" />
-                <TextInput label="DESCRIPTION" name="description" />
+                <TextInput label="DESCRIPTION" name="description" rows="4" />
                 <SelectInput
                   label="STATUS"
                   name="status"

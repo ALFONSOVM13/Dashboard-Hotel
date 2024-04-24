@@ -21,7 +21,7 @@ function UserFormButtons({ isSubmitting, id }) {
     });
   };
 
-  const handleDelete = () => {
+  /*const handleDelete = () => {
     Swal.fire({
       title: "Are you sure you want to delete this user?",
       text: "",
@@ -34,7 +34,7 @@ function UserFormButtons({ isSubmitting, id }) {
         navigate(-1);
       }
     });
-  };
+  };*/
 
   return (
     <div className="flex gap-5 justify-around items-center mb-9 self-start mt-11 text-base font-semibold tracking-normal text-center text-white whitespace-nowrap max-md:mt-10">
@@ -54,7 +54,7 @@ function UserFormButtons({ isSubmitting, id }) {
           Cancel
         </button>
       </div>
-
+      {/*
       {id ? (
         <button
           type="button"
@@ -69,6 +69,7 @@ function UserFormButtons({ isSubmitting, id }) {
           <div className="flex justify-center items-center">DELETE GUEST</div>
         </button>
       ) : null}
+       */}
     </div>
   );
 }

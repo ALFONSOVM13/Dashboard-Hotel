@@ -69,12 +69,13 @@ function Guests() {
 
   const mapData = (dataArray) => {
     return dataArray.map((item) => {
-      const { id, username, guest_profile, email } = item;
+      const { id, username, guest_profile, email, is_active } = item;
       return {
         id,
         username,
         full_name: guest_profile ? guest_profile.full_name : "Not specified",
         email,
+        is_active,
       };
     });
   };
@@ -106,10 +107,10 @@ function Guests() {
           <h3>{`No results for "${inputValue}" search...`}</h3>
         ) : (
           <Table
-            headers={["Username", "Fullname", "Email", "Edit"]}
-            data={mapData(searchResults.length > 0 ? searchResults : allUsers)}
+            headers={["Username", "Fullname", "Email", "Status", "Edit"]}
+            data={mapData(searchResults.length > 0 ? searchResults : data)}
             Components={(props) => (
-              <UserEditButton {...props} onClick={handleEdit} />
+              <UserEditButton {...props} onClick={handleEdit} data={data} />
             )}
             idName="id"
             size={pagination.size}
