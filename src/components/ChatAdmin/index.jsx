@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaBell } from "react-icons/fa";
+import ChatButton from "./ChatButton";
 
 const AdministradorChat = ({ socket }) => {
   const [mensaje, setMensaje] = useState("");
@@ -17,6 +17,7 @@ const AdministradorChat = ({ socket }) => {
       setSelectedRoom(storedMessages.lastSelectedRoom || null);
       setNewMessagesCount(storedMessages.newMessagesCount || {});
     }
+    console.log("Se ejecuta lectura de local storage: ", storedMessages);
   }, []);
 
   useEffect(() => {
@@ -44,12 +45,10 @@ const AdministradorChat = ({ socket }) => {
         console.log(
           `Mensaje del administrador para el cliente ${data.clienteId}: ${data.mensaje}`
         );
-        socket
-          .to(data.clienteId)
-          .emit("mensaje_cliente", {
-            clienteId: data.clienteId,
-            mensaje: data.mensaje,
-          });
+        socket.to(data.clienteId).emit("mensaje_cliente", {
+          clienteId: data.clienteId,
+          mensaje: data.mensaje,
+        });
       });
 
       socket.emit("joinAdminToClientRooms");
@@ -65,6 +64,16 @@ const AdministradorChat = ({ socket }) => {
     if (socket) {
       socket.on("admin_mensaje", (data) => {
         console.log(`Mensaje del cliente ${data.clienteId}: ${data.mensaje}`);
+        console.log(
+          data.clienteId,
+          salasClientes,
+          data.clienteId in salasClientes
+        );
+        if (!salasClientes.hasOwnProperty(data.clienteId))
+          setSalasClientes((prev) => ({
+            ...prev,
+            [data.clienteId]: data.clienteId,
+          }));
         setMensajes((prevMensajes) => ({
           ...prevMensajes,
           [data.clienteId]: [
@@ -93,6 +102,7 @@ const AdministradorChat = ({ socket }) => {
           "Mensaje del cliente recibido en el AdministradorChat:",
           data.mensaje
         );
+        console.log("Se esta registrando el msg de admin el localstorage");
         const mensajeConEtiqueta = ` ${data.clienteId}: ${data.mensaje}`;
         setMensajes((prevMensajes) => ({
           ...prevMensajes,
@@ -157,91 +167,88 @@ const AdministradorChat = ({ socket }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-gray-100 rounded shadow">
+    <div className="mx-auto p-4 dark:bg-black/90 dark:text-white bg-gray-100 rounded shadow w-[95%] h-screen overflow-y-scroll">
       <h1 className="text-2xl font-bold mb-4 text-center">
         Administrator Chat Rooms
       </h1>
       <div>
         <h2 className="text-lg font-bold mb-2">Client Chat Rooms</h2>
-        <ul>
+        <ul
+          className={`grid grid-rows-${
+            Object.keys(salasClientes).length < 16
+              ? "4"
+              : Math.ceil(salasClientes.length / 4).toString()
+          } gap-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  h-[17rem] overflow-y-scroll mb-5 border border-slate-400 p-3 rounded-md shadow-md shadow-slate-400 content-start`}
+        >
           {Object.keys(salasClientes).map((sala, index) => (
-            <li key={index} className="flex items-center justify-between">
-              <span
+            <li
+              key={index}
+              className="flex self-center justify-center text-left"
+            >
+              <ChatButton
                 onClick={() => handleClickRoom(salasClientes[sala])}
-                className={`cursor-pointer text-xl ${
-                  selectedRoom === salasClientes[sala] ? "bg-d" : ""
-                } hover:bg-gray-100`}
-              >
-                Room: {salasClientes[sala]}
-                {newMessagesCount[salasClientes[sala]] > 0 && (
-                  <span className="relative inline-block">
-                    <FaBell />
-                    <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 text-xs transform translate-x-1/2 -translate-y-1/2">
-                      {newMessagesCount[salasClientes[sala]]}
-                    </span>
-                  </span>
-                )}
-              </span>
-              {selectedRoom === salasClientes[sala] && (
-                <>
-                  <button
-                    className="text-black  font-bold mr-1"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      cerrarSala(salasClientes[sala]);
-                    }}
-                  >
-                    X
-                  </button>
-                </>
-              )}
+                name={salasClientes[sala]}
+                selectedRoom={selectedRoom}
+                unreadMessagesCount={newMessagesCount[salasClientes[sala]]}
+                cerrarSala={cerrarSala}
+              />
             </li>
           ))}
         </ul>
       </div>
-      <div className="chat-container">
+      <div className="chat-container flex flex-col h-[30%] overflow-y-scroll dark:bg-zinc-800 bg-gray-200 p-3">
         {selectedRoom &&
           mensajes[selectedRoom] &&
           mensajes[selectedRoom].map((mensaje, index) => (
             <div
               key={index}
-              className={`mensaje ${
+              className={`mensaje w-fit ${
                 mensaje.tipo === "cliente"
-                  ? "bg-d text-black"
-                  : "bg-gray-300 text-gray-800"
-              } p-2 rounded mb-2`}
+                  ? "bg-gray-200 self-start text-black shadow-gray-700"
+                  : "bg-green-300 self-end text-gray-800 shadow-emerald-700"
+              } py-2 px-5 rounded-full mb-2 shadow-sm`}
             >
-              <span className="font-bold">
+              {/* <span className="font-bold">
                 {mensaje.tipo === "cliente" ? "Client" : "admin"}:
-              </span>{" "}
+              </span>{" "} */}
               {mensaje.mensaje}
             </div>
           ))}
       </div>
-      <form onSubmit={enviarMensaje} className="flex items-center">
-        <input
-          type="text"
-          value={mensaje}
-          onChange={(e) => setMensaje(e.target.value)}
-          placeholder="Escribe tu mensaje aquí..."
-          className="flex-1 mr-2 p-2 rounded border border-gray-300 focus:outline-none focus:border-green-500"
-        />
+      {selectedRoom && (
+        <div className="flex justify-center flex-col gap-5 mt-5">
+          <form onSubmit={enviarMensaje} className="flex items-center">
+            <input
+              type="text"
+              value={mensaje}
+              onChange={(e) => setMensaje(e.target.value)}
+              placeholder="Escribe tu mensaje aquí..."
+              className="flex-1 mr-2 p-2 rounded border text-black border-gray-300 focus:outline-none focus:border-green-500"
+            />
 
-        <button
-          type="submit"
-          className="bg-amber-300 hover:bg-amber-400 transition-colors px-4 py-2 rounded focus:outline-none"
-        >
-          Send
-        </button>
-      </form>
-      <div className="flex justify-center">
-        <button
-          onClick={refrescarChat}
-          className="w-40 bg-amber-300 hover:bg-amber-400 transition-colors text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline"
-        >
-          REFRESH CHAT
-        </button>
-      </div>
+            <button
+              type="submit"
+              className="bg-amber-300 hover:bg-amber-400 text-black/70 transition-colors px-4 py-2 rounded focus:outline-none"
+            >
+              Send
+            </button>
+          </form>
+          <button
+            onClick={() => {
+              if (
+                window.confirm(
+                  "Are you sure of delete Chat?! This action can't be undone."
+                )
+              ) {
+                refrescarChat();
+              }
+            }}
+            className="w-40 bg-amber-300 hover:bg-amber-400 transition-colors text-black/70 font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline"
+          >
+            CLEAR CHAT
+          </button>
+        </div>
+      )}
     </div>
   );
 };
