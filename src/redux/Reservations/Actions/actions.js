@@ -15,7 +15,7 @@ const { VITE_BACKEND_URL } = import.meta.env;
 export const getAllReservations = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${VITE_BACKEND_URL}/api/reservations`, {
+      const response = await axios.get(`${VITE_BACKEND_URL}/api/reservations/AllReservations`, {
         headers: { authorization: `Bearer ${Cookies.get("token")}` },
       });
 
