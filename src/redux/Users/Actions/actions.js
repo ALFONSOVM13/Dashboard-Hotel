@@ -18,6 +18,7 @@ export const getAllUsers = () => {
           headers: { authorization: `Bearer ${Cookies.get("token")}` },
         }
       );
+      console.log(Cookies.get("token"));
       dispatch({
         type: GET_ALL_USERS,
         payload: response.data.users,

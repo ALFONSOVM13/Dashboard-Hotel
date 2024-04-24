@@ -15,10 +15,13 @@ const { VITE_BACKEND_URL } = import.meta.env;
 export const getAllReservations = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${VITE_BACKEND_URL}/api/reservations/AllReservations`, {
-        headers: { authorization: `Bearer ${Cookies.get("token")}` },
-      });
-
+      const response = await axios.get(
+        `${VITE_BACKEND_URL}/api/reservations/AllReservations`,
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
+      );
+      console.log(response.data);
       dispatch({
         type: GET_ALL_RESERVATIONS,
         payload: response.data,
@@ -40,7 +43,7 @@ export const getReservation = (id) => {
           headers: { authorization: `Bearer ${Cookies.get("token")}` },
         }
       );
-
+      console.log(response.data);
       dispatch({
         type: GET_RESERVATION,
         payload: response.data[0],
@@ -103,9 +106,10 @@ export const checkInReservation = (reservation_number) => {
           headers: { authorization: `Bearer ${Cookies.get("token")}` },
         }
       );
+      console.log(response.data);
       return dispatch({
         type: CHECKIN_RESERVATION,
-        payload: response.data,
+        payload: response.data.reservation,
       });
     } catch (error) {
       throw new Error(error);
@@ -125,7 +129,7 @@ export const checkOutReservation = (reservation_number) => {
       );
       return dispatch({
         type: CHECKOUT_RESERVATION,
-        payload: response.data,
+        payload: response.data.reservation,
       });
     } catch (error) {
       throw new Error(error);
@@ -145,6 +149,7 @@ export const createReservation = (product) => {
           headers: { authorization: `Bearer ${Cookies.get("token")}` },
         }
       );
+      console.log(response.data);
       return dispatch({
         type: CREATE_RESERVATION,
         payload: response.data,

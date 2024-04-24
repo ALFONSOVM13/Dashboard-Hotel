@@ -7,7 +7,9 @@ export function convertirFechaAAmPm(fechaISO) {
     hour: "numeric",
     minute: "2-digit",
     hour12: true,
+    timeZone: "UTC",
   });
+
   return formatoAmPm.replace(",", " ");
 }
 
