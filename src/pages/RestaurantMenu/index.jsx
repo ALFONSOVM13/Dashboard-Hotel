@@ -78,6 +78,7 @@ function RestaurantMenu() {
 
   const handleEdit = (id) => {
     const food = allFoods.find((item) => item.id.toString() === id);
+    console.log(food);
     setFoodToEdit(food);
     setShowForm(true);
   };
