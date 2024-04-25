@@ -78,7 +78,7 @@ function RestaurantMenu() {
 
   const handleEdit = (id) => {
     const food = allFoods.find((item) => item.id.toString() === id);
-    console.log(food);
+    console.log("Desde handle edit", food);
     setFoodToEdit(food);
     setShowForm(true);
   };
