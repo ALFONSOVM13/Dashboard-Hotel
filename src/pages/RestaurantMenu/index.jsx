@@ -77,8 +77,9 @@ function RestaurantMenu() {
   };
 
   const handleEdit = (id) => {
-    const foodToEdit = allFoods.find((item) => item.id.toString() === id);
-    setFoodToEdit(foodToEdit);
+    const food = allFoods.find((item) => item.id.toString() === id);
+    console.log(food);
+    setFoodToEdit(food);
     setShowForm(true);
   };
 

@@ -32,6 +32,8 @@ export const getAllFoods = () => {
 export const deleteFood = (id) => {
   return async (dispatch) => {
     try {
+      console.log(id);
+
       const response = await axios.delete(
         `${VITE_BACKEND_URL}/api/dishes/${id}`
       );
