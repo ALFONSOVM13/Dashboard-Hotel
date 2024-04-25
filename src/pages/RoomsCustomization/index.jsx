@@ -82,7 +82,7 @@ function RoomsCustomization() {
   return (
     <>
       <div className="flex flex-col px-5 pr-10 pt-10 w-full max-md:max-w-full">
-        <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="flex flex-col justify-between items-center">
           <TabTitle title="Rooms Customization" />
           <Button
             className="self-center mt-5"

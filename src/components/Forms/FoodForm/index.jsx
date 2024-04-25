@@ -53,7 +53,7 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
             p: 4,
           }}
         >
-          <div className="flex flex-col items-center w-full h-full dark:text-white">
+          <div className="flex flex-col items-center w-full h-full dark:text-black">
             <div className="absolute top-0 right-0">
               <IconButton
                 edge="end"
@@ -129,7 +129,7 @@ function FoodForm({ setShowForm, foodToEdit, setFoodToEdit, setInputValue }) {
               validateOnBlur={true}
             >
               {({ isSubmitting, resetForm }) => (
-                <Form className="w-full">
+                <Form className="w-full dark:text-black">
                   <TextInput label="NAME" name="name" />
                   <TextInput label="PRICE" name="price" />
                   <TextInput label="DESCRIPTION" name="description" rows="3" />

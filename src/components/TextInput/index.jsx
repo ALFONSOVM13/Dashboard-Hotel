@@ -29,7 +29,7 @@ const TextInput = ({
   return (
     <div className={`flex flex-col w-full mt-4`}>
       <label
-        className={`text-bold text-lg dark:text-white ${
+        className={`text-bold text-lg dark:text-black ${
           labelAlign === "center" ? "" : "text-left pl-5"
         }`}
       >
