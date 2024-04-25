@@ -167,7 +167,7 @@ function RoomEdit() {
     <Loading state={loading}>
       <div className=" w-[95%] mx-auto py-5">
         <TabTitle title={`Room #${roomData.room_number} Customization`} />
-        <div className="p-5 grid grid-cols-2 xl:grid-cols-3 gap-10 grid">
+        <div className="p-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 grid">
           <FieldContainer>
             <InputField
               type={"textarea"}
