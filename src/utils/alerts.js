@@ -2,6 +2,8 @@ import Swal from "sweetalert2";
 
 export default {
   seeAlert(dispatch, id, values, action, text, confirm) {
+    console.log("id", id, values);
+
     Swal.fire({
       title: "Warning",
       text: text,
