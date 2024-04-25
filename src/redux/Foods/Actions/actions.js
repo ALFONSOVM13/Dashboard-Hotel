@@ -32,6 +32,8 @@ export const getAllFoods = () => {
 export const deleteFood = (id) => {
   return async (dispatch) => {
     try {
+      console.log(id);
+
       const response = await axios.delete(
         `${VITE_BACKEND_URL}/api/dishes/${id}`
       );
@@ -51,6 +53,8 @@ export const deleteFood = (id) => {
 export const putFood = (id, product) => {
   return async (dispatch) => {
     try {
+      console.log(id, product);
+
       const response = await axios.patch(
         `${VITE_BACKEND_URL}/api/dishes/${id}`,
         product
