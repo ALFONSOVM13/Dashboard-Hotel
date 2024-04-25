@@ -74,8 +74,8 @@ function App() {
     }
 
     let screenWidth = window.innerWidth;
-
-    setShowMenu(screenWidth >= 768);
+    console.log("es menor a 768", screenWidth < 768, screenWidth);
+    setShowMenu(screenWidth >= 768, screenWidth < 768);
     setShowBurguer(screenWidth < 768);
   }, []);
 
@@ -103,8 +103,11 @@ function App() {
   };
 
   useEffect(() => {
-    setShowMenu(false);
-    setShowBurguer(true);
+    let screenWidth = window.innerWidth;
+    if (screenWidth < 768) {
+      setShowMenu(false);
+      setShowBurguer(true);
+    }
   }, [location.pathname]);
 
   window.addEventListener("resize", handleMenu);

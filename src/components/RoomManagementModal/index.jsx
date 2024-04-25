@@ -68,7 +68,7 @@ export default function RoomManagementModal({ isOpen, onClose }) {
     <Dialog
       open={isOpen}
       onClose={onClose}
-      className="relative z-50 h-[95%] overflow-y-auto"
+      className="relative z-[500] h-[95%] overflow-y-auto"
     >
       {" "}
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />{" "}
