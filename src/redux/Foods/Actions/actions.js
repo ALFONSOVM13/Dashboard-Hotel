@@ -51,6 +51,8 @@ export const deleteFood = (id) => {
 export const putFood = (id, product) => {
   return async (dispatch) => {
     try {
+      console.log(id, product);
+
       const response = await axios.patch(
         `${VITE_BACKEND_URL}/api/dishes/${id}`,
         product
