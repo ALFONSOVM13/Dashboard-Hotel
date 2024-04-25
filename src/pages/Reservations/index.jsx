@@ -76,9 +76,13 @@ function Reservations() {
   return (
     <>
       <div className="flex flex-col px-5 pr-10 pt-10 w-full">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center flex-col md:flex-row">
           <TabTitle title="Reserved Rooms" />
-          <Button text="New Reservation" onClick={() => navigate("create")} />
+          <Button
+            text="New Reservation"
+            onClick={() => navigate("create")}
+            className={"self-center mt-5"}
+          />
         </div>
         <SearchBar
           text="Room #, Room Name, Date"

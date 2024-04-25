@@ -91,11 +91,11 @@ function Offers() {
   return (
     <>
       <div className="flex flex-col px-5 pr-10 pt-10 w-full max-md:max-w-full">
-        <div className="flex flex-col justify-between items-center mb-3">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-3">
           <TabTitle title="Offers Management" />
           {!showForm && (
             <Button
-              className="absolute right-10"
+              className="self-center mt-5"
               text="New Offer"
               onClick={handleClick}
             />
