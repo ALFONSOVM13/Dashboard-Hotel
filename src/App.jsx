@@ -30,24 +30,24 @@ import SpaCreate from "./pages/ServiceManage/ServiceCreate/SpaCreate";
 import { io } from "socket.io-client";
 import ChatAdmin from "./components/ChatAdmin";
 import BookNotify from "./components/BookNotify";
+import BurguerButton from "./components/BurguerButton";
 
 function App() {
   const [socket, setSocket] = useState(null);
+  const [showMenu, setShowMenu] = useState(false);
+  const [showBurguer, setShowBurguer] = useState(false);
   useEffect(() => {
     const { VITE_BACKEND_URL } = import.meta.env;
     const newSocket = io(VITE_BACKEND_URL);
     setSocket(newSocket);
-
+    if (window.innerWidth >= 768) {
+      setShowMenu(true);
+    }
     return () => newSocket.close();
   }, []);
 
-  const [logged, setLogged] = useState(true);
   const location = useLocation();
-  const sideBar = useRef();
-  const tabcontent = useRef();
   const [darkMode, setDarkMode] = useState(false);
-  const [sidebar, setSidebar] = useState();
-  let sidebarElement = document.getElementById("sidebar");
 
   const toogleDarkMode = () => {
     if (darkMode) {
@@ -66,12 +66,17 @@ function App() {
       (!("theme" in localStorage) &&
         window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
-      document.documentElement.classList.add("dark");
+      document.documentElement?.classList.add("dark");
       setDarkMode(true);
     } else {
-      document.documentElement.classList.remove("dark");
+      document.documentElement?.classList.remove("dark");
       setDarkMode(false);
     }
+
+    let screenWidth = window.innerWidth;
+
+    setShowMenu(screenWidth >= 768);
+    setShowBurguer(screenWidth < 768);
   }, []);
 
   const noSideBarRoutes = ["/", "/register"];
@@ -88,37 +93,44 @@ function App() {
   const handleMenu = (e) => {
     if (!e || !document.getElementById("sidebar")) return;
     let screenWidth = window.innerWidth;
-    let sidebar = sideBar.current;
-    let tabContent = tabcontent.current;
 
-    if (screenWidth < 768) {
-      sidebar?.classList?.remove("left-0");
-      sidebar?.classList?.add("left-[-300px]");
-      tabContent.classList?.remove("pl-[300px]");
-      tabContent.classList?.add("pl-0");
-    } else {
-      sidebar?.classList.remove("left-[-300px]");
-      sidebar?.classList.add("left-0");
+    setShowMenu(screenWidth >= 768);
+    setShowBurguer(screenWidth < 768);
+  };
 
-      tabContent?.classList.remove("pl-0");
-      tabContent?.classList?.add("pl-[300px]");
-    }
+  const handleShowMenu = (e) => {
+    setShowMenu(!showMenu);
   };
 
   useEffect(() => {
-    setSidebar(!!document.getElementById("sidebar"));
-  }, [document.getElementById("sidebar")]);
+    setShowMenu(false);
+    setShowBurguer(true);
+  }, [location.pathname]);
 
   window.addEventListener("resize", handleMenu);
+
   return (
     // <Provider store={store}>
     <div
       className={`flex dark:bg-[rgba(10,10,10,0.9)] transition-all duration-300 max-w-screen overflow-x-hidden`}
     >
+      {!noSideBarRoutes.includes(location.pathname) && showBurguer && (
+        <BurguerButton value={showMenu} handler={handleShowMenu} />
+      )}
       {!noSideBarRoutes.includes(location.pathname) && (
         <ProtectedRoute showLoading={false}>
           <Sidebar
-            controlador={sideBar}
+            className={`${
+              !showBurguer
+                ? showMenu
+                  ? "left-0"
+                  : "left-[-300px]"
+                : showMenu && showBurguer
+                ? "-translate-x-0"
+                : "-translate-x-[100%]"
+            } 
+              
+             ${showBurguer ? "w-full" : " w-[300px]"}`}
             darkMode={darkMode}
             toogleDarkMode={toogleDarkMode}
           />
@@ -126,10 +138,13 @@ function App() {
       )}
 
       <div
-        ref={tabcontent}
-        className={`dark:bg-black-900 flex justify-start min-h-screen flex-col overflow-x-hidden w-full ${
-          noSideBarRoutes.includes(location.pathname) ? " pl-0" : " pl-[300px]"
-        } transition-all duration-300 ease-in-out`}
+        className={`${
+          !noSideBarRoutes.includes(location.pathname) &&
+          showMenu &&
+          !showBurguer
+            ? "pl-[300px]"
+            : "pl-0"
+        } dark:bg-black-900 flex justify-start min-h-screen flex-col overflow-x-hidden w-full  pl-0 transition-all duration-300 ease-in-out z-[200]`}
       >
         <Routes>
           <Route path="/" element={<LoginPage />} />

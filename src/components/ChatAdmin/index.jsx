@@ -178,7 +178,7 @@ const AdministradorChat = ({ socket }) => {
             Object.keys(salasClientes).length < 16
               ? "4"
               : Math.ceil(salasClientes.length / 4).toString()
-          } gap-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  h-[17rem] overflow-y-scroll mb-5 border border-slate-400 p-3 rounded-md shadow-md shadow-slate-400 content-start`}
+          } gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5  h-[17rem] overflow-y-scroll mb-5 border border-slate-400 p-3 rounded-md shadow-md shadow-slate-400 content-start`}
         >
           {Object.keys(salasClientes).map((sala, index) => (
             <li
